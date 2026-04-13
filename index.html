@@ -11,84 +11,84 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: #060609; color: #f0ede8; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.28; pointer-events: none; }
+    body { font-family: 'DM Sans', sans-serif; background: #ffffff; color: #0a0a0a; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.06; pointer-events: none; }
     nav, main, footer { position: relative; z-index: 1; }
 
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 64px; border-bottom: 0.5px solid rgba(240,237,232,0.07); position: sticky; top: 0; background: rgba(6,6,9,0.88); backdrop-filter: blur(16px); z-index: 100; }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.5px; color: rgba(240,237,232,0.7); text-decoration: none; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 64px; border-bottom: 0.5px solid #f0f0f0; position: sticky; top: 0; background: rgba(6,6,9,0.88); backdrop-filter: blur(16px); z-index: 100; }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.5px; color: #444; text-decoration: none; }
     .logo span { color: #1D9E75; }
     .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a { font-size: 14px; color: rgba(240,237,232,0.4); text-decoration: none; transition: color 0.2s; letter-spacing: 0.1px; }
-    .nav-links a:hover { color: #f0ede8; }
-    .nav-cta { background: #1D9E75; color: #04342C; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; padding: 10px 24px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.2s; letter-spacing: 0.2px; }
+    .nav-links a { font-size: 14px; color: #888; text-decoration: none; transition: color 0.2s; letter-spacing: 0.1px; }
+    .nav-links a:hover { color: #0a0a0a; }
+    .nav-cta { background: #1D9E75; color: #ffffff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; padding: 10px 24px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.2s; letter-spacing: 0.2px; }
     .nav-cta:hover { opacity: 0.85; }
 
     .hero { padding: 140px 64px 120px; max-width: 1100px; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(29,158,117,0.07); border: 0.5px solid rgba(29,158,117,0.2); color: #5DCAA5; font-size: 11px; font-weight: 500; padding: 6px 16px; border-radius: 100px; margin-bottom: 40px; letter-spacing: 1.5px; text-transform: uppercase; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(29,158,117,0.07); border: 0.5px solid #b8e8d4; color: #5DCAA5; font-size: 11px; font-weight: 500; padding: 6px 16px; border-radius: 100px; margin-bottom: 40px; letter-spacing: 1.5px; text-transform: uppercase; }
     .hero-tag-dot { width: 6px; height: 6px; background: #1D9E75; border-radius: 50%; animation: pulse 2.5s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
     h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 84px; line-height: 0.97; letter-spacing: -3.5px; margin-bottom: 36px; }
     h1 em { font-style: normal; color: #1D9E75; }
-    .hero-sub { font-size: 20px; color: rgba(240,237,232,0.5); line-height: 1.85; max-width: 580px; margin-bottom: 52px; font-weight: 300; letter-spacing: 0.1px; }
+    .hero-sub { font-size: 20px; color: #666; line-height: 1.85; max-width: 580px; margin-bottom: 52px; font-weight: 300; letter-spacing: 0.1px; }
     .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
-    .btn-primary { background: #1D9E75; color: #04342C; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; padding: 16px 34px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.2s; }
+    .btn-primary { background: #1D9E75; color: #ffffff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; padding: 16px 34px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.2s; }
     .btn-primary:hover { opacity: 0.85; }
-    .btn-ghost { background: transparent; color: #f0ede8; font-family: 'Syne', sans-serif; font-weight: 400; font-size: 15px; padding: 16px 34px; border-radius: 100px; border: 0.5px solid rgba(240,237,232,0.18); cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.2s; }
-    .btn-ghost:hover { border-color: rgba(240,237,232,0.4); }
-    .hero-footnote { font-size: 13px; color: rgba(240,237,232,0.2); font-weight: 300; letter-spacing: 0.2px; }
-    .hero-footnote em { font-style: normal; color: rgba(93,202,165,0.5); }
+    .btn-ghost { background: transparent; color: #0a0a0a; font-family: 'Syne', sans-serif; font-weight: 400; font-size: 15px; padding: 16px 34px; border-radius: 100px; border: 0.5px solid #ddd; cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.2s; }
+    .btn-ghost:hover { border-color: #888; }
+    .hero-footnote { font-size: 13px; color: #bbb; font-weight: 300; letter-spacing: 0.2px; }
+    .hero-footnote em { font-style: normal; color: #1D9E75; }
 
-    .stats { display: flex; border-top: 0.5px solid rgba(240,237,232,0.06); border-bottom: 0.5px solid rgba(240,237,232,0.06); margin: 0 64px; }
+    .stats { display: flex; border-top: 0.5px solid #f0f0f0; border-bottom: 0.5px solid #f0f0f0; margin: 0 64px; }
     .stat { flex: 1; padding: 40px 0; text-align: center; border-right: 0.5px solid rgba(240,237,232,0.06); }
     .stat:last-child { border-right: none; }
-    .stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 38px; color: #f0ede8; letter-spacing: -1.5px; }
-    .stat-label { font-size: 12px; color: rgba(240,237,232,0.28); margin-top: 8px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 38px; color: #0a0a0a; letter-spacing: -1.5px; }
+    .stat-label { font-size: 12px; color: #aaa; margin-top: 8px; letter-spacing: 0.5px; text-transform: uppercase; }
 
     section { padding: 110px 64px; }
-    .section-tag { font-size: 11px; color: rgba(93,202,165,0.6); letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 16px; }
+    .section-tag { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 16px; }
     h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 48px; letter-spacing: -2px; margin-bottom: 16px; line-height: 1.05; }
-    .section-intro { font-size: 17px; color: rgba(240,237,232,0.38); line-height: 1.85; max-width: 560px; margin-bottom: 60px; font-weight: 300; }
+    .section-intro { font-size: 17px; color: #888; line-height: 1.85; max-width: 560px; margin-bottom: 60px; font-weight: 300; }
 
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: rgba(240,237,232,0.06); border-radius: 20px; overflow: hidden; }
-    .card { background: #060609; padding: 36px 32px; text-decoration: none; display: block; color: #f0ede8; transition: background 0.2s; }
-    .card:hover { background: rgba(12,15,20,0.98); }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: #f0f0f0; border-radius: 20px; overflow: hidden; }
+    .card { background: #ffffff; padding: 36px 32px; text-decoration: none; display: block; color: #0a0a0a; transition: background 0.2s; }
+    .card:hover { background: #fafafa; }
     .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .card-badge { font-size: 10px; color: rgba(93,202,165,0.45); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
-    .card-arrow { width: 26px; height: 26px; border: 0.5px solid rgba(240,237,232,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-    .card-arrow svg { width: 11px; height: 11px; stroke: rgba(240,237,232,0.25); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s, stroke 0.2s; }
+    .card-badge { font-size: 10px; color: #1D9E75; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+    .card-arrow { width: 26px; height: 26px; border: 0.5px solid #e0e0e0; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .card-arrow svg { width: 11px; height: 11px; stroke: #aaa; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s, stroke 0.2s; }
     .card:hover .card-arrow { border-color: rgba(29,158,117,0.35); }
     .card:hover .card-arrow svg { stroke: #1D9E75; transform: translate(2px, 0); }
     .card-number { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 11px; color: rgba(29,158,117,0.35); letter-spacing: 2px; margin-bottom: 12px; }
     .card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 12px; letter-spacing: -0.3px; line-height: 1.2; }
-    .card-desc { font-size: 14px; color: rgba(240,237,232,0.38); line-height: 1.8; font-weight: 300; }
+    .card-desc { font-size: 14px; color: #888; line-height: 1.8; font-weight: 300; }
 
-    .typewriter-bar { margin: 0 64px; padding: 32px 48px; border: 0.5px solid rgba(240,237,232,0.06); border-radius: 14px; display: flex; align-items: center; gap: 24px; }
-    .tw-label { font-size: 11px; color: rgba(240,237,232,0.18); letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
-    .tw-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; color: #f0ede8; letter-spacing: -0.5px; }
+    .typewriter-bar { margin: 0 64px; padding: 32px 48px; border: 0.5px solid #f0f0f0; border-radius: 14px; display: flex; align-items: center; gap: 24px; }
+    .tw-label { font-size: 11px; color: #bbb; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
+    .tw-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; color: #0a0a0a; letter-spacing: -0.5px; }
     .tw-cursor { display: inline-block; width: 2px; height: 0.9em; background: #1D9E75; margin-left: 3px; animation: blink 1s infinite; vertical-align: middle; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-    .mission-wrap { margin: 0 64px; padding: 72px; border-top: 0.5px solid rgba(240,237,232,0.06); border-bottom: 0.5px solid rgba(240,237,232,0.06); }
+    .mission-wrap { margin: 0 64px; padding: 72px; border-top: 0.5px solid #f0f0f0; border-bottom: 0.5px solid #f0f0f0; }
     .mission-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 32px; line-height: 1.45; max-width: 820px; margin-bottom: 28px; letter-spacing: -0.8px; }
     .mission-text em { font-style: normal; color: #1D9E75; }
-    .mission-sub { font-size: 17px; color: rgba(240,237,232,0.35); max-width: 600px; line-height: 1.85; font-weight: 300; }
+    .mission-sub { font-size: 17px; color: #888; max-width: 600px; line-height: 1.85; font-weight: 300; }
 
     .cta-section { padding: 110px 64px; }
-    .cta-box { border: 0.5px solid rgba(29,158,117,0.2); border-radius: 24px; padding: 80px 72px; }
-    .cta-eyebrow { font-size: 11px; color: rgba(93,202,165,0.5); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; }
+    .cta-box { border: 0.5px solid #b8e8d4; border-radius: 24px; padding: 80px 72px; }
+    .cta-eyebrow { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; }
     .cta-box h2 { font-size: 52px; letter-spacing: -2px; margin-bottom: 20px; }
-    .cta-sub { font-size: 18px; color: rgba(240,237,232,0.38); margin-bottom: 44px; max-width: 520px; line-height: 1.8; font-weight: 300; }
+    .cta-sub { font-size: 18px; color: #888; margin-bottom: 44px; max-width: 520px; line-height: 1.8; font-weight: 300; }
     .cta-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn-green { background: #1D9E75; color: #04342C; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; padding: 16px 34px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.2s; }
+    .btn-green { background: #1D9E75; color: #ffffff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; padding: 16px 34px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.2s; }
     .btn-green:hover { opacity: 0.85; }
-    .btn-border { background: transparent; color: #f0ede8; font-family: 'Syne', sans-serif; font-weight: 400; font-size: 15px; padding: 16px 34px; border-radius: 100px; border: 0.5px solid rgba(240,237,232,0.18); cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.2s; }
-    .btn-border:hover { border-color: rgba(240,237,232,0.4); }
+    .btn-border { background: transparent; color: #0a0a0a; font-family: 'Syne', sans-serif; font-weight: 400; font-size: 15px; padding: 16px 34px; border-radius: 100px; border: 0.5px solid #ddd; cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.2s; }
+    .btn-border:hover { border-color: #888; }
 
-    footer { padding: 36px 64px; border-top: 0.5px solid rgba(240,237,232,0.06); display: flex; justify-content: space-between; align-items: center; }
-    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: rgba(240,237,232,0.2); text-decoration: none; }
+    footer { padding: 36px 64px; border-top: 0.5px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: #bbb; text-decoration: none; }
     .footer-logo span { color: rgba(29,158,117,0.6); }
-    .footer-copy { font-size: 12px; color: rgba(240,237,232,0.12); letter-spacing: 0.3px; }
+    .footer-copy { font-size: 12px; color: #ccc; letter-spacing: 0.3px; }
 
     @media (max-width: 900px) {
       nav { padding: 18px 24px; }
