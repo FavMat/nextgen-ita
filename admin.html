@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Bits Admin · NextGen Ita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #f7f8fa; color: #0f0f0f; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+    /* HEADER */
+    .admin-header { background: #fff; border-bottom: 1px solid #eee; padding: 0 48px; height: 60px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .admin-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .admin-badge { width: 28px; height: 28px; background: #1D9E75; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 800; color: #fff; }
+    .admin-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: #0f0f0f; }
+    .admin-title span { color: #1D9E75; }
+    .admin-subtitle { font-size: 11px; color: #aaa; margin-left: 4px; font-weight: 400; }
+    .header-right { display: flex; gap: 10px; align-items: center; }
+    .btn { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 12px; padding: 8px 18px; border-radius: 100px; cursor: pointer; border: none; transition: all 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-primary { background: #0f0f0f; color: #fff; }
+    .btn-primary:hover { opacity: 0.8; }
+    .btn-ghost { background: transparent; border: 0.5px solid #ddd; color: #555; }
+    .btn-ghost:hover { border-color: #aaa; color: #0f0f0f; }
+    .btn-green { background: #1D9E75; color: #fff; }
+    .btn-green:hover { opacity: 0.85; }
+
+    /* MAIN */
+    .admin-main { max-width: 900px; margin: 0 auto; padding: 40px 24px 120px; }
+
+    /* STATS */
+    .stats-bar { display: flex; gap: 24px; margin-bottom: 32px; }
+    .stat-pill { background: #fff; border: 0.5px solid #eee; border-radius: 12px; padding: 14px 20px; display: flex; flex-direction: column; gap: 4px; }
+    .stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: #0f0f0f; }
+    .stat-label { font-size: 11px; color: #aaa; font-weight: 400; }
+    .stat-num.green { color: #1D9E75; }
+
+    /* SECTION HEADER */
+    .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .section-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: #0f0f0f; }
+
+    /* POST CARDS */
+    .posts-list { display: flex; flex-direction: column; gap: 1px; background: #eee; border-radius: 16px; overflow: hidden; margin-bottom: 32px; }
+    .post-card { background: #fff; padding: 24px 28px; display: flex; align-items: flex-start; gap: 20px; }
+    .post-card:hover { background: #fafafa; }
+
+    /* TOGGLE */
+    .toggle-wrap { flex-shrink: 0; padding-top: 2px; }
+    .toggle { position: relative; width: 40px; height: 22px; cursor: pointer; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-track { position: absolute; inset: 0; background: #e0e0e0; border-radius: 100px; transition: background 0.2s; }
+    .toggle input:checked + .toggle-track { background: #1D9E75; }
+    .toggle-thumb { position: absolute; height: 16px; width: 16px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+    .toggle input:checked ~ .toggle-thumb { transform: translateX(18px); }
+
+    .post-main { flex: 1; min-width: 0; }
+    .post-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .post-tag { font-size: 9px; color: #1D9E75; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; background: #f0faf6; border: 0.5px solid #b8e8d4; padding: 3px 10px; border-radius: 100px; }
+    .post-date { font-size: 11px; color: #bbb; }
+    .post-status { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 100px; }
+    .post-status.live { background: rgba(29,158,117,0.08); color: #1D9E75; }
+    .post-status.draft { background: #f5f5f5; color: #aaa; }
+    .post-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: -0.2px; margin-bottom: 6px; }
+    .post-excerpt { font-size: 13px; color: #888; line-height: 1.6; font-weight: 300; margin-bottom: 12px; max-width: 560px; }
+    .post-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .action-btn { font-size: 11px; font-weight: 500; color: #666; background: #f5f5f5; border: none; padding: 5px 12px; border-radius: 100px; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; }
+    .action-btn:hover { background: #ebebeb; color: #0f0f0f; }
+    .action-btn.generate { color: #1D9E75; background: rgba(29,158,117,0.08); }
+    .action-btn.generate:hover { background: rgba(29,158,117,0.14); }
+    .post-file { font-size: 11px; color: #ccc; margin-top: 4px; font-family: monospace; }
+
+    /* ADD POST FORM */
+    .add-post-section { background: #fff; border: 0.5px solid #eee; border-radius: 16px; padding: 28px; margin-bottom: 32px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { font-size: 11px; font-weight: 500; color: #666; letter-spacing: 0.3px; }
+    .form-input { font-family: 'Inter', sans-serif; font-size: 13px; color: #0f0f0f; border: 0.5px solid #ddd; border-radius: 10px; padding: 10px 14px; outline: none; transition: border-color 0.15s; background: #fafafa; }
+    .form-input:focus { border-color: #1D9E75; background: #fff; }
+    .form-input.textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
+    .form-row { display: flex; gap: 12px; margin-top: 16px; align-items: center; }
+    .form-note { font-size: 11px; color: #aaa; }
+
+    /* MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 500; display: none; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(4px); }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #fff; border-radius: 20px; max-width: 680px; width: 100%; max-height: 80vh; overflow: hidden; display: flex; flex-direction: column; }
+    .modal-header { padding: 24px 28px 20px; border-bottom: 0.5px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+    .modal-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; }
+    .modal-close { width: 30px; height: 30px; background: #f5f5f5; border: none; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; color: #888; transition: all 0.15s; }
+    .modal-close:hover { background: #eee; color: #0f0f0f; }
+    .modal-body { padding: 24px 28px; overflow-y: auto; flex: 1; }
+    .modal-code { font-family: 'Menlo', 'Monaco', monospace; font-size: 11px; background: #f7f8fa; border: 0.5px solid #eee; border-radius: 10px; padding: 16px; white-space: pre-wrap; word-break: break-all; line-height: 1.6; color: #333; max-height: 300px; overflow-y: auto; }
+    .modal-footer { padding: 16px 28px; border-top: 0.5px solid #f0f0f0; display: flex; gap: 10px; }
+
+    /* DEPLOY SECTION */
+    .deploy-section { background: #f0faf6; border: 0.5px solid #b8e8d4; border-radius: 16px; padding: 24px 28px; }
+    .deploy-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    .deploy-desc { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 16px; font-weight: 300; }
+    .deploy-code { font-family: 'Menlo', 'Monaco', monospace; font-size: 12px; background: rgba(29,158,117,0.06); border: 0.5px solid #b8e8d4; border-radius: 8px; padding: 12px 16px; color: #1D9E75; line-height: 1.8; }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); background: #0f0f0f; color: #fff; font-size: 13px; padding: 12px 24px; border-radius: 100px; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .toast.show { opacity: 1; }
+
+    @media (max-width: 700px) {
+      .admin-header { padding: 0 20px; }
+      .admin-main { padding: 24px 16px 100px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .stats-bar { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="admin-header">
+    <div class="admin-logo">
+      <div class="admin-badge">N</div>
+      <span class="admin-title">Next<span>Gen</span> Ita</span>
+      <span class="admin-subtitle">/ AI Bits Admin</span>
+    </div>
+    <div class="header-right">
+      <a href="bits.html" target="_blank" class="btn btn-ghost">Preview site</a>
+      <button class="btn btn-green" onclick="downloadConfig()">Download posts-data.js</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+
+    <!-- STATS -->
+    <div class="stats-bar" id="stats-bar"></div>
+
+    <!-- POSTS LIST -->
+    <div class="section-head">
+      <div class="section-label">All Posts</div>
+    </div>
+    <div class="posts-list" id="posts-list"></div>
+
+    <!-- ADD NEW POST -->
+    <div class="section-head" style="margin-top:40px;">
+      <div class="section-label">Add New Post</div>
+    </div>
+    <div class="add-post-section">
+      <p style="font-size:13px;color:#888;font-weight:300;line-height:1.6;">Paste a LinkedIn post below. Fill in the fields, generate the article HTML, and download the updated config file.</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">TITLE</label>
+          <input type="text" class="form-input" id="new-title" placeholder="Post title for the site" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">DATE</label>
+          <input type="text" class="form-input" id="new-date" placeholder="Apr 2025" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">TAG</label>
+          <input type="text" class="form-input" id="new-tag" placeholder="AI, Startup, Innovation..." />
+        </div>
+        <div class="form-group">
+          <label class="form-label">READ TIME</label>
+          <input type="text" class="form-input" id="new-readtime" placeholder="3 min" />
+        </div>
+        <div class="form-group full">
+          <label class="form-label">EXCERPT (1-2 sentences)</label>
+          <input type="text" class="form-input" id="new-excerpt" placeholder="Short teaser that makes someone want to read more." />
+        </div>
+        <div class="form-group full">
+          <label class="form-label">LINKEDIN POST TEXT</label>
+          <textarea class="form-input textarea" id="new-text" placeholder="Paste the full LinkedIn post text here..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">LINKEDIN URL</label>
+          <input type="text" class="form-input" id="new-linkedin" placeholder="https://www.linkedin.com/posts/..." />
+        </div>
+      </div>
+      <div class="form-row">
+        <button class="btn btn-primary" onclick="addNewPost()">Add to Config</button>
+        <button class="btn btn-ghost" onclick="generateFromForm()">Generate Article HTML</button>
+        <span class="form-note">After adding, download the config and deploy.</span>
+      </div>
+    </div>
+
+    <!-- DEPLOY -->
+    <div class="deploy-section">
+      <div class="deploy-title">Deploy changes</div>
+      <div class="deploy-desc">Download the updated <code>posts-data.js</code> above, save it to your project folder, then push to GitHub. Vercel deploys automatically.</div>
+      <div class="deploy-code">git add posts-data.js bit-XX.html<br>git commit -m "add new AI Bit"<br>git push origin main</div>
+    </div>
+
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal" onclick="closeModal(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="modal-title">Generated HTML</div>
+        <button class="modal-close" onclick="closeModalDirect()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:13px;color:#888;margin-bottom:16px;line-height:1.6;font-weight:300;">Copy this HTML, save it as the filename shown, place it in your project folder, then push to GitHub.</p>
+        <pre class="modal-code" id="modal-code"></pre>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="copyModal()">Copy HTML</button>
+        <button class="btn btn-ghost" onclick="downloadModal()">Download file</button>
+        <button class="btn btn-ghost" onclick="closeModalDirect()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="posts-data.js"></script>
+  <script>
+    // State: clone of NEXTGEN_POSTS + any new additions
+    let posts = JSON.parse(JSON.stringify(NEXTGEN_POSTS));
+    let modalContent = '';
+    let modalFilename = '';
+
+    function render() {
+      // Stats
+      const total = posts.length;
+      const live = posts.filter(p => p.published).length;
+      document.getElementById('stats-bar').innerHTML = `
+        <div class="stat-pill"><div class="stat-num green">${live}</div><div class="stat-label">Published</div></div>
+        <div class="stat-pill"><div class="stat-num">${total - live}</div><div class="stat-label">Drafts</div></div>
+        <div class="stat-pill"><div class="stat-num">${total}</div><div class="stat-label">Total posts</div></div>
+      `;
+
+      // Posts list
+      document.getElementById('posts-list').innerHTML = posts.map((p, i) => `
+        <div class="post-card">
+          <div class="toggle-wrap">
+            <label class="toggle">
+              <input type="checkbox" ${p.published ? 'checked' : ''} onchange="togglePost(${i}, this.checked)" />
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </label>
+          </div>
+          <div class="post-main">
+            <div class="post-meta">
+              <span class="post-tag">${p.tag}</span>
+              <span class="post-date">${p.date}</span>
+              <span class="post-status ${p.published ? 'live' : 'draft'}">${p.published ? 'Live' : 'Draft'}</span>
+            </div>
+            <div class="post-title">${p.title}</div>
+            <div class="post-excerpt">${p.excerpt}</div>
+            <div class="post-actions">
+              <button class="action-btn generate" onclick="generateArticle(${i})">Generate Article HTML</button>
+              ${p.file ? `<a href="${p.file}" target="_blank" class="action-btn">Preview article</a>` : ''}
+              <button class="action-btn" onclick="removePost(${i})">Remove</button>
+            </div>
+            ${p.file ? `<div class="post-file">→ ${p.file}</div>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function togglePost(i, val) {
+      posts[i].published = val;
+      render();
+      showToast(val ? 'Post set to Live. Download config to deploy.' : 'Post set to Draft. Download config to deploy.');
+    }
+
+    function removePost(i) {
+      if (!confirm('Remove this post from the config?')) return;
+      posts.splice(i, 1);
+      render();
+      showToast('Post removed. Download config to save.');
+    }
+
+    function addNewPost() {
+      const title = document.getElementById('new-title').value.trim();
+      const date = document.getElementById('new-date').value.trim();
+      const tag = document.getElementById('new-tag').value.trim();
+      const readTime = document.getElementById('new-readtime').value.trim();
+      const excerpt = document.getElementById('new-excerpt').value.trim();
+      const text = document.getElementById('new-text').value.trim();
+      const linkedin = document.getElementById('new-linkedin').value.trim();
+
+      if (!title || !date) { showToast('Title and date are required.'); return; }
+
+      const nextId = String(posts.length + 1).padStart(2, '0');
+      const file = `bit-${nextId}.html`;
+
+      posts.unshift({
+        id: nextId,
+        published: false,
+        date, tag: tag || 'AI', title, excerpt,
+        file, readTime: readTime || '3 min',
+        author: 'Matteo Favilli',
+        linkedin: linkedin || 'https://www.linkedin.com/in/matteo-favilli/',
+        text
+      });
+
+      // Clear form
+      ['new-title','new-date','new-tag','new-readtime','new-excerpt','new-text','new-linkedin'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+
+      render();
+      showToast(`Post added as Draft. Generate its HTML and download config.`);
+    }
+
+    function generateFromForm() {
+      const title = document.getElementById('new-title').value.trim() || 'New Article';
+      const date = document.getElementById('new-date').value.trim() || 'Apr 2025';
+      const tag = document.getElementById('new-tag').value.trim() || 'AI';
+      const readTime = document.getElementById('new-readtime').value.trim() || '3 min';
+      const excerpt = document.getElementById('new-excerpt').value.trim() || '';
+      const text = document.getElementById('new-text').value.trim() || '';
+      const linkedin = document.getElementById('new-linkedin').value.trim() || 'https://www.linkedin.com/in/matteo-favilli/';
+      const nextId = String(posts.length + 1).padStart(2, '0');
+      openGenerateModal({ id: nextId, title, date, tag, readTime, excerpt, text, linkedin });
+    }
+
+    function generateArticle(i) {
+      openGenerateModal(posts[i]);
+    }
+
+    function openGenerateModal(p) {
+      const html = buildArticleHTML(p);
+      const filename = p.file || `bit-${p.id}.html`;
+      modalContent = html;
+      modalFilename = filename;
+      document.getElementById('modal-title').textContent = `Generated: ${filename}`;
+      document.getElementById('modal-code').textContent = html;
+      document.getElementById('modal').classList.add('open');
+    }
+
+    function buildArticleHTML(p) {
+      // Convert text to paragraphs
+      const rawText = (p.text || '').trim();
+      const paragraphs = rawText.split(/\n{2,}/).map(block => {
+        block = block.trim();
+        if (!block) return '';
+        // Check if it's a list
+        if (block.includes('\n- ') || block.startsWith('- ')) {
+          const items = block.split('\n').filter(l => l.trim().startsWith('- ')).map(l => `          <li>${l.replace(/^- /, '').trim()}</li>`).join('\n');
+          return `        <ul>\n${items}\n        </ul>`;
+        }
+        return `        <p>${block.replace(/\n/g, ' ')}</p>`;
+      }).filter(Boolean).join('\n\n');
+
+      return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${p.title} · AI Bits · NextGen Ita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0f0f0f; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.05; pointer-events: none; }
+    nav, main, footer { position: relative; z-index: 1; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 0 64px; height: 64px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); z-index: 100; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-badge { width: 30px; height: 30px; background: #1D9E75; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; letter-spacing: -0.5px; }
+    .logo-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #0f0f0f; letter-spacing: -0.3px; }
+    .logo-name span { color: #1D9E75; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 13.5px; font-weight: 400; color: #888; text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover, .nav-links a.active { color: #0f0f0f; }
+    .nav-cta { background: #0f0f0f; color: #fff; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 9px 22px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.75; }
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 80px 64px 100px; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #999; text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
+    .back-link:hover { color: #1D9E75; }
+    .back-link svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .article-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+    .article-tag { font-size: 10px; color: #1D9E75; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; background: #f0faf6; border: 0.5px solid #b8e8d4; padding: 4px 12px; border-radius: 100px; }
+    .article-date { font-size: 12px; color: #bbb; }
+    .article-read-time { font-size: 12px; color: #bbb; }
+    .meta-dot { width: 3px; height: 3px; background: #ddd; border-radius: 50%; }
+    .article-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 44px; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 24px; }
+    .article-lead { font-size: 19px; color: #555; line-height: 1.8; font-weight: 300; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 0.5px solid #f0f0f0; }
+    .article-body { font-size: 17px; line-height: 1.9; color: #333; font-weight: 300; }
+    .article-body p { margin-bottom: 24px; }
+    .article-body h2 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: -0.2px; color: #0f0f0f; margin-top: 48px; margin-bottom: 16px; }
+    .article-body strong { color: #0f0f0f; font-weight: 500; }
+    .article-body em { color: #1D9E75; font-style: normal; }
+    .article-body ul { margin-left: 0; margin-bottom: 24px; display: flex; flex-direction: column; gap: 10px; list-style: none; }
+    .article-body ul li { color: #444; line-height: 1.75; padding-left: 20px; position: relative; }
+    .article-body ul li::before { content: ''; position: absolute; left: 0; top: 10px; width: 5px; height: 5px; background: #1D9E75; border-radius: 50%; }
+    .article-body blockquote { border-left: 2px solid #1D9E75; padding: 16px 24px; margin: 32px 0; background: rgba(29,158,117,0.04); border-radius: 0 10px 10px 0; }
+    .article-body blockquote p { margin-bottom: 0; color: #555; font-style: italic; font-size: 16px; }
+    .article-footer { margin-top: 64px; padding-top: 40px; border-top: 0.5px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .article-footer-left { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 44px; height: 44px; background: rgba(29,158,117,0.1); border: 0.5px solid #b8e8d4; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; color: #1D9E75; }
+    .author-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: #0f0f0f; }
+    .author-role { font-size: 12px; color: #999; margin-top: 2px; }
+    .li-share-btn { display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 0.5px solid rgba(29,158,117,0.4); color: #1D9E75; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 10px 20px; border-radius: 100px; text-decoration: none; transition: all 0.2s; }
+    .li-share-btn:hover { background: rgba(29,158,117,0.07); }
+    .li-share-btn svg { width: 14px; height: 14px; fill: #1D9E75; }
+    .more-bits { margin-top: 80px; }
+    .more-label { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 16px; }
+    .more-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #0f0f0f; text-decoration: none; transition: color 0.2s; }
+    .more-link:hover { color: #1D9E75; }
+    .more-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s; }
+    .more-link:hover svg { transform: translate(3px, 0); }
+    footer { padding: 32px 64px; border-top: 0.5px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; margin-top: 80px; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #bbb; text-decoration: none; }
+    .footer-logo span { color: rgba(29,158,117,0.5); }
+    .footer-copy { font-size: 12px; color: #ccc; }
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; } .nav-links { display: none; }
+      .article-wrap { padding: 48px 24px 64px; } .article-title { font-size: 30px; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="ai-canvas"></canvas>
+  <nav>
+    <a href="index.html" class="logo">
+      <div class="logo-badge">N</div>
+      <span class="logo-name">Next<span>Gen</span> Ita</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#work">What we do</a></li>
+      <li><a href="podcast.html">Podcast</a></li>
+      <li><a href="toolbox.html">Toolbox</a></li>
+      <li><a href="coaching.html">Coaching</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="bits.html" class="active">AI Bits</a></li>
+    </ul>
+    <a href="coaching.html" class="nav-cta">Join the community</a>
+  </nav>
+  <main>
+    <div class="article-wrap">
+      <a href="bits.html" class="back-link">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        All AI Bits
+      </a>
+      <div class="article-meta">
+        <span class="article-tag">${p.tag || 'AI'}</span>
+        <div class="meta-dot"></div>
+        <span class="article-date">${p.date}</span>
+        <div class="meta-dot"></div>
+        <span class="article-read-time">${p.readTime || '3 min'} read</span>
+      </div>
+      <h1 class="article-title">${p.title}</h1>
+      <p class="article-lead">${p.excerpt || ''}</p>
+      <div class="article-body">
+${paragraphs}
+      </div>
+      <div class="article-footer">
+        <div class="article-footer-left">
+          <div class="author-avatar">MF</div>
+          <div class="author-info">
+            <div class="author-name">Matteo Favilli</div>
+            <div class="author-role">Founder, NextGen Ita</div>
+          </div>
+        </div>
+        <a href="${p.linkedin || 'https://www.linkedin.com/in/matteo-favilli/'}" target="_blank" class="li-share-btn">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          Discuss on LinkedIn
+        </a>
+      </div>
+      <div class="more-bits">
+        <div class="more-label">Read more</div>
+        <a href="bits.html" class="more-link">All AI Bits
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <a href="index.html" class="footer-logo">Next<span>Gen</span> Ita</a>
+    <p class="footer-copy">Italy's next generation community · 2025</p>
+  </footer>
+  <script>
+    const canvas = document.getElementById('ai-canvas');
+    const ctx = canvas.getContext('2d');
+    let nodes = [], W, H;
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize(); window.addEventListener('resize', () => { resize(); init(); });
+    function init() { nodes = []; const count = Math.floor((W * H) / 18000); for (let i = 0; i < count; i++) nodes.push({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-0.5)*0.28, vy: (Math.random()-0.5)*0.28, r: Math.random()*1.2+0.4 }); }
+    init();
+    function draw() { ctx.clearRect(0,0,W,H); for (let i = 0; i < nodes.length; i++) { const a = nodes[i]; a.x += a.vx; a.y += a.vy; if (a.x<0||a.x>W) a.vx*=-1; if (a.y<0||a.y>H) a.vy*=-1; for (let j = i+1; j < nodes.length; j++) { const b = nodes[j]; const dx = a.x-b.x, dy = a.y-b.y, dist = Math.sqrt(dx*dx+dy*dy); if (dist < 150) { ctx.beginPath(); ctx.strokeStyle=\`rgba(29,158,117,\${(1-dist/150)*0.28})\`; ctx.lineWidth=0.5; ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); } } ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,Math.PI*2); ctx.fillStyle='rgba(29,158,117,0.55)'; ctx.fill(); } requestAnimationFrame(draw); }
+    draw();
+  <\/script>
+</body>
+</html>`;
+    }
+
+    function downloadConfig() {
+      const content = generateConfigJS();
+      download('posts-data.js', content);
+      showToast('posts-data.js downloaded. Replace the file in your project and git push.');
+    }
+
+    function generateConfigJS() {
+      const entries = posts.map(p => {
+        const text = (p.text || '').replace(/`/g, '\\`');
+        return `  {
+    id: "${p.id}",
+    published: ${p.published},
+    date: "${p.date}",
+    tag: "${p.tag}",
+    title: "${p.title.replace(/"/g, '\\"')}",
+    excerpt: "${p.excerpt.replace(/"/g, '\\"')}",
+    file: "${p.file || ''}",
+    readTime: "${p.readTime || '3 min'}",
+    author: "${p.author || 'Matteo Favilli'}",
+    linkedin: "${p.linkedin || 'https://www.linkedin.com/in/matteo-favilli/'}",
+    text: \`${text}\`
+  }`;
+      }).join(',\n');
+      return `// NextGen Ita — AI Bits Config\n// Manage which posts appear on bits.html\n// Use admin.html to toggle and generate articles visually\n\nconst NEXTGEN_POSTS = [\n${entries}\n];\n`;
+    }
+
+    function copyModal() {
+      navigator.clipboard.writeText(modalContent).then(() => showToast('HTML copied to clipboard.'));
+    }
+
+    function downloadModal() {
+      download(modalFilename, modalContent);
+      showToast(`${modalFilename} downloaded.`);
+    }
+
+    function download(filename, content) {
+      const blob = new Blob([content], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+    }
+
+    function closeModal(e) {
+      if (e.target === document.getElementById('modal')) closeModalDirect();
+    }
+    function closeModalDirect() {
+      document.getElementById('modal').classList.remove('open');
+    }
+
+    let toastTimer;
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    render();
+  </script>
+</body>
+</html>

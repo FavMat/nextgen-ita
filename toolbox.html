@@ -6,26 +6,28 @@
   <title>Founder's Toolbox · NextGen Ita</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: #ffffff; color: #0a0a0a; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.06; pointer-events: none; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0f0f0f; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.05; pointer-events: none; }
     nav, main, footer { position: relative; z-index: 1; }
 
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 64px; border-bottom: 0.5px solid #f0f0f0; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); z-index: 100; }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.5px; color: #0a0a0a; text-decoration: none; }
-    .logo span { color: #1D9E75; }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a { font-size: 14px; color: #888; text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: #0a0a0a; }
-    .nav-cta { background: #1D9E75; color: #ffffff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; padding: 10px 24px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.2s; }
-    .nav-cta:hover { opacity: 0.85; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 0 64px; height: 64px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); z-index: 100; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-badge { width: 30px; height: 30px; background: #1D9E75; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; letter-spacing: -0.5px; }
+    .logo-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #0f0f0f; letter-spacing: -0.3px; }
+    .logo-name span { color: #1D9E75; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 13.5px; font-weight: 400; color: #888; text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover, .nav-links a.active { color: #0f0f0f; }
+    .nav-cta { background: #0f0f0f; color: #fff; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 9px 22px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.75; }
 
     .page-header { padding: 80px 64px 60px; border-bottom: 0.5px solid #f0f0f0; }
     .page-tag { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 16px; }
-    .page-h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 56px; line-height: 1.0; letter-spacing: -2.5px; margin-bottom: 20px; }
+    .page-h1 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 48px; line-height: 1.2; letter-spacing: 0.2px; margin-bottom: 24px; }
     .page-h1 em { font-style: normal; color: #1D9E75; }
     .page-sub { font-size: 18px; color: #666; line-height: 1.8; max-width: 580px; font-weight: 300; }
 
@@ -93,7 +95,10 @@
 <body>
   <canvas id="ai-canvas"></canvas>
   <nav>
-    <a href="index.html" class="logo">Next<span>Gen</span> Ita</a>
+    <a href="index.html" class="logo">
+      <div class="logo-badge">N</div>
+      <span class="logo-name">Next<span>Gen</span> Ita</span>
+    </a>
     <ul class="nav-links">
       <li><a href="index.html#work">What we do</a></li>
       <li><a href="podcast.html">Podcast</a></li>
@@ -117,62 +122,62 @@
       <div class="skills-label">Choose a skill to get started</div>
       <div class="skills-grid">
         <a href="https://claude.ai/new?q=I%20want%20to%20validate%20my%20startup%20idea.%20Help%20me%20think%20through%20it%20critically%3A%20the%20problem%20I%27m%20solving%2C%20the%20target%20market%2C%20existing%20alternatives%2C%20and%20whether%20this%20idea%20has%20real%20potential.%20Start%20by%20asking%20me%20to%20describe%20my%20idea." target="_blank" class="skill-btn">
-          <span class="skill-icon">💡</span>
+          <span class="skill-icon">&#x1F4A1;</span>
           <span class="skill-name">Validate my idea</span>
           <span class="skill-desc">Test your concept against real market logic</span>
         </a>
         <a href="https://claude.ai/new?q=I%20want%20to%20build%20a%20strong%20pitch%20deck.%20Guide%20me%20through%20each%20section%3A%20problem%2C%20solution%2C%20market%20size%2C%20business%20model%2C%20traction%2C%20team%2C%20and%20ask.%20Start%20by%20asking%20me%20what%20my%20startup%20does." target="_blank" class="skill-btn">
-          <span class="skill-icon">📊</span>
+          <span class="skill-icon">&#x1F4CA;</span>
           <span class="skill-name">Build my pitch deck</span>
           <span class="skill-desc">Structure a pitch investors actually read</span>
         </a>
         <a href="https://claude.ai/new?q=Help%20me%20build%20a%20go-to-market%20strategy.%20I%20need%20to%20identify%20the%20right%20channels%2C%20craft%20the%20right%20message%2C%20and%20find%20my%20first%20customers.%20Start%20by%20asking%20me%20about%20my%20product%20and%20target%20customer." target="_blank" class="skill-btn">
-          <span class="skill-icon">🚀</span>
+          <span class="skill-icon">&#x1F680;</span>
           <span class="skill-name">Go-to-market strategy</span>
           <span class="skill-desc">Define channels, messaging and first customers</span>
         </a>
         <a href="https://claude.ai/new?q=I%20want%20to%20prepare%20for%20fundraising.%20Help%20me%20understand%20what%20stage%20I%20am%20at%2C%20what%20investors%20look%20for%2C%20how%20to%20structure%20my%20ask%2C%20and%20how%20to%20tell%20my%20story.%20Start%20by%20asking%20me%20about%20my%20startup%20and%20where%20I%20am%20in%20the%20journey." target="_blank" class="skill-btn">
-          <span class="skill-icon">💰</span>
+          <span class="skill-icon">&#x1F4B0;</span>
           <span class="skill-name">Fundraising prep</span>
           <span class="skill-desc">Get ready for your first investor conversation</span>
         </a>
         <a href="https://claude.ai/new?q=Help%20me%20map%20my%20competitive%20landscape.%20I%20want%20to%20understand%20who%20my%20real%20competitors%20are%2C%20what%20my%20differentiators%20are%2C%20and%20how%20to%20position%20myself.%20Start%20by%20asking%20me%20what%20I%20am%20building." target="_blank" class="skill-btn">
-          <span class="skill-icon">🔍</span>
+          <span class="skill-icon">&#x1F50D;</span>
           <span class="skill-name">Competitive analysis</span>
           <span class="skill-desc">Map the landscape and find your edge</span>
         </a>
         <a href="https://claude.ai/new?q=Help%20me%20build%20and%20stress-test%20my%20business%20model.%20Work%20through%20revenue%20streams%2C%20pricing%20strategy%2C%20unit%20economics%20and%20scalability%20with%20me.%20Start%20by%20asking%20me%20what%20my%20startup%20does%20and%20how%20I%20plan%20to%20make%20money." target="_blank" class="skill-btn">
-          <span class="skill-icon">📐</span>
+          <span class="skill-icon">&#x1F4D0;</span>
           <span class="skill-name">Business model</span>
           <span class="skill-desc">Revenue streams, pricing and unit economics</span>
         </a>
         <a href="https://claude.ai/new?q=I%20need%20advice%20on%20my%20first%20hire.%20Help%20me%20think%20through%20who%20to%20hire%2C%20when%2C%20how%20to%20structure%20the%20offer%20and%20what%20to%20look%20for.%20Start%20by%20asking%20me%20about%20my%20stage%20and%20what%20is%20blocking%20me%20right%20now." target="_blank" class="skill-btn">
-          <span class="skill-icon">🤝</span>
+          <span class="skill-icon">&#x1F91D;</span>
           <span class="skill-name">First hire advice</span>
           <span class="skill-desc">Who to hire first and how to do it right</span>
         </a>
         <a href="https://claude.ai/new?q=Help%20me%20understand%20how%20to%20use%20AI%20in%20my%20startup%3A%20from%20agents%20and%20automation%20to%20the%20latest%20tools%20and%20trends%20relevant%20for%20my%20business.%20Start%20by%20asking%20me%20what%20kind%20of%20startup%20I%20am%20building." target="_blank" class="skill-btn">
-          <span class="skill-icon">🤖</span>
+          <span class="skill-icon">&#x1F916;</span>
           <span class="skill-name">AI for my startup</span>
           <span class="skill-desc">Agents, tools and AI trends for your business</span>
         </a>
         <a href="https://claude.ai/new?q=Help%20me%20build%20a%20sharp%20product%20strategy.%20What%20to%20build%2C%20what%20to%20cut%2C%20how%20to%20prioritize%20and%20how%20to%20stay%20focused%20on%20what%20matters.%20Start%20by%20asking%20me%20about%20my%20product%20and%20current%20roadmap." target="_blank" class="skill-btn">
-          <span class="skill-icon">🛠</span>
+          <span class="skill-icon">&#x1F6E0;</span>
           <span class="skill-name">Product strategy</span>
           <span class="skill-desc">Build what matters, cut what doesn't</span>
         </a>
         <a href="https://claude.ai/new?q=I%20want%20to%20understand%20green%20AI%20and%20how%20to%20build%20my%20startup%20with%20sustainable%20AI%20practices.%20Help%20me%20understand%20the%20environmental%20impact%20of%20AI%2C%20best%20practices%2C%20and%20how%20to%20make%20conscious%20choices%20from%20day%20one." target="_blank" class="skill-btn">
-          <span class="skill-icon">🌱</span>
+          <span class="skill-icon">&#x1F331;</span>
           <span class="skill-name">Green AI</span>
           <span class="skill-desc">Sustainable AI practices for your startup</span>
         </a>
         <a href="https://claude.ai/new?q=Help%20me%20think%20through%20AI%20ethics%20for%20my%20startup.%20I%20want%20to%20build%20responsibly%20from%20day%20one%3A%20bias%2C%20transparency%2C%20privacy%2C%20accountability.%20Give%20me%20a%20practical%20framework%20I%20can%20apply%20as%20a%20founder." target="_blank" class="skill-btn">
-          <span class="skill-icon">⚖️</span>
+          <span class="skill-icon">&#x2696;&#xFE0F;</span>
           <span class="skill-name">AI ethics</span>
           <span class="skill-desc">Build responsibly from day one</span>
         </a>
         <a href="https://claude.ai/new?q=I%20want%20to%20talk%20about%20my%20startup.%20I%20am%20an%20Italian%20founder%20and%20I%20need%20your%20honest%2C%20practical%20advice.%20Let%27s%20start%20with%20whatever%20is%20most%20on%20my%20mind%20right%20now." target="_blank" class="skill-btn">
-          <span class="skill-icon">💬</span>
+          <span class="skill-icon">&#x1F4AC;</span>
           <span class="skill-name">Free conversation</span>
           <span class="skill-desc">Ask anything, no template</span>
         </a>
@@ -187,7 +192,7 @@
         <div class="chat-messages" id="chatMessages">
           <div class="msg">
             <div class="msg-avatar ai">AI</div>
-            <div class="msg-bubble ai">Hi, I'm your NextGen AI co-founder. Pick a skill above to get started, or just ask me anything about your startup. I'm trained on Y Combinator, P&P and the world's best startup resources.</div>
+            <div class="msg-bubble ai">Hi, I'm your NextGen AI co-founder. Pick a skill above to get started, or just ask me anything about your startup. I'm trained on Y Combinator, P&amp;P and the world's best startup resources.</div>
           </div>
         </div>
         <div class="chat-input-area">
@@ -237,48 +242,11 @@
     }
     draw();
 
-    const skillPrompts = {
-      idea: { label: 'Validate my idea', prompt: "I want to validate my startup idea. Please help me think through it critically — ask me about the problem I'm solving, the target market, existing alternatives, and whether this idea has real potential. Start by asking me to describe my idea." },
-      pitch: { label: 'Build my pitch deck', prompt: "I want to build a strong pitch deck. Guide me through each section: problem, solution, market size, business model, traction, team, and ask. Start by asking me what my startup does." },
-      gtm: { label: 'Go-to-market strategy', prompt: "Help me build a go-to-market strategy. I need to identify the right channels, craft the right message, and find my first customers. Start by asking me about my product and target customer." },
-      fundraise: { label: 'Fundraising prep', prompt: "I want to prepare for fundraising. Help me understand what stage I'm at, what investors look for, how to structure my ask, and how to tell my story. Start by asking me about my startup and where I am in the journey." },
-      competitors: { label: 'Competitive analysis', prompt: "Help me map my competitive landscape. I want to understand who my real competitors are, what my differentiators are, and how to position myself. Start by asking me what I'm building." },
-      model: { label: 'Business model', prompt: "Help me build and stress-test my business model. Let's work through revenue streams, pricing strategy, unit economics and scalability. Start by asking me what my startup does and how I currently plan to make money." },
-      hiring: { label: 'First hire advice', prompt: "I need advice on my first hire. Help me think through who to hire, when, how to structure the offer and what to look for. Start by asking me about my stage and what's blocking me right now." },
-      ai_literacy: { label: 'AI for my startup', prompt: "Help me understand how to use AI in my startup — from agents and automation to the latest tools and trends that are relevant for my business. Start by asking me what kind of startup I'm building." },
-      product: { label: 'Product strategy', prompt: "Help me build a sharp product strategy. Let's talk about what to build, what to cut, how to prioritize and how to stay focused on what matters. Start by asking me about my product and current roadmap." },
-      greenai: { label: 'Green AI', prompt: "I want to understand green AI and how to build my startup with sustainable AI practices. Help me understand the environmental impact of AI, best practices, and how to make conscious choices from day one. Let's start with an overview of what green AI means for a startup." },
-      ethics: { label: 'AI ethics', prompt: "Help me think through AI ethics for my startup. I want to build responsibly from day one — bias, transparency, privacy, accountability. Start by giving me a practical framework I can apply as a founder." },
-      free: { label: 'Free conversation', prompt: null }
-    };
-
     const messages = [
       { role: 'assistant', content: "Hi, I'm your NextGen AI co-founder. Pick a skill above to get started, or just ask me anything about your startup. I'm trained on Y Combinator, P&P and the world's best startup resources." }
     ];
 
     let isLoading = false;
-
-    function useSkill(btn, skillKey) {
-      document.querySelectorAll('.skill-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const skill = skillPrompts[skillKey];
-      document.getElementById('activeSkillLabel').textContent = skill.label;
-      if (skill.prompt) {
-        document.getElementById('chatInput').value = '';
-        document.getElementById('chatInput').placeholder = `Ask about: ${skill.label}...`;
-        sendSkillPrompt(skill.prompt, skill.label);
-      } else {
-        document.getElementById('chatInput').placeholder = 'Ask me anything...';
-        document.getElementById('chatInput').focus();
-      }
-    }
-
-    async function sendSkillPrompt(prompt, label) {
-      if (isLoading) return;
-      addMessage('user', `Start: ${label}`);
-      messages.push({ role: 'user', content: prompt });
-      await callClaude();
-    }
 
     async function sendMessage() {
       const input = document.getElementById('chatInput');
@@ -302,7 +270,7 @@
           body: JSON.stringify({
             model: 'claude-sonnet-4-20250514',
             max_tokens: 1000,
-            system: `You are the NextGen Ita AI co-founder — a sharp, practical startup advisor trained on Y Combinator, P&P, First Round Capital and the world's best entrepreneurial resources. You help Italian founders with idea validation, business models, pitch decks, fundraising, go-to-market strategy, AI literacy, green AI and ethics. Be direct, concrete and honest. No fluff, no filler. Format answers clearly — use short paragraphs or numbered lists when helpful. Respond in the same language the user writes in (Italian or English). Never use em-dashes.`,
+            system: `You are the NextGen Ita AI co-founder. Be direct, concrete and honest. No fluff, no filler. Never use em-dashes.`,
             messages: messages.slice(-12)
           })
         });

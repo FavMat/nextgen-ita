@@ -6,25 +6,27 @@
   <title>NextGen Podcast · NextGen Ita</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: #ffffff; color: #0a0a0a; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.06; pointer-events: none; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0f0f0f; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.05; pointer-events: none; }
     nav, main, footer { position: relative; z-index: 1; }
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 64px; border-bottom: 0.5px solid #f0f0f0; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); z-index: 100; }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.5px; color: #0a0a0a; text-decoration: none; }
-    .logo span { color: #1D9E75; }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a { font-size: 14px; color: #888; text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: #0a0a0a; }
-    .nav-cta { background: #1D9E75; color: #ffffff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; padding: 10px 24px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.2s; }
-    .nav-cta:hover { opacity: 0.85; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 0 64px; height: 64px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); z-index: 100; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-badge { width: 30px; height: 30px; background: #1D9E75; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; letter-spacing: -0.5px; }
+    .logo-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #0f0f0f; letter-spacing: -0.3px; }
+    .logo-name span { color: #1D9E75; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 13.5px; font-weight: 400; color: #888; text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover, .nav-links a.active { color: #0f0f0f; }
+    .nav-cta { background: #0f0f0f; color: #fff; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 9px 22px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.75; }
 
     .page-header { padding: 80px 64px 60px; border-bottom: 0.5px solid #f0f0f0; }
     .page-tag { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 16px; }
-    .page-h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 56px; line-height: 1.0; letter-spacing: -2.5px; margin-bottom: 20px; }
+    .page-h1 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 48px; line-height: 1.2; letter-spacing: 0.2px; margin-bottom: 24px; }
     .page-h1 em { font-style: normal; color: #1D9E75; }
     .page-sub { font-size: 18px; color: #666; line-height: 1.8; max-width: 560px; font-weight: 300; }
 
@@ -92,7 +94,10 @@
 <body>
   <canvas id="ai-canvas"></canvas>
   <nav>
-    <a href="index.html" class="logo">Next<span>Gen</span> Ita</a>
+    <a href="index.html" class="logo">
+      <div class="logo-badge">N</div>
+      <span class="logo-name">Next<span>Gen</span> Ita</span>
+    </a>
     <ul class="nav-links">
       <li><a href="index.html#work">What we do</a></li>
       <li><a href="podcast.html" class="active">Podcast</a></li>
@@ -113,7 +118,7 @@
 
     <div class="page-content">
 
-      <!-- SPOTIFY PLAYER — sostituisci SHOW_ID con l'ID del tuo show Spotify -->
+      <!-- SPOTIFY PLAYER -->
       <div class="spotify-wrap">
         <div class="spotify-label"><div class="spotify-dot"></div>Listen on Spotify</div>
         <div class="spotify-player">
@@ -121,43 +126,19 @@
         </div>
       </div>
 
-      <!-- EPISODES LIST — aggiungi episodi qui quando hai il canale -->
+      <!-- EPISODES LIST -->
       <div class="episodes-label">All episodes</div>
       <div class="ep-list">
 
-        <!-- EP 01 — sostituisci href con link Spotify episodio -->
-        <a href="#" class="ep-row">
+        <!-- EP 01 -->
+        <a href="https://open.spotify.com/episode/1IUxYb5QW106WJ3J19K68v" target="_blank" class="ep-row">
           <div class="ep-num">01</div>
           <div class="ep-thumb"><svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 0 1-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 0 1-.973-.519.781.781 0 0 1 .52-.973c3.632-1.102 8.147-.568 11.233 1.329a.78.78 0 0 1 .257 1.072zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.937.937 0 1 1-.543-1.793c3.532-1.072 9.404-.865 13.115 1.337a.937.937 0 0 1-.955 1.613z"/></svg></div>
           <div class="ep-info">
-            <div class="ep-guest">Guest name · Role, Company</div>
-            <div class="ep-title">Episode title here</div>
+            <div class="ep-guest">Matteo Favilli · Salvatore Rosania</div>
+            <div class="ep-title">NextGen-Ita inizia qui</div>
           </div>
-          <div class="ep-duration">00:00</div>
-          <div class="ep-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-        </a>
-
-        <!-- EP 02 -->
-        <a href="#" class="ep-row">
-          <div class="ep-num">02</div>
-          <div class="ep-thumb"><svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 0 1-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 0 1-.973-.519.781.781 0 0 1 .52-.973c3.632-1.102 8.147-.568 11.233 1.329a.78.78 0 0 1 .257 1.072zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.937.937 0 1 1-.543-1.793c3.532-1.072 9.404-.865 13.115 1.337a.937.937 0 0 1-.955 1.613z"/></svg></div>
-          <div class="ep-info">
-            <div class="ep-guest">Guest name · Role, Company</div>
-            <div class="ep-title">Episode title here</div>
-          </div>
-          <div class="ep-duration">00:00</div>
-          <div class="ep-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-        </a>
-
-        <!-- EP 03 -->
-        <a href="#" class="ep-row">
-          <div class="ep-num">03</div>
-          <div class="ep-thumb"><svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 0 1-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 0 1-.973-.519.781.781 0 0 1 .52-.973c3.632-1.102 8.147-.568 11.233 1.329a.78.78 0 0 1 .257 1.072zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.937.937 0 1 1-.543-1.793c3.532-1.072 9.404-.865 13.115 1.337a.937.937 0 0 1-.955 1.613z"/></svg></div>
-          <div class="ep-info">
-            <div class="ep-guest">Guest name · Role, Company</div>
-            <div class="ep-title">Episode title here</div>
-          </div>
-          <div class="ep-duration">00:00</div>
+          <div class="ep-duration">1:00</div>
           <div class="ep-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
         </a>
 

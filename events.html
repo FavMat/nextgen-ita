@@ -6,33 +6,35 @@
   <title>AI Events · NextGen Ita</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: #ffffff; color: #0a0a0a; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.06; pointer-events: none; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0f0f0f; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.05; pointer-events: none; }
     nav, main, footer { position: relative; z-index: 1; }
 
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 64px; border-bottom: 0.5px solid #f0f0f0; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); z-index: 100; }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.5px; color: #0a0a0a; text-decoration: none; }
-    .logo span { color: #1D9E75; }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a { font-size: 14px; color: #888; text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: #0a0a0a; }
-    .nav-cta { background: #1D9E75; color: #ffffff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; padding: 10px 24px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.2s; }
-    .nav-cta:hover { opacity: 0.85; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 0 64px; height: 64px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); z-index: 100; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-badge { width: 30px; height: 30px; background: #1D9E75; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; letter-spacing: -0.5px; }
+    .logo-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #0f0f0f; letter-spacing: -0.3px; }
+    .logo-name span { color: #1D9E75; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 13.5px; font-weight: 400; color: #888; text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover, .nav-links a.active { color: #0f0f0f; }
+    .nav-cta { background: #0f0f0f; color: #fff; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 9px 22px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.75; }
 
     .page-header { padding: 80px 64px 60px; border-bottom: 0.5px solid #f0f0f0; }
     .page-tag { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 16px; }
-    .page-h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 56px; line-height: 1.0; letter-spacing: -2.5px; margin-bottom: 20px; }
+    .page-h1 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 48px; line-height: 1.2; letter-spacing: 0.2px; margin-bottom: 24px; }
     .page-h1 em { font-style: normal; color: #1D9E75; }
     .page-sub { font-size: 18px; color: #666; line-height: 1.8; max-width: 560px; font-weight: 300; }
 
     .partner-bar { margin: 0; padding: 20px 64px; border-bottom: 0.5px solid #f0f0f0; display: flex; align-items: center; gap: 14px; }
     .partner-bar-label { font-size: 11px; color: #bbb; letter-spacing: 0.5px; }
     .partner-bar-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: #1D9E75; }
-    .partner-bar-dot { width: 3px; height: 3px; background: rgba(240,237,232,0.15); border-radius: 50%; }
+    .partner-bar-dot { width: 3px; height: 3px; background: #ccc; border-radius: 50%; }
 
     .page-content { padding: 64px; }
 
@@ -58,7 +60,6 @@
 
     /* NEXT EVENT CTA */
     .next-event { background: rgba(29,158,117,0.04); border: 0.5px solid #b8e8d4; border-radius: 20px; padding: 52px; margin-top: 48px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
-    .next-event-left { }
     .next-event-tag { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
     .next-event-dot { width: 6px; height: 6px; background: #1D9E75; border-radius: 50%; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.2} }
@@ -88,7 +89,10 @@
 <body>
   <canvas id="ai-canvas"></canvas>
   <nav>
-    <a href="index.html" class="logo">Next<span>Gen</span> Ita</a>
+    <a href="index.html" class="logo">
+      <div class="logo-badge">N</div>
+      <span class="logo-name">Next<span>Gen</span> Ita</span>
+    </a>
     <ul class="nav-links">
       <li><a href="index.html#work">What we do</a></li>
       <li><a href="podcast.html">Podcast</a></li>
@@ -119,7 +123,7 @@
 
       <div class="events-grid">
 
-        <!-- EVENTO 1 — sostituisci src con la locandina -->
+        <!-- EVENTO 1 -->
         <div class="event-card">
           <div class="event-poster">
             <!-- <img src="locandina-1.jpg" alt="Event 1" /> -->
