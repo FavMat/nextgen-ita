@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A 20-Year-Old Built This in 10 Days · AI Bits · NextGen Ita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0f0f0f; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.05; pointer-events: none; }
+    nav, main, footer { position: relative; z-index: 1; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 0 64px; height: 64px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); z-index: 100; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-badge { width: 30px; height: 30px; background: #1D9E75; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; letter-spacing: -0.5px; }
+    .logo-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #0f0f0f; letter-spacing: -0.3px; }
+    .logo-name span { color: #1D9E75; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 13.5px; font-weight: 400; color: #888; text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover, .nav-links a.active { color: #0f0f0f; }
+    .nav-cta { background: #0f0f0f; color: #fff; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 9px 22px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.75; }
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 80px 64px 100px; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #999; text-decoration: none; margin-bottom: 48px; transition: color 0.2s; font-weight: 400; }
+    .back-link:hover { color: #1D9E75; }
+    .back-link svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .article-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+    .article-tag { font-size: 10px; color: #1D9E75; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; background: #f0faf6; border: 0.5px solid #b8e8d4; padding: 4px 12px; border-radius: 100px; }
+    .article-date { font-size: 12px; color: #bbb; }
+    .article-read-time { font-size: 12px; color: #bbb; }
+    .meta-dot { width: 3px; height: 3px; background: #ddd; border-radius: 50%; }
+    .article-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 44px; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 24px; }
+    .article-lead { font-size: 19px; color: #555; line-height: 1.8; font-weight: 300; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 0.5px solid #f0f0f0; }
+    .article-body { font-size: 17px; line-height: 1.9; color: #333; font-weight: 300; }
+    .article-body p { margin-bottom: 24px; }
+    .article-body h2 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: -0.2px; color: #0f0f0f; margin-top: 48px; margin-bottom: 16px; }
+    .article-body strong { color: #0f0f0f; font-weight: 500; }
+    .article-body em { color: #1D9E75; font-style: normal; }
+    .article-body blockquote { border-left: 2px solid #1D9E75; padding: 16px 24px; margin: 32px 0; background: rgba(29,158,117,0.04); border-radius: 0 10px 10px 0; }
+    .article-body blockquote p { margin-bottom: 0; color: #555; font-style: italic; font-size: 16px; }
+    .article-footer { margin-top: 64px; padding-top: 40px; border-top: 0.5px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .article-footer-left { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 44px; height: 44px; background: rgba(29,158,117,0.1); border: 0.5px solid #b8e8d4; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; color: #1D9E75; }
+    .author-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: #0f0f0f; }
+    .author-role { font-size: 12px; color: #999; margin-top: 2px; }
+    .li-share-btn { display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 0.5px solid rgba(29,158,117,0.4); color: #1D9E75; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 10px 20px; border-radius: 100px; text-decoration: none; transition: all 0.2s; }
+    .li-share-btn:hover { background: rgba(29,158,117,0.07); }
+    .li-share-btn svg { width: 14px; height: 14px; fill: #1D9E75; }
+    .more-bits { margin-top: 80px; }
+    .more-label { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 16px; }
+    .more-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #0f0f0f; text-decoration: none; transition: color 0.2s; }
+    .more-link:hover { color: #1D9E75; }
+    .more-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s; }
+    .more-link:hover svg { transform: translate(3px, 0); }
+    footer { padding: 32px 64px; border-top: 0.5px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; margin-top: 80px; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #bbb; text-decoration: none; }
+    .footer-logo span { color: rgba(29,158,117,0.5); }
+    .footer-copy { font-size: 12px; color: #ccc; }
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; } .nav-links { display: none; }
+      .article-wrap { padding: 48px 24px 64px; } .article-title { font-size: 30px; } .article-body { font-size: 16px; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="ai-canvas"></canvas>
+  <nav>
+    <a href="index.html" class="logo">
+      <div class="logo-badge">N</div>
+      <span class="logo-name">Next<span>Gen</span> Ita</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#work">What we do</a></li>
+      <li><a href="podcast.html">Podcast</a></li>
+      <li><a href="toolbox.html">Toolbox</a></li>
+      <li><a href="coaching.html">Coaching</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="bits.html" class="active">AI Bits</a></li>
+    </ul>
+    <a href="coaching.html" class="nav-cta">Join the community</a>
+  </nav>
+
+  <main>
+    <div class="article-wrap">
+      <a href="bits.html" class="back-link">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        All AI Bits
+      </a>
+      <div class="article-meta">
+        <span class="article-tag">AI</span>
+        <div class="meta-dot"></div>
+        <span class="article-date">March 2026</span>
+        <div class="meta-dot"></div>
+        <span class="article-read-time">4 min read</span>
+      </div>
+      <h1 class="article-title">A 20-Year-Old Built This in 10 Days. Then It Got Complicated.</h1>
+      <p class="article-lead">MiroFish generates thousands of AI agents with distinct personalities and memories, simulates human interactions at scale, and was built by a student using vibe coding only. It raised $4 million in 24 hours. Then you start thinking about what happens when you feed it Meta's data.</p>
+
+      <div class="article-body">
+
+        <p>You are already being simulated. That is not a provocation. It is a reasonable inference from what just became technically possible, built by a single person in under two weeks.</p>
+
+        <p>MiroFish is a tool that takes documents as input and constructs <em>knowledge graphs</em> from them. From those graphs, it generates thousands of AI agents, each with a distinct personality, memory, and behavioral profile. It then simulates how those agents interact: what they say to each other, how they respond to information, what decisions they make. It raised $4 million in 24 hours and accumulated over 33,000 GitHub stars.</p>
+
+        <p>The builder is 20 years old. He used vibe coding exclusively, meaning AI-assisted development with minimal traditional engineering. The timeline was 10 days.</p>
+
+        <h2>What this actually enables</h2>
+
+        <p>At face value, MiroFish is a research and simulation tool. Feed it a company's internal documents and you can model how different employee types might respond to a policy change. Feed it a product description and simulate how different customer segments process the messaging. Feed it a political platform and see how simulated voter profiles react.</p>
+
+        <p>The use cases are genuinely useful. Researchers, product teams, policy designers could all benefit from this kind of behavioral simulation at scale, without the cost and time of real user studies.</p>
+
+        <blockquote>
+          <p>The tool itself is impressive. The question is what happens when you pair simulation capability at this level with the behavioral data that already exists.</p>
+        </blockquote>
+
+        <h2>Then Meta's data enters the picture</h2>
+
+        <p>Meta has behavioral datasets spanning roughly 3 billion users. Not survey responses. Behavioral data: reading time per post, scroll velocity, when you pause, what you reread, messaging patterns, emotional response proxies. This data has been collected over more than a decade.</p>
+
+        <p>Cambridge Analytica operated with 87 million Facebook profiles and relatively primitive models by 2026 standards. That operation shaped the outcome of at least one major election. It had a fraction of the data available today and a fraction of the modeling capability.</p>
+
+        <p>The combination of <strong>simulation infrastructure like MiroFish</strong> and <strong>behavioral data at the scale Meta holds</strong> would produce something qualitatively different from anything that has existed before. Not better predictions about what a population might do. The ability to model specific individuals based on their behavioral fingerprints, at scale, in real time.</p>
+
+        <h2>The honest question</h2>
+
+        <p>The question is not whether this is possible. It clearly is, or is becoming so. The question is what the existence of this capability means for how we think about consent, data governance, and the design of public AI systems.</p>
+
+        <p>MiroFish is one student's project. The underlying capability it demonstrates is not contained to one student's project. That is the part worth sitting with.</p>
+
+        <p>How did we get here so fast is a fair question. The more useful one is: now that we are here, what do we build around it?</p>
+
+      </div>
+
+      <div class="article-footer">
+        <div class="article-footer-left">
+          <div class="author-avatar">MF</div>
+          <div class="author-info">
+            <div class="author-name">Matteo Favilli</div>
+            <div class="author-role">Founder, NextGen Ita</div>
+          </div>
+        </div>
+        <a href="https://www.linkedin.com/posts/matteo-favilli_ai-aiagents-generativeai-share-7442375971992666112-ZiSJ" target="_blank" class="li-share-btn">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          Discuss on LinkedIn
+        </a>
+      </div>
+
+      <div class="more-bits">
+        <div class="more-label">Read more</div>
+        <a href="bits.html" class="more-link">All AI Bits
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <a href="index.html" class="footer-logo">Next<span>Gen</span> Ita</a>
+    <p class="footer-copy">Italy's next generation community · 2025</p>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('ai-canvas');
+    const ctx = canvas.getContext('2d');
+    let nodes = [], W, H;
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize(); window.addEventListener('resize', () => { resize(); init(); });
+    function init() { nodes = []; const count = Math.floor((W * H) / 18000); for (let i = 0; i < count; i++) nodes.push({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-0.5)*0.28, vy: (Math.random()-0.5)*0.28, r: Math.random()*1.2+0.4 }); }
+    init();
+    function draw() { ctx.clearRect(0,0,W,H); for (let i = 0; i < nodes.length; i++) { const a = nodes[i]; a.x += a.vx; a.y += a.vy; if (a.x<0||a.x>W) a.vx*=-1; if (a.y<0||a.y>H) a.vy*=-1; for (let j = i+1; j < nodes.length; j++) { const b = nodes[j]; const dx = a.x-b.x, dy = a.y-b.y, dist = Math.sqrt(dx*dx+dy*dy); if (dist < 150) { ctx.beginPath(); ctx.strokeStyle=`rgba(29,158,117,${(1-dist/150)*0.28})`; ctx.lineWidth=0.5; ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); } } ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,Math.PI*2); ctx.fillStyle='rgba(29,158,117,0.55)'; ctx.fill(); } requestAnimationFrame(draw); }
+    draw();
+  </script>
+</body>
+</html>

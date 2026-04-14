@@ -61,6 +61,20 @@
     .li-cta-btn:hover { background: rgba(29,158,117,0.08); }
     .li-cta-btn svg { width: 14px; height: 14px; fill: #1D9E75; }
 
+    /* FEATURED IN */
+    .featured-section { margin-bottom: 64px; }
+    .featured-label { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 20px; }
+    .featured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .featured-card { border: 0.5px solid #f0f0f0; border-radius: 14px; padding: 24px; text-decoration: none; color: #0f0f0f; transition: border-color 0.2s, background 0.2s; display: flex; flex-direction: column; gap: 12px; }
+    .featured-card:hover { border-color: rgba(29,158,117,0.3); background: #fafffe; }
+    .featured-outlet { font-size: 10px; color: #1D9E75; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+    .featured-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; line-height: 1.3; letter-spacing: -0.2px; }
+    .featured-desc { font-size: 13px; color: #888; line-height: 1.65; font-weight: 300; }
+    .featured-arrow { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #ccc; margin-top: 4px; transition: color 0.2s; }
+    .featured-arrow svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s; }
+    .featured-card:hover .featured-arrow { color: #1D9E75; }
+    .featured-card:hover .featured-arrow svg { transform: translate(2px, 0); }
+
     footer { padding: 32px 64px; border-top: 0.5px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; margin-top: 80px; }
     .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #bbb; text-decoration: none; }
     .footer-logo span { color: rgba(29,158,117,0.5); }
@@ -76,6 +90,7 @@
       .article-date-col { width: 60px; }
       .article-title { font-size: 16px; }
       .li-cta { flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px; }
+      .featured-grid { grid-template-columns: 1fr; }
       footer { padding: 24px; flex-direction: column; gap: 8px; }
     }
   </style>
@@ -108,6 +123,25 @@
     <div class="page-content">
       <div class="articles-list" id="articles-list">
         <!-- Populated by posts-data.js -->
+      </div>
+
+      <!-- FEATURED IN -->
+      <div class="featured-section">
+        <div class="featured-label">Featured In</div>
+        <div class="featured-grid">
+          <a href="https://www.youtube.com/watch?v=Y2gNdHGvt0A" target="_blank" class="featured-card">
+            <div class="featured-outlet">The Spoon · FoodAI CoLab</div>
+            <div class="featured-title">How Generative AI Is Transforming the Way We Work</div>
+            <div class="featured-desc">A live conversation with Michael Wolf on AI adoption across industries, cross-functional fluency, and what it actually takes for organizations to evolve.</div>
+            <div class="featured-arrow">Watch conversation <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          </a>
+          <a href="https://www.santannapisa.it" target="_blank" class="featured-card">
+            <div class="featured-outlet">Scuola Superiore Sant'Anna · CNR-ISTI · SoBigData</div>
+            <div class="featured-title">Big Data in Healthcare: AI Transforming Patient Care</div>
+            <div class="featured-desc">Speaker at the SoBigData webinar series on how innovative technologies are reshaping healthcare and patient well-being across the life sciences sector.</div>
+            <div class="featured-arrow">View event <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          </a>
+        </div>
       </div>
 
       <div class="li-cta">
