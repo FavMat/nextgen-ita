@@ -59,15 +59,31 @@
     .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #bbb; text-decoration: none; }
     .footer-logo span { color: rgba(29,158,117,0.5); }
     .footer-copy { font-size: 12px; color: #ccc; }
-    @media (max-width: 900px) {
+        .read-progress { position: fixed; top: 0; left: 0; height: 2px; background: #1D9E75; z-index: 999; width: 0%; pointer-events: none; transition: width 0.08s linear; }
+    .author-avatar-wrap { width: 52px; height: 52px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: rgba(29,158,117,0.1); border: 0.5px solid #b8e8d4; position: relative; }
+    .author-avatar-wrap img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .author-initials { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #1D9E75; }
+    .author-bio { font-size: 12px; color: #aaa; margin-top: 5px; line-height: 1.55; max-width: 340px; font-weight: 300; }
+    .more-articles { margin-top: 80px; padding-top: 48px; border-top: 0.5px solid #f0f0f0; }
+    .more-articles-label { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 20px; }
+    .more-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .more-card { display: flex; flex-direction: column; gap: 10px; padding: 22px; border: 0.5px solid #f0f0f0; border-radius: 14px; text-decoration: none; color: #0f0f0f; transition: border-color 0.2s, background 0.2s; }
+    .more-card:hover { border-color: rgba(29,158,117,0.3); background: #fafffe; }
+    .more-card-tag { font-size: 9px; color: #1D9E75; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+    .more-card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; line-height: 1.3; letter-spacing: -0.2px; }
+    .more-card-excerpt { font-size: 13px; color: #888; line-height: 1.6; font-weight: 300; flex: 1; }
+    .more-card-meta { font-size: 11px; color: #ccc; }
+@media (max-width: 900px) {
       nav { padding: 0 24px; } .nav-links { display: none; }
       .article-wrap { padding: 48px 24px 64px; } .article-title { font-size: 30px; } .article-body { font-size: 16px; }
       footer { padding: 24px; flex-direction: column; gap: 8px; }
+      .more-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <canvas id="ai-canvas"></canvas>
+  <div class="read-progress" id="read-progress"></div>
   <nav>
     <a href="index.html" class="logo">
       <div class="logo-badge">N</div>
@@ -136,12 +152,16 @@
 
       </div>
 
-      <div class="article-footer">
-        <div class="article-footer-left">
-          <div class="author-avatar">MF</div>
+            <div class="article-footer">
+        <div class="author-card" style="display:flex;align-items:center;gap:16px;">
+          <div class="author-avatar-wrap">
+            <div class="author-initials">MF</div>
+            <img src="matteo.jpg" alt="Matteo Favilli" onerror="this.remove()" />
+          </div>
           <div class="author-info">
             <div class="author-name">Matteo Favilli</div>
             <div class="author-role">Founder, NextGen Ita</div>
+            <div class="author-bio">Strategy, Innovation and Ventures. 7+ years across USA, Europe, Middle East. Building AI agents professionally.</div>
           </div>
         </div>
         <a href="https://www.linkedin.com/posts/matteo-favilli_ai-aiagents-generativeai-share-7442375971992666112-ZiSJ" target="_blank" class="li-share-btn">
@@ -164,6 +184,7 @@
     <p class="footer-copy">Italy's next generation community · 2025</p>
   </footer>
 
+  <script src="posts-data.js"></script>
   <script>
     const canvas = document.getElementById('ai-canvas');
     const ctx = canvas.getContext('2d');
@@ -174,6 +195,24 @@
     init();
     function draw() { ctx.clearRect(0,0,W,H); for (let i = 0; i < nodes.length; i++) { const a = nodes[i]; a.x += a.vx; a.y += a.vy; if (a.x<0||a.x>W) a.vx*=-1; if (a.y<0||a.y>H) a.vy*=-1; for (let j = i+1; j < nodes.length; j++) { const b = nodes[j]; const dx = a.x-b.x, dy = a.y-b.y, dist = Math.sqrt(dx*dx+dy*dy); if (dist < 150) { ctx.beginPath(); ctx.strokeStyle=`rgba(29,158,117,${(1-dist/150)*0.28})`; ctx.lineWidth=0.5; ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); } } ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,Math.PI*2); ctx.fillStyle='rgba(29,158,117,0.55)'; ctx.fill(); } requestAnimationFrame(draw); }
     draw();
+    // Reading progress bar
+    window.addEventListener('scroll', function() {
+      var el = document.getElementById('read-progress');
+      if (!el) return;
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      el.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+    });
+    // More articles
+    (function() {
+      if (typeof NEXTGEN_POSTS === 'undefined') return;
+      var grid = document.getElementById('more-grid');
+      if (!grid) return;
+      var current = location.pathname.split('/').pop() || '';
+      var others = NEXTGEN_POSTS.filter(function(p) { return p.published && p.file && p.file !== current; }).slice(0, 2);
+      grid.innerHTML = others.map(function(p) {
+        return '<a href="' + p.file + '" class="more-card"><div class="more-card-tag">' + p.tag + '</div><div class="more-card-title">' + p.title + '</div><div class="more-card-excerpt">' + p.excerpt + '</div><div class="more-card-meta">' + p.date + ' · ' + p.readTime + ' read</div></a>';
+      }).join('');
+    })();
   </script>
 </body>
 </html>
