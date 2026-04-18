@@ -1,0 +1,97 @@
+// NextGen Ita — AI Bits Config
+// Manage which posts appear on bits.html
+// Use admin.html to toggle and generate articles visually
+
+window.NEXTGEN_POSTS = [
+  {
+    id: "02",
+    published: true,
+    date: "Apr 2026",
+    tag: "AI",
+    title: "What the Stanford AI Index 2026 Actually Says",
+    excerpt: "The performance gap between top models has shrunk to 2.7%. Global adoption is moving faster than the internet. Here are the data points that matter.",
+    file: "bit-02.html",
+    readTime: "3 min",
+    author: "Matteo Favilli",
+    linkedin: "https://www.linkedin.com/in/matteo-favilli/",
+    text: `The new 2026 AI Index from Stanford Institute for Human-Centered Artificial Intelligence (HAI) is officially out. The data highlights a massive shift: the performance gap between top models has shrunk to a razor-thin 2.7% (Anthropic at the top), and global adoption is moving faster than the internet ever did. A reflection for organizations: How can we use these insights to actually evolve our business models, rather than just automating what we have?`
+  },
+  {
+    id: "01",
+    published: true,
+    date: "Apr 2026",
+    tag: "AI",
+    title: "Anthropic Paid $400M for a Problem",
+    excerpt: "Fewer than 10 people. No product. No revenue. Here is what Anthropic actually bought, and why pharma is the next AI infrastructure war.",
+    file: "bit-01.html",
+    readTime: "4 min",
+    author: "Matteo Favilli",
+    linkedin: "https://www.linkedin.com/in/matteo-favilli/",
+    text: `Last week Anthropic paid $400 million for a startup that was eight months old. Fewer than 10 people. No product. No revenue. I spend a lot of time with pharma clients leading AI projects. One thing comes up constantly: the models don't speak biology. They speak English. That's the gap Coefficient Bio was working on. Anthropic didn't buy a product but paid $400 million for a problem most of the industry is still pretending doesn't exist.`
+  },
+  {
+    id: "03",
+    published: true,
+    date: "Mar 2026",
+    tag: "AI",
+    title: "AI's Memory Problem, and Google's Fix",
+    excerpt: "Every AI conversation has a weight limit. Google just published a technique that shrinks that memory by 6x without retraining the model. Here is what it means.",
+    file: "bit-03.html",
+    readTime: "3 min",
+    author: "Matteo Favilli",
+    linkedin: "https://www.linkedin.com/posts/matteo-favilli_ai-llm-research-share-7444184604892209152-NcPo",
+    text: `We've all felt it: that brutal typing lag once an AI chat gets too long. Every time you chat with an AI, it has to store the whole conversation in its short-term memory. The longer the conversation, the more it eats up, until the system gets slow or the cost to run it just doesn't make sense anymore. Google just put out a paper on TurboQuant (using techniques like PolarQuant and QJL) to deal with this. The idea: instead of storing that memory in a complex, bulky way, they found a mathematical shortcut to shrink it by 6x. No need to retrain any LLM. Making AI 6x lighter means it might actually work on a normal office server or even your phone, without needing a giant data center in the background. There's a trade-off, though. To make it this light, the AI has to forget the details it thinks don't matter. It's a very human compromise: we filter out the noise so we can focus.`
+  },
+  {
+    id: "04",
+    published: true,
+    date: "Mar 2026",
+    tag: "AI",
+    title: "A 20-Year-Old Built This in 10 Days. Then It Got Complicated.",
+    excerpt: "MiroFish generates thousands of AI agents with distinct personalities and memories. Built by a student, vibe coding only. $4M raised in 24 hours. Then you start thinking about Meta's data.",
+    file: "bit-04.html",
+    readTime: "4 min",
+    author: "Matteo Favilli",
+    linkedin: "https://www.linkedin.com/posts/matteo-favilli_ai-aiagents-generativeai-share-7442375971992666112-ZiSJ",
+    text: `You are already being simulated. MiroFish is a tool built by a 20-year-old student in 10 days, vibe coding only. Feed it documents and it constructs knowledge graphs, generates thousands of AI agents with distinct personalities and memories, and simulates human interactions. It raised $4 million in 24 hours with 33,000+ GitHub stars. Then think about Meta's behavioral datasets spanning 3 billion users, including reading time, scroll patterns, and messaging data. Cambridge Analytica operated with 87 million profiles and a fraction of today's AI capabilities. Modern AI simulation combined with contemporary behavioral data represents unprecedented predictive power over individual behavior. How did we get here so fast?`
+  },
+  {
+    id: "05",
+    published: true,
+    date: "Mar 2026",
+    tag: "AI",
+    title: "The Chat Interface Was Just the Lobby",
+    excerpt: "OpenClaw proved something the big labs did not want to prove: for most real tasks, cheaper models on a Mac Mini are good enough. The competition has shifted. It is not about the model anymore.",
+    file: "bit-05.html",
+    readTime: "4 min",
+    author: "Matteo Favilli",
+    linkedin: "https://www.linkedin.com/posts/matteo-favilli_ai-aiagents-generativeai-share-7441788833072979968-aen_",
+    text: `Six months ago nobody had heard of OpenClaw. One Austrian developer built it alone. Last week Jensen Huang dedicated part of his NVIDIA GTC keynote to it and called it "the most popular open-source project in the history of humanity." But that's not the point. For years, the big AI labs raised hundreds of billions on a single bet: that their models were untouchable. That the gap was the competitive advantage. OpenClaw cracked that. Not by having a better model. By proving that for most real-world tasks, cheaper models running locally on a Mac Mini are good enough. The cloud becomes optional. The premium becomes hard to justify. The competition has shifted. It's not about who has the best model anymore. It's about who builds the best layer on top of it. Agents, workflows, things that actually do work instead of just answering questions. The value is shifting away from the model and toward the layer you build on top of it. The chat interface was just the lobby. We're in the building now.`
+  },
+  {
+    id: "06",
+    published: true,
+    date: "Mar 2026",
+    tag: "AI",
+    title: "Most Enterprise AI Projects Don't Fail Because the Tech Is Bad",
+    excerpt: "Mistral's Forge bets on a simple, uncomfortable idea: enterprise AI fails not because the model is weak, but because it was trained on the internet and not on your company.",
+    file: "bit-06.html",
+    readTime: "4 min",
+    author: "Matteo Favilli",
+    linkedin: "https://www.linkedin.com/posts/matteo-favilli_ai-proprietaryai-aistrategy-share-7440050534117449728-cxGL",
+    text: `Mistral AI just bet that owning AI beats renting it. The idea behind Forge is simple and a bit uncomfortable for the industry: most enterprise AI projects don't fail because the technology isn't there. They fail because the model has no idea how the company actually works. Trained on the internet. Not on your contracts, your processes, the ten years of institutional knowledge buried in documents nobody outside your walls has ever read. I keep having the same conversation with clients in pharma and life sciences. It's never 'should we use AI'. It's always 'we tried, but the model didn't understand our context, gave answers that made sense in general but were wrong for us specifically'. That's not a technology gap. That's a training data problem. Fine-tuning and RAG don't really fix it completely. They make it less visible. The model is still fundamentally someone else's model, shaped by someone else's assumptions. Owning the model changes the equation. Trained on your knowledge, governed by your policies, inside your infrastructure. In regulated industries, where you can't afford to not understand why the model said what it said, the direction makes sense. Whether most organizations are actually ready to get there is a different story.`
+  },
+  {
+    id: "07",
+    published: false,
+    date: "Apr 2026",
+    tag: "Innovation",
+    title: "Dario Amodei Moves to Italy",
+    excerpt: "The Anthropic CEO announced he is moving to Massa Marittima, Tuscany. A short thought on what this signals.",
+    file: "",
+    readTime: "2 min",
+    author: "Matteo Favilli",
+    linkedin: "https://www.linkedin.com/in/matteo-favilli/",
+    text: `Ci vediamo in Piazza Dario. Anthropic CEO Dario Amodei announced he is moving to Massa Marittima, a small town in Tuscany, his father's hometown. He will lead Anthropic in full remote for 6 months a year from the Maremma.`
+  }
+];

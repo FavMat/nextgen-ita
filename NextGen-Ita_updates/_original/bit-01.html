@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anthropic Paid $400M for a Problem · AI Bits · NextGen Ita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0f0f0f; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.05; pointer-events: none; }
+    nav, main, footer { position: relative; z-index: 1; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 0 64px; height: 64px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); z-index: 100; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-badge { width: 30px; height: 30px; background: #1D9E75; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; letter-spacing: -0.5px; }
+    .logo-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #0f0f0f; letter-spacing: -0.3px; }
+    .logo-name span { color: #1D9E75; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 13.5px; font-weight: 400; color: #888; text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover, .nav-links a.active { color: #0f0f0f; }
+    .nav-cta { background: #0f0f0f; color: #fff; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 9px 22px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.75; }
+
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 80px 64px 100px; }
+
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #999; text-decoration: none; margin-bottom: 48px; transition: color 0.2s; font-weight: 400; }
+    .back-link:hover { color: #1D9E75; }
+    .back-link svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .article-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+    .article-tag { font-size: 10px; color: #1D9E75; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; background: #f0faf6; border: 0.5px solid #b8e8d4; padding: 4px 12px; border-radius: 100px; }
+    .article-date { font-size: 12px; color: #bbb; }
+    .article-read-time { font-size: 12px; color: #bbb; }
+    .meta-dot { width: 3px; height: 3px; background: #ddd; border-radius: 50%; }
+
+    .article-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 44px; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 24px; }
+    .article-lead { font-size: 19px; color: #555; line-height: 1.8; font-weight: 300; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 0.5px solid #f0f0f0; }
+
+    .article-body { font-size: 17px; line-height: 1.9; color: #333; font-weight: 300; }
+    .article-body p { margin-bottom: 24px; }
+    .article-body h2 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: -0.2px; color: #0f0f0f; margin-top: 48px; margin-bottom: 16px; }
+    .article-body strong { color: #0f0f0f; font-weight: 500; }
+    .article-body em { color: #1D9E75; font-style: normal; }
+    .article-body ul { margin-left: 0; margin-bottom: 24px; display: flex; flex-direction: column; gap: 10px; list-style: none; }
+    .article-body ul li { color: #444; line-height: 1.75; padding-left: 20px; position: relative; }
+    .article-body ul li::before { content: ''; position: absolute; left: 0; top: 10px; width: 5px; height: 5px; background: #1D9E75; border-radius: 50%; }
+    .article-body blockquote { border-left: 2px solid #1D9E75; padding: 16px 24px; margin: 32px 0; background: rgba(29,158,117,0.04); border-radius: 0 10px 10px 0; }
+    .article-body blockquote p { margin-bottom: 0; color: #555; font-style: italic; font-size: 16px; }
+
+    .deal-table { width: 100%; border-collapse: collapse; margin: 24px 0 32px; font-size: 14px; }
+    .deal-table th { text-align: left; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #999; padding: 10px 16px; border-bottom: 0.5px solid #f0f0f0; }
+    .deal-table td { padding: 14px 16px; border-bottom: 0.5px solid #f7f7f7; color: #444; line-height: 1.5; vertical-align: top; }
+    .deal-table tr:last-child td { border-bottom: none; }
+    .deal-table td:first-child { font-weight: 400; color: #0f0f0f; }
+    .deal-amount { font-family: 'Syne', sans-serif; font-weight: 700; color: #1D9E75; font-size: 13px; white-space: nowrap; }
+
+    .article-footer { margin-top: 64px; padding-top: 40px; border-top: 0.5px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .article-footer-left { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 44px; height: 44px; background: rgba(29,158,117,0.1); border: 0.5px solid #b8e8d4; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; color: #1D9E75; }
+    .author-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: #0f0f0f; }
+    .author-role { font-size: 12px; color: #999; margin-top: 2px; }
+    .li-share-btn { display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 0.5px solid rgba(29,158,117,0.4); color: #1D9E75; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 10px 20px; border-radius: 100px; text-decoration: none; transition: all 0.2s; }
+    .li-share-btn:hover { background: rgba(29,158,117,0.07); }
+    .li-share-btn svg { width: 14px; height: 14px; fill: #1D9E75; }
+
+    .more-bits { margin-top: 80px; }
+    .more-label { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 16px; }
+    .more-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #0f0f0f; text-decoration: none; transition: color 0.2s; }
+    .more-link:hover { color: #1D9E75; }
+    .more-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s; }
+    .more-link:hover svg { transform: translate(3px, 0); }
+
+    footer { padding: 32px 64px; border-top: 0.5px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; margin-top: 80px; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #bbb; text-decoration: none; }
+    .footer-logo span { color: rgba(29,158,117,0.5); }
+    .footer-copy { font-size: 12px; color: #ccc; }
+
+        .read-progress { position: fixed; top: 0; left: 0; height: 2px; background: #1D9E75; z-index: 999; width: 0%; pointer-events: none; transition: width 0.08s linear; }
+    .author-avatar-wrap { width: 52px; height: 52px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: rgba(29,158,117,0.1); border: 0.5px solid #b8e8d4; position: relative; }
+    .author-avatar-wrap img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .author-initials { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #1D9E75; }
+    .author-bio { font-size: 12px; color: #aaa; margin-top: 5px; line-height: 1.55; max-width: 340px; font-weight: 300; }
+    .more-articles { margin-top: 80px; padding-top: 48px; border-top: 0.5px solid #f0f0f0; }
+    .more-articles-label { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 20px; }
+    .more-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .more-card { display: flex; flex-direction: column; gap: 10px; padding: 22px; border: 0.5px solid #f0f0f0; border-radius: 14px; text-decoration: none; color: #0f0f0f; transition: border-color 0.2s, background 0.2s; }
+    .more-card:hover { border-color: rgba(29,158,117,0.3); background: #fafffe; }
+    .more-card-tag { font-size: 9px; color: #1D9E75; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+    .more-card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; line-height: 1.3; letter-spacing: -0.2px; }
+    .more-card-excerpt { font-size: 13px; color: #888; line-height: 1.6; font-weight: 300; flex: 1; }
+    .more-card-meta { font-size: 11px; color: #ccc; }
+@media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .article-wrap { padding: 48px 24px 64px; }
+      .article-title { font-size: 30px; }
+      .article-lead { font-size: 17px; }
+      .article-body { font-size: 16px; }
+      .deal-table { font-size: 13px; }
+      .deal-table th, .deal-table td { padding: 10px 8px; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; }
+      .more-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="ai-canvas"></canvas>
+  <div class="read-progress" id="read-progress"></div>
+  <nav>
+    <a href="index.html" class="logo">
+      <div class="logo-badge">N</div>
+      <span class="logo-name">Next<span>Gen</span> Ita</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#work">What we do</a></li>
+      <li><a href="podcast.html">Podcast</a></li>
+      <li><a href="toolbox.html">Toolbox</a></li>
+      <li><a href="coaching.html">Coaching</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="bits.html" class="active">AI Bits</a></li>
+    </ul>
+    <a href="coaching.html" class="nav-cta">Join the community</a>
+  </nav>
+
+  <main>
+    <div class="article-wrap">
+
+      <a href="bits.html" class="back-link">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        All AI Bits
+      </a>
+
+      <div class="article-meta">
+        <span class="article-tag">AI</span>
+        <div class="meta-dot"></div>
+        <span class="article-date">April 2025</span>
+        <div class="meta-dot"></div>
+        <span class="article-read-time">4 min read</span>
+      </div>
+
+      <h1 class="article-title">Anthropic Paid $400M for a Problem</h1>
+
+      <p class="article-lead">Last week Anthropic paid $400 million for a startup that was eight months old. Fewer than 10 people. No product. No revenue. Here is what they actually bought, and why the price makes complete sense.</p>
+
+      <div class="article-body">
+
+        <p>I spend a lot of time with pharma clients leading AI projects. One thing comes up constantly, in every meeting, across every team: <strong>the models don't speak biology. They speak English.</strong> Scientists feel the difference the first time they use these tools. It is not subtle.</p>
+
+        <p>You can ask a frontier model to summarize a paper about a molecule. It does that well. You can ask it to reason about the binding properties of that molecule, how it might interact at the protein level, what structural modifications could reduce toxicity. That is where it breaks down. Not because the model is bad at reasoning. Because it was never trained to reason in the language of biology.</p>
+
+        <h2>What Coefficient Bio was actually building</h2>
+
+        <p>Coefficient Bio had former top researchers building models that reason about molecules <em>directly</em>, not just papers about them. That is a foundational difference. The gap is not a UX problem. It is not a prompt engineering problem. It is a training data and architecture problem, and it is one most of the industry has been comfortable pretending does not exist.</p>
+
+        <blockquote>
+          <p>Anthropic didn't buy a product. They paid $400 million for a problem most of the industry is still pretending doesn't exist.</p>
+        </blockquote>
+
+        <p>The acquisition is not surprising when you look at the broader context. Pharma has been moving fast and the deals in 2026 alone tell the story clearly:</p>
+
+        <table class="deal-table">
+          <thead>
+            <tr>
+              <th>Deal</th>
+              <th>Focus</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Eli Lilly + Insilico Medicine</td>
+              <td>AI-discovered drugs</td>
+              <td class="deal-amount">$2.75B</td>
+            </tr>
+            <tr>
+              <td>Isomorphic Labs + Johnson and Johnson</td>
+              <td>AI molecules for hard-to-drug targets</td>
+              <td class="deal-amount">undisclosed</td>
+            </tr>
+            <tr>
+              <td>NVIDIA + Eli Lilly</td>
+              <td>AI research lab</td>
+              <td class="deal-amount">$1B</td>
+            </tr>
+            <tr>
+              <td>GSK + NOETIK</td>
+              <td>Biological foundation models</td>
+              <td class="deal-amount">$50M</td>
+            </tr>
+            <tr>
+              <td>Bayer + Cradle</td>
+              <td>AI inside antibody design</td>
+              <td class="deal-amount">undisclosed</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>The infrastructure play</h2>
+
+        <p>Pharma is not buying AI tools anymore. It is buying <em>infrastructure</em>. There is a meaningful difference. Tools get evaluated, piloted, replaced. Infrastructure gets embedded in workflows, integrated into systems, and becomes the foundation that everything else is built on.</p>
+
+        <p>Whoever gets inside the R&D pipeline early owns that relationship for years. Not because of lock-in in the traditional software sense, but because scientific workflows are slow to change, data is expensive to move, and institutional knowledge is sticky. Once a model is part of how a team thinks, it is hard to replace.</p>
+
+        <h2>Same week, OpenAI bought a podcast</h2>
+
+        <p>Both moves make sense in context. OpenAI has a distribution and consumer brand play to run. Anthropic, with its origin in AI safety and its concentration of technical depth, is better positioned to go deep in specialized scientific domains.</p>
+
+        <p>In a few years, one of these bets will age much better than the other. My read: the bet on making AI speak biology, not just describe it, is the one that compounds.</p>
+
+        <p>The interesting thing is not the price. It is what the price signals about <strong>where AI is actually going</strong>: deeper into the places where it doesn't work yet.</p>
+
+      </div>
+
+            <div class="article-footer">
+        <div class="author-card" style="display:flex;align-items:center;gap:16px;">
+          <div class="author-avatar-wrap">
+            <div class="author-initials">MF</div>
+            <img src="matteo.jpg" alt="Matteo Favilli" onerror="this.remove()" />
+          </div>
+          <div class="author-info">
+            <div class="author-name">Matteo Favilli</div>
+            <div class="author-role">Founder, NextGen Ita</div>
+            <div class="author-bio">Strategy, Innovation and Ventures. 7+ years across USA, Europe, Middle East. Building AI agents professionally.</div>
+          </div>
+        </div>
+        <a href="https://www.linkedin.com/in/matteo-favilli/" target="_blank" class="li-share-btn">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          Discuss on LinkedIn
+        </a>
+      </div>
+
+      <div class="more-bits">
+        <div class="more-label">Read more</div>
+        <a href="bits.html" class="more-link">
+          All AI Bits
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <a href="index.html" class="footer-logo">Next<span>Gen</span> Ita</a>
+    <p class="footer-copy">Italy's next generation community · 2025</p>
+  </footer>
+
+  <script src="posts-data.js"></script>
+  <script>
+    const canvas = document.getElementById('ai-canvas');
+    const ctx = canvas.getContext('2d');
+    let nodes = [], W, H;
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', () => { resize(); init(); });
+    function init() {
+      nodes = [];
+      const count = Math.floor((W * H) / 18000);
+      for (let i = 0; i < count; i++) nodes.push({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-0.5)*0.28, vy: (Math.random()-0.5)*0.28, r: Math.random()*1.2+0.4 });
+    }
+    init();
+    function draw() {
+      ctx.clearRect(0,0,W,H);
+      for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i];
+        a.x += a.vx; a.y += a.vy;
+        if (a.x<0||a.x>W) a.vx*=-1;
+        if (a.y<0||a.y>H) a.vy*=-1;
+        for (let j = i+1; j < nodes.length; j++) {
+          const b = nodes[j];
+          const dx = a.x-b.x, dy = a.y-b.y, dist = Math.sqrt(dx*dx+dy*dy);
+          if (dist < 150) { ctx.beginPath(); ctx.strokeStyle=`rgba(29,158,117,${(1-dist/150)*0.28})`; ctx.lineWidth=0.5; ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+        }
+        ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,Math.PI*2); ctx.fillStyle='rgba(29,158,117,0.55)'; ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+    // Reading progress bar
+    window.addEventListener('scroll', function() {
+      var el = document.getElementById('read-progress');
+      if (!el) return;
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      el.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+    });
+    // More articles
+    (function() {
+      if (typeof NEXTGEN_POSTS === 'undefined') return;
+      var grid = document.getElementById('more-grid');
+      if (!grid) return;
+      var current = location.pathname.split('/').pop() || '';
+      var others = NEXTGEN_POSTS.filter(function(p) { return p.published && p.file && p.file !== current; }).slice(0, 2);
+      grid.innerHTML = others.map(function(p) {
+        return '<a href="' + p.file + '" class="more-card"><div class="more-card-tag">' + p.tag + '</div><div class="more-card-title">' + p.title + '</div><div class="more-card-excerpt">' + p.excerpt + '</div><div class="more-card-meta">' + p.date + ' · ' + p.readTime + ' read</div></a>';
+      }).join('');
+    })();
+  </script>
+</body>
+</html>

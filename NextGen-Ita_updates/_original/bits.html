@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Bits · NextGen Ita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0f0f0f; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.05; pointer-events: none; }
+    nav, main, footer { position: relative; z-index: 1; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 0 64px; height: 64px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); z-index: 100; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-badge { width: 30px; height: 30px; background: #1D9E75; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; letter-spacing: -0.5px; }
+    .logo-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #0f0f0f; letter-spacing: -0.3px; }
+    .logo-name span { color: #1D9E75; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 13.5px; font-weight: 400; color: #888; text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover, .nav-links a.active { color: #0f0f0f; }
+    .nav-cta { background: #0f0f0f; color: #fff; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 9px 22px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.75; }
+
+    .page-header { padding: 80px 64px 60px; border-bottom: 0.5px solid #f0f0f0; }
+    .page-tag { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 16px; }
+    .page-h1 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 48px; line-height: 1.2; letter-spacing: 0.2px; margin-bottom: 24px; }
+    .page-h1 em { font-style: normal; color: #1D9E75; }
+    .page-sub { font-size: 18px; color: #666; line-height: 1.8; max-width: 560px; font-weight: 300; }
+
+    .page-content { padding: 64px; }
+
+    /* ARTICLES LIST */
+    .articles-list { display: flex; flex-direction: column; gap: 1px; background: #f0f0f0; border-radius: 16px; overflow: hidden; margin-bottom: 64px; }
+
+    .article-row { display: flex; align-items: flex-start; gap: 32px; background: #ffffff; padding: 32px; text-decoration: none; color: #0a0a0a; transition: background 0.2s; }
+    .article-row:hover { background: #fafafa; }
+    .article-row:hover .article-arrow svg { stroke: #1D9E75; transform: translate(2px, 0); }
+
+    .article-date-col { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; flex-shrink: 0; width: 80px; padding-top: 4px; }
+    .article-date { font-size: 11px; color: #bbb; letter-spacing: 0.3px; }
+    .article-tag { font-size: 9px; color: #1D9E75; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+
+    .article-body { flex: 1; min-width: 0; }
+    .article-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.3px; line-height: 1.25; margin-bottom: 10px; }
+    .article-excerpt { font-size: 14px; color: #888; line-height: 1.75; font-weight: 300; max-width: 680px; margin-bottom: 14px; }
+    .article-author { display: flex; align-items: center; gap: 8px; }
+    .author-dot { width: 20px; height: 20px; background: rgba(29,158,117,0.1); border: 0.5px solid #b8e8d4; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 8px; color: #1D9E75; flex-shrink: 0; }
+    .author-label { font-size: 12px; color: #aaa; font-weight: 300; }
+
+    .article-arrow { width: 28px; height: 28px; border: 0.5px solid #ebebeb; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px; transition: border-color 0.2s; }
+    .article-arrow svg { width: 11px; height: 11px; stroke: #bbb; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: all 0.2s; }
+    .article-row:hover .article-arrow { border-color: rgba(29,158,117,0.3); }
+
+    .li-cta { background: #f8fffe; border: 0.5px solid #b8e8d4; border-radius: 14px; padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .li-cta-text { font-size: 15px; color: #888; font-weight: 300; line-height: 1.6; max-width: 480px; }
+    .li-cta-text strong { color: #444; font-weight: 500; }
+    .li-cta-btn { display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 0.5px solid rgba(29,158,117,0.3); color: #1D9E75; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 11px 22px; border-radius: 100px; text-decoration: none; white-space: nowrap; transition: all 0.2s; }
+    .li-cta-btn:hover { background: rgba(29,158,117,0.08); }
+    .li-cta-btn svg { width: 14px; height: 14px; fill: #1D9E75; }
+
+    /* FEATURED IN */
+    .featured-section { margin-bottom: 64px; }
+    .featured-label { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 20px; }
+    .featured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .featured-card { border: 0.5px solid #f0f0f0; border-radius: 14px; padding: 24px; text-decoration: none; color: #0f0f0f; transition: border-color 0.2s, background 0.2s; display: flex; flex-direction: column; gap: 12px; }
+    .featured-card:hover { border-color: rgba(29,158,117,0.3); background: #fafffe; }
+    .featured-outlet { font-size: 10px; color: #1D9E75; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+    .featured-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; line-height: 1.3; letter-spacing: -0.2px; }
+    .featured-desc { font-size: 13px; color: #888; line-height: 1.65; font-weight: 300; }
+    .featured-arrow { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #ccc; margin-top: 4px; transition: color 0.2s; }
+    .featured-arrow svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s; }
+    .featured-card:hover .featured-arrow { color: #1D9E75; }
+    .featured-card:hover .featured-arrow svg { transform: translate(2px, 0); }
+
+    footer { padding: 32px 64px; border-top: 0.5px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; margin-top: 80px; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #bbb; text-decoration: none; }
+    .footer-logo span { color: rgba(29,158,117,0.5); }
+    .footer-copy { font-size: 12px; color: #ccc; }
+
+    @media (max-width: 900px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      .page-header { padding: 56px 24px 40px; }
+      .page-h1 { font-size: 38px; }
+      .page-content { padding: 32px 24px; }
+      .article-row { gap: 16px; padding: 24px; }
+      .article-date-col { width: 60px; }
+      .article-title { font-size: 16px; }
+      .li-cta { flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px; }
+      .featured-grid { grid-template-columns: 1fr; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="ai-canvas"></canvas>
+  <nav>
+    <a href="index.html" class="logo">
+      <div class="logo-badge">N</div>
+      <span class="logo-name">Next<span>Gen</span> Ita</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#work">What we do</a></li>
+      <li><a href="podcast.html">Podcast</a></li>
+      <li><a href="toolbox.html">Toolbox</a></li>
+      <li><a href="coaching.html">Coaching</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="bits.html" class="active">AI Bits</a></li>
+    </ul>
+    <a href="coaching.html" class="nav-cta">Join the community</a>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <div class="page-tag">AI Bits</div>
+      <h1 class="page-h1">Ideas worth<br><em>writing down.</em></h1>
+      <p class="page-sub">Short-form thinking on AI, startups and what's actually happening in the Italian innovation scene.</p>
+    </div>
+
+    <div class="page-content">
+      <div class="articles-list" id="articles-list">
+        <!-- Populated by posts-data.js -->
+      </div>
+
+      <!-- FEATURED IN -->
+      <div class="featured-section">
+        <div class="featured-label">Featured In</div>
+        <div class="featured-grid">
+          <a href="https://www.youtube.com/watch?v=Y2gNdHGvt0A" target="_blank" class="featured-card">
+            <div class="featured-outlet">The Spoon · FoodAI CoLab</div>
+            <div class="featured-title">How Generative AI Is Transforming the Way We Work</div>
+            <div class="featured-desc">A live conversation with Michael Wolf on AI adoption across industries, cross-functional fluency, and what it actually takes for organizations to evolve.</div>
+            <div class="featured-arrow">Watch conversation <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          </a>
+          <a href="https://www.santannapisa.it" target="_blank" class="featured-card">
+            <div class="featured-outlet">Scuola Superiore Sant'Anna · CNR-ISTI · SoBigData</div>
+            <div class="featured-title">Big Data in Healthcare: AI Transforming Patient Care</div>
+            <div class="featured-desc">Speaker at the SoBigData webinar series on how innovative technologies are reshaping healthcare and patient well-being across the life sciences sector.</div>
+            <div class="featured-arrow">View event <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="li-cta">
+        <div class="li-cta-text">These articles are published in full here. <strong>Follow on LinkedIn</strong> for the conversation around each one.</div>
+        <a href="https://linkedin.com/in/matteofaralli" target="_blank" class="li-cta-btn">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          Follow on LinkedIn
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <a href="index.html" class="footer-logo">Next<span>Gen</span> Ita</a>
+    <p class="footer-copy">Italy's next generation community · 2025</p>
+  </footer>
+
+  <script src="posts-data.js"></script>
+  <script>
+    // Render published posts
+    (function() {
+      const list = document.getElementById('articles-list');
+      if (!list || typeof NEXTGEN_POSTS === 'undefined') return;
+      const published = NEXTGEN_POSTS.filter(p => p.published);
+      if (published.length === 0) {
+        list.innerHTML = '<div style="padding:48px;text-align:center;color:#aaa;font-size:14px;">No articles published yet.</div>';
+        return;
+      }
+      list.innerHTML = published.map(p => `
+        <a href="${p.file || '#'}" class="article-row">
+          <div class="article-date-col">
+            <span class="article-date">${p.date}</span>
+            <span class="article-tag">${p.tag}</span>
+          </div>
+          <div class="article-body">
+            <div class="article-title">${p.title}</div>
+            <div class="article-excerpt">${p.excerpt}</div>
+            <div class="article-author"><div class="author-dot">MF</div><span class="author-label">Matteo Favilli · Founder, NextGen Ita</span></div>
+          </div>
+          <div class="article-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </a>
+      `).join('');
+    })();
+  </script>
+  <script>
+    const canvas = document.getElementById('ai-canvas');
+    const ctx = canvas.getContext('2d');
+    let nodes = [], W, H;
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', () => { resize(); init(); });
+    function init() {
+      nodes = [];
+      const count = Math.floor((W * H) / 18000);
+      for (let i = 0; i < count; i++) nodes.push({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-0.5)*0.28, vy: (Math.random()-0.5)*0.28, r: Math.random()*1.2+0.4 });
+    }
+    init();
+    function draw() {
+      ctx.clearRect(0,0,W,H);
+      for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i];
+        a.x += a.vx; a.y += a.vy;
+        if (a.x<0||a.x>W) a.vx*=-1;
+        if (a.y<0||a.y>H) a.vy*=-1;
+        for (let j = i+1; j < nodes.length; j++) {
+          const b = nodes[j];
+          const dx = a.x-b.x, dy = a.y-b.y, dist = Math.sqrt(dx*dx+dy*dy);
+          if (dist < 150) { ctx.beginPath(); ctx.strokeStyle=`rgba(29,158,117,${(1-dist/150)*0.28})`; ctx.lineWidth=0.5; ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+        }
+        ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,Math.PI*2); ctx.fillStyle='rgba(29,158,117,0.55)'; ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  </script>
+</body>
+</html>

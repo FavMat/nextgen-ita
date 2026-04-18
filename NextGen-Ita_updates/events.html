@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events · NextGen Ita</title>
+  <meta name="description" content="Founder dinners and AI hackathons across Italy. Real rooms, real people." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/ng.css" />
+  <style>
+    .page-content { padding: 80px 48px 40px; max-width: 1400px; margin: 0 auto; }
+
+    /* ── Two-up cards (dinners / hackathons) ── */
+    .formats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 80px; }
+
+    .format {
+      padding: 48px;
+      border-radius: 24px;
+      position: relative; overflow: hidden;
+      transition: transform .35s var(--ease);
+    }
+    .format:hover { transform: translateY(-4px); }
+    .format.dinner {
+      background: linear-gradient(160deg, rgba(245, 184, 74, .1), rgba(245, 184, 74, .02));
+      border: 1px solid var(--amber-20);
+    }
+    .format.hack {
+      background: linear-gradient(160deg, rgba(45, 212, 160, .1), rgba(45, 212, 160, .02));
+      border: 1px solid var(--green-20);
+    }
+    .format-tag {
+      font-family: var(--f-mono); font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 24px;
+    }
+    .format.dinner .format-tag { color: var(--amber); }
+    .format.hack .format-tag { color: var(--green); }
+    .format h2 {
+      font-family: var(--f-display); font-size: 48px;
+      line-height: 1; margin-bottom: 20px; letter-spacing: -.02em;
+    }
+    .format h2 em { font-style: italic; }
+    .format.dinner h2 em { color: var(--amber); }
+    .format.hack h2 em { color: var(--green); }
+    .format p {
+      font-size: 15px; color: var(--fg-1); line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .format-stats {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+      padding-top: 24px; border-top: 1px solid var(--line);
+    }
+    .stat .k { font-family: var(--f-mono); font-size: 10px; color: var(--fg-3); letter-spacing: 1.5px; margin-bottom: 6px; }
+    .stat .v { font-family: var(--f-display); font-size: 22px; color: var(--fg); }
+    .stat .v em { font-style: italic; }
+    .format.dinner .stat .v em { color: var(--amber); }
+    .format.hack .stat .v em { color: var(--green); }
+
+    /* ── Calendar / schedule ── */
+    .sec-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 32px; gap: 24px; flex-wrap: wrap;
+    }
+    .sec-head h2 {
+      font-family: var(--f-display); font-size: 40px; letter-spacing: -.02em;
+    }
+    .sec-head h2 em { font-style: italic; color: var(--green); }
+    .sec-head .count { font-family: var(--f-mono); font-size: 12px; color: var(--fg-3); letter-spacing: 1.5px; }
+
+    .calendar { display: flex; flex-direction: column; margin-bottom: 80px; }
+    .event-row {
+      display: grid;
+      grid-template-columns: 100px 1fr 160px 140px auto;
+      gap: 32px; align-items: center;
+      padding: 32px 24px;
+      border-top: 1px solid var(--line);
+      transition: all .3s var(--ease);
+      position: relative;
+    }
+    .event-row:last-child { border-bottom: 1px solid var(--line); }
+    .event-row::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: var(--green); transform: scaleY(0); transform-origin: center;
+      transition: transform .3s var(--ease);
+    }
+    .event-row.dinner-row::before { background: var(--amber); }
+    .event-row:hover { background: var(--bg-1); }
+    .event-row:hover::before { transform: scaleY(1); }
+
+    .e-date {
+      font-family: var(--f-mono); font-size: 11px; color: var(--fg-2);
+      letter-spacing: 1.5px;
+    }
+    .e-date strong {
+      display: block; font-family: var(--f-display); font-size: 36px;
+      color: var(--fg); font-weight: 400; line-height: 1;
+      margin-bottom: 4px;
+    }
+    .e-title {
+      font-family: var(--f-display); font-size: 22px; line-height: 1.2;
+      color: var(--fg);
+    }
+    .e-title em { font-style: italic; color: var(--green); }
+    .event-row.dinner-row .e-title em { color: var(--amber); }
+    .e-meta { font-family: var(--f-mono); font-size: 11px; color: var(--fg-2); letter-spacing: 1px; margin-top: 6px; }
+    .e-city {
+      font-family: var(--f-mono); font-size: 12px; color: var(--fg-2);
+      letter-spacing: 1.5px; text-transform: uppercase;
+    }
+    .e-status {
+      font-family: var(--f-mono); font-size: 10px; letter-spacing: 1.5px;
+      padding: 6px 12px; border-radius: 100px;
+      text-transform: uppercase;
+    }
+    .e-status.open { background: var(--green-08); color: var(--green); border: 1px solid var(--green-20); }
+    .e-status.soon { background: rgba(245, 184, 74, .08); color: var(--amber); border: 1px solid var(--amber-20); }
+    .e-status.full { background: rgba(255,255,255,.03); color: var(--fg-3); border: 1px solid var(--line-2); }
+    .e-cta {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid var(--line-2);
+      display: grid; place-items: center;
+      transition: all .3s var(--ease);
+    }
+    .e-cta svg { width: 16px; height: 16px; }
+    .event-row:hover .e-cta { background: var(--fg); border-color: var(--fg); color: #000; transform: rotate(-45deg); }
+
+    /* ── Host a dinner CTA ── */
+    .host {
+      padding: 56px;
+      background: var(--bg-1);
+      border: 1px solid var(--line-2);
+      border-radius: 24px;
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px;
+      align-items: center;
+      margin-bottom: 60px;
+      position: relative; overflow: hidden;
+    }
+    .host::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 300px; height: 300px;
+      background: radial-gradient(circle, var(--amber-08), transparent 70%);
+      pointer-events: none;
+    }
+    .host-label {
+      font-family: var(--f-mono); font-size: 11px; color: var(--amber);
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 18px;
+      position: relative; z-index: 1;
+    }
+    .host h2 {
+      font-family: var(--f-display); font-size: 42px; line-height: 1.1;
+      letter-spacing: -.02em; margin-bottom: 16px;
+      position: relative; z-index: 1;
+    }
+    .host h2 em { font-style: italic; color: var(--amber); }
+    .host p { font-size: 15px; color: var(--fg-1); line-height: 1.7; position: relative; z-index: 1; }
+    .host-actions { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; }
+    .host-actions a {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px;
+      border: 1px solid var(--line-2);
+      border-radius: 16px;
+      background: var(--bg);
+      font-size: 15px; color: var(--fg);
+      transition: all .3s var(--ease);
+    }
+    .host-actions a:hover {
+      border-color: var(--amber-20);
+      transform: translateX(4px);
+    }
+    .host-actions a .label {
+      font-family: var(--f-mono); font-size: 10px;
+      color: var(--fg-3); letter-spacing: 1.5px; display: block;
+      margin-bottom: 4px; text-transform: uppercase;
+    }
+    .host-actions a .val em { font-style: italic; color: var(--amber); }
+
+    @media (max-width: 900px) {
+      .page-content { padding: 48px 20px 20px; }
+      .formats { grid-template-columns: 1fr; margin-bottom: 48px; }
+      .format { padding: 32px; }
+      .format h2 { font-size: 36px; }
+      .event-row { grid-template-columns: 1fr; gap: 8px; padding: 20px 12px; }
+      .e-date strong { font-size: 24px; display: inline; margin-right: 8px; }
+      .e-title { font-size: 18px; }
+      .host { grid-template-columns: 1fr; padding: 32px; gap: 24px; }
+      .host h2 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<canvas class="bg-canvas"></canvas>
+<div class="grain"></div>
+
+<nav class="ng-nav">
+  <a href="index.html" class="ng-logo">
+    <span class="mark">N</span>
+    <span>Next<em>Gen</em> Ita</span>
+  </a>
+  <ul class="ng-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="podcast.html">Podcast</a></li>
+    <li><a href="toolbox.html">Toolbox</a></li>
+    <li><a href="coaching.html">Coaching</a></li>
+    <li><a href="events.html" class="active">Events</a></li>
+    <li><a href="bits.html">AI Bits</a></li>
+  </ul>
+  <a href="coaching.html" class="ng-cta">Join community</a>
+</nav>
+
+<main>
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow reveal">→ 04 · Events</div>
+      <h1 class="h-display reveal d1">Real rooms.<br><em>Real people.</em></h1>
+      <p class="lead reveal d2">
+        Founder dinners and AI hackathons across Italy. 20 people, one long table, no pitches.
+        Or two days of building with the best Italian AI minds in the room.
+      </p>
+    </div>
+  </section>
+
+  <div class="page-content">
+
+    <div class="formats">
+      <div class="format dinner reveal">
+        <div class="format-tag">FORMAT · 01</div>
+        <h2><em>Founder<br>Dinners.</em></h2>
+        <p>
+          Twenty Italian founders around one long table. A single topic on the menu.
+          We eat, we talk honestly, we leave with two or three people we actually want to keep talking to.
+          No pitches. No panels. No photographers.
+        </p>
+        <div class="format-stats">
+          <div class="stat"><div class="k">SIZE</div><div class="v"><em>20</em> people</div></div>
+          <div class="stat"><div class="k">FORMAT</div><div class="v"><em>3-hour</em> dinner</div></div>
+          <div class="stat"><div class="k">COST</div><div class="v"><em>Free</em></div></div>
+        </div>
+      </div>
+
+      <div class="format hack reveal d1">
+        <div class="format-tag">FORMAT · 02</div>
+        <h2><em>AI<br>Hackathons.</em></h2>
+        <p>
+          Two days. 40 builders. Ship something real.
+          Partnership-driven, university venues, real prizes.
+          Not a portfolio event — a build event. The best weekend you'll have this year.
+        </p>
+        <div class="format-stats">
+          <div class="stat"><div class="k">SIZE</div><div class="v"><em>40</em> builders</div></div>
+          <div class="stat"><div class="k">FORMAT</div><div class="v"><em>48</em> hours</div></div>
+          <div class="stat"><div class="k">COST</div><div class="v"><em>Free</em></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-head">
+      <h2>Upcoming <em>calendar.</em></h2>
+      <span class="count">2026 · H1</span>
+    </div>
+
+    <div class="calendar">
+      <a href="mailto:mttfvll@gmail.com?subject=Milan%20Dinner%20RSVP" class="event-row dinner-row reveal">
+        <div class="e-date"><strong>18</strong>MAY · 2026</div>
+        <div>
+          <div class="e-title"><em>Milan</em> Founder Dinner</div>
+          <div class="e-meta">TOPIC · AI AS LEVERAGE FOR SMALL TEAMS</div>
+        </div>
+        <div class="e-city">MILAN, IT</div>
+        <div><span class="e-status open">Open · 6 seats</span></div>
+        <div class="e-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+      <a href="mailto:mttfvll@gmail.com?subject=Bologna%20Hackathon" class="event-row reveal d1">
+        <div class="e-date"><strong>07</strong>JUN · 2026</div>
+        <div>
+          <div class="e-title"><em>Bologna</em> AI Hackathon</div>
+          <div class="e-meta">48H BUILD · PARTNER: UNIVERSITÀ DI BOLOGNA</div>
+        </div>
+        <div class="e-city">BOLOGNA, IT</div>
+        <div><span class="e-status soon">Opens May 15</span></div>
+        <div class="e-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+      <a href="mailto:mttfvll@gmail.com?subject=Rome%20Dinner%20RSVP" class="event-row dinner-row reveal d2">
+        <div class="e-date"><strong>22</strong>JUN · 2026</div>
+        <div>
+          <div class="e-title"><em>Rome</em> Founder Dinner</div>
+          <div class="e-meta">TOPIC · FUNDRAISING IN 2026, HONESTLY</div>
+        </div>
+        <div class="e-city">ROME, IT</div>
+        <div><span class="e-status open">Open · 12 seats</span></div>
+        <div class="e-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+      <a href="#" class="event-row dinner-row reveal d3">
+        <div class="e-date"><strong>12</strong>APR · 2026</div>
+        <div>
+          <div class="e-title"><em>Turin</em> Founder Dinner</div>
+          <div class="e-meta">TOPIC · WHAT ACTUALLY CHANGED AFTER AI</div>
+        </div>
+        <div class="e-city">TURIN, IT</div>
+        <div><span class="e-status full">Past · Closed</span></div>
+        <div class="e-cta" style="opacity:.4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+      <a href="#" class="event-row reveal d3">
+        <div class="e-date"><strong>01</strong>FEB · 2026</div>
+        <div>
+          <div class="e-title"><em>Milan</em> AI Hackathon</div>
+          <div class="e-meta">48H BUILD · PARTNER: STARTUP GRIND</div>
+        </div>
+        <div class="e-city">MILAN, IT</div>
+        <div><span class="e-status full">Past · Closed</span></div>
+        <div class="e-cta" style="opacity:.4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+    </div>
+
+    <div class="host reveal">
+      <div>
+        <div class="host-label">BRING IT TO YOUR CITY</div>
+        <h2>Host a NextGen <em>dinner</em> in your city.</h2>
+        <p>
+          We're expanding to 10 cities in 2026. If you want to host one in Florence, Naples, Genoa — or anywhere the Italian founder community needs a room — reach out.
+          We cover the cost. You bring the people.
+        </p>
+      </div>
+      <div class="host-actions">
+        <a href="mailto:mttfvll@gmail.com?subject=Host%20a%20NextGen%20Dinner" data-magnet>
+          <div>
+            <span class="label">01 · Host</span>
+            <span class="val">Pitch your <em>city</em> →</span>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+        <a href="mailto:mttfvll@gmail.com?subject=Partner%20with%20NextGen%20Ita">
+          <div>
+            <span class="label">02 · Partner</span>
+            <span class="val">Sponsor a <em>hackathon</em> →</span>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="ng-footer">
+  <div class="ng-footer-inner">
+    <div>
+      <div class="ftag">Italian talent.<br><em>AI as leverage.</em></div>
+      <p class="fsub">A community for founders, builders and researchers who want to move fast, think clearly, and ship what matters.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <div class="flinks">
+        <a href="podcast.html">Podcast</a>
+        <a href="toolbox.html">Toolbox</a>
+        <a href="coaching.html">Coaching</a>
+        <a href="events.html">Events</a>
+        <a href="bits.html">AI Bits</a>
+      </div>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <div class="flinks">
+        <a href="mailto:mttfvll@gmail.com">Email</a>
+        <a href="https://linkedin.com/in/matteofaralli" target="_blank">LinkedIn</a>
+        <a href="https://open.spotify.com/show/6yWSAUi97PEEQXSAzNTI9z" target="_blank">Spotify</a>
+      </div>
+    </div>
+    <div>
+      <h4>Partners</h4>
+      <div class="flinks">
+        <a href="#">Startup Grind</a>
+        <a href="#">The Spoon</a>
+        <a href="#">SoBigData</a>
+      </div>
+    </div>
+  </div>
+  <div class="ng-footer-bottom">
+    <span>© 2026 NextGen Ita · All programs free</span>
+    <span>Built in Italy, for the world</span>
+  </div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/ng.js"></script>
+</body>
+</html>

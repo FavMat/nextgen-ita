@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toolbox · NextGen Ita</title>
+  <meta name="description" content="12 AI founder skills trained on the best startup thinking. Free." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/ng.css" />
+  <style>
+    .page-content { padding: 80px 48px 40px; max-width: 1400px; margin: 0 auto; }
+
+    .intro-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      margin-bottom: 72px; align-items: start;
+    }
+    .intro-text { font-size: 16px; color: var(--fg-1); line-height: 1.8; max-width: 480px; }
+    .intro-text em { font-style: italic; color: var(--amber); }
+    .how-it-works {
+      padding: 24px;
+      background: var(--bg-1); border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+    .how-it-works h4 {
+      font-family: var(--f-mono); font-size: 11px; color: var(--green);
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px;
+    }
+    .how-steps { display: flex; flex-direction: column; gap: 14px; }
+    .how-step {
+      display: flex; gap: 14px; font-size: 14px; color: var(--fg-1); line-height: 1.6;
+    }
+    .how-step .n {
+      font-family: var(--f-mono); font-size: 11px; color: var(--fg-3);
+      flex-shrink: 0; padding-top: 2px; letter-spacing: 1.5px;
+    }
+
+    /* ── Skills grid ── */
+    .skills-label {
+      font-family: var(--f-mono); font-size: 11px; color: var(--green);
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;
+    }
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+      margin-bottom: 80px;
+    }
+    .skill {
+      display: block;
+      padding: 24px;
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      transition: all .35s var(--ease);
+      position: relative; overflow: hidden;
+    }
+    .skill::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(135deg, var(--green-08), transparent 70%);
+      opacity: 0; transition: opacity .35s;
+    }
+    .skill:hover {
+      border-color: var(--green-20);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, .3);
+    }
+    .skill:hover::before { opacity: 1; }
+    .skill-icon {
+      font-size: 22px; margin-bottom: 14px;
+      display: inline-flex; width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(45, 212, 160, .08);
+      border: 1px solid var(--green-20);
+      align-items: center; justify-content: center;
+      position: relative; z-index: 1;
+    }
+    .skill-name {
+      font-family: var(--f-display); font-size: 20px;
+      color: var(--fg); line-height: 1.2;
+      margin-bottom: 8px; position: relative; z-index: 1;
+    }
+    .skill-desc {
+      font-size: 13px; color: var(--fg-2); line-height: 1.6;
+      position: relative; z-index: 1;
+    }
+    .skill-arrow {
+      margin-top: 16px;
+      font-family: var(--f-mono); font-size: 11px;
+      color: var(--fg-3);
+      display: flex; align-items: center; gap: 6px;
+      position: relative; z-index: 1;
+      transition: color .3s;
+    }
+    .skill-arrow::after { content: '↗'; transition: transform .3s; }
+    .skill:hover .skill-arrow { color: var(--green); }
+    .skill:hover .skill-arrow::after { transform: translate(2px, -2px); }
+
+    /* Amber-tinted skills for variety */
+    .skill.amber .skill-icon {
+      background: rgba(245, 184, 74, .08);
+      border-color: var(--amber-20);
+    }
+    .skill.amber::before {
+      background: linear-gradient(135deg, var(--amber-08), transparent 70%);
+    }
+    .skill.amber:hover { border-color: var(--amber-20); }
+    .skill.amber:hover .skill-arrow { color: var(--amber); }
+
+    /* ── FAQ / note ── */
+    .note-band {
+      background: var(--bg-1);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 48px;
+      margin-bottom: 60px;
+      display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+      border-radius: 20px;
+    }
+    .note-ic {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--green-08); border: 1px solid var(--green-20);
+      display: grid; place-items: center; color: var(--green);
+      flex-shrink: 0;
+    }
+    .note-text {
+      font-family: var(--f-display); font-size: 22px;
+      color: var(--fg); line-height: 1.4; flex: 1;
+    }
+    .note-text em { font-style: italic; color: var(--green); }
+    .note-text small { font-family: var(--f-sans); font-size: 14px; color: var(--fg-2); display: block; margin-top: 6px; }
+
+    @media (max-width: 900px) {
+      .page-content { padding: 48px 20px 20px; }
+      .intro-row { grid-template-columns: 1fr; gap: 24px; margin-bottom: 48px; }
+      .skills-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .note-band { padding: 28px; }
+      .note-text { font-size: 18px; }
+    }
+    @media (max-width: 600px) {
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<canvas class="bg-canvas"></canvas>
+<div class="grain"></div>
+
+<nav class="ng-nav">
+  <a href="index.html" class="ng-logo">
+    <span class="mark">N</span>
+    <span>Next<em>Gen</em> Ita</span>
+  </a>
+  <ul class="ng-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="podcast.html">Podcast</a></li>
+    <li><a href="toolbox.html" class="active">Toolbox</a></li>
+    <li><a href="coaching.html">Coaching</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="bits.html">AI Bits</a></li>
+  </ul>
+  <a href="coaching.html" class="ng-cta">Join community</a>
+</nav>
+
+<main>
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow reveal">→ 02 · Founder's Toolbox</div>
+      <h1 class="h-display reveal d1">Your AI<br><em>co-founder.</em></h1>
+      <p class="lead reveal d2">
+        Pick a skill, start a conversation. Claude trained on Y Combinator, P&amp;P and the world's best startup thinking,
+        ready to work with you right now. Free, forever.
+      </p>
+    </div>
+  </section>
+
+  <div class="page-content">
+
+    <div class="intro-row">
+      <p class="intro-text reveal">
+        Twelve skills that cover the real founder work: validate, pitch, go-to-market, hire, fundraise,
+        position, price, scale. <em>Each one opens a pre-briefed Claude conversation.</em>
+        You bring your idea. It brings the frameworks.
+      </p>
+      <div class="how-it-works reveal d1">
+        <h4>How it works</h4>
+        <div class="how-steps">
+          <div class="how-step"><span class="n">01</span><span>Click a skill. It opens claude.ai with the right prompt pre-loaded.</span></div>
+          <div class="how-step"><span class="n">02</span><span>You'll need a free Claude account. The conversation lives on your side.</span></div>
+          <div class="how-step"><span class="n">03</span><span>Talk through your problem. Claude asks the right questions back.</span></div>
+          <div class="how-step"><span class="n">04</span><span>Zero cost from us. No API, no limits, no tracking.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skills-label">12 skills · Choose one</div>
+
+    <div class="skills-grid">
+
+      <a href="https://claude.ai/new?q=I%20want%20to%20validate%20my%20startup%20idea.%20Help%20me%20think%20through%20it%20critically%3A%20the%20problem%20I%27m%20solving%2C%20the%20target%20market%2C%20existing%20alternatives%2C%20and%20whether%20this%20idea%20has%20real%20potential.%20Start%20by%20asking%20me%20to%20describe%20my%20idea." target="_blank" class="skill reveal">
+        <div class="skill-icon">💡</div>
+        <div class="skill-name">Validate my idea</div>
+        <div class="skill-desc">Test your concept against real market logic.</div>
+        <div class="skill-arrow">Open chat</div>
+      </a>
+
+      <a href="https://claude.ai/new?q=I%20want%20to%20build%20a%20strong%20pitch%20deck.%20Guide%20me%20through%20each%20section%3A%20problem%2C%20solution%2C%20market%20size%2C%20business%20model%2C%20traction%2C%20team%2C%20and%20ask.%20Start%20by%20asking%20me%20what%20my%20startup%20does." target="_blank" class="skill amber reveal d1">
+        <div class="skill-icon">📊</div>
+        <div class="skill-name">Build my pitch deck</div>
+        <div class="skill-desc">Structure a pitch investors actually read.</div>
+        <div class="skill-arrow">Open chat</div>
+      </a>
+
+      <a href="https://claude.ai/new?q=Help%20me%20build%20a%20go-to-market%20strategy.%20I%20need%20to%20identify%20the%20right%20channels%2C%20craft%20the%20right%20message%2C%20and%20find%20my%20first%20customers.%20Start%20by%20asking%20me%20about%20my%20product%20and%20target%20customer." target="_blank" class="skill reveal d2">
+        <div class="skill-icon">🚀</div>
+        <div class="skill-name">Go-to-market</div>
+        <div class="skill-desc">Define channels, messaging and first customers.</div>
+        <div class="skill-arrow">Open chat</div>
+      </a>
+
+      <a href="https://claude.ai/new?q=I%20want%20to%20prepare%20for%20fundraising.%20Help%20me%20understand%20what%20stage%20I%20am%20at%2C%20what%20investors%20look%20for%2C%20how%20to%20structure%20my%20ask%2C%20and%20how%20to%20tell%20my%20story.%20Start%20by%20asking%20me%20about%20my%20startup%20and%20where%20I%20am%20in%20the%20journey." target="_blank" class="skill amber reveal d3">
+        <div class="skill-icon">💰</div>
+        <div class="skill-name">Fundraising prep</div>
+        <div class="skill-desc">Get ready for your first investor conversation.</div>
+        <div class="skill-arrow">Open chat</div>
+      </a>
+
+      <a href="https://claude.ai/new?q=Help%20me%20map%20my%20competitive%20landscape.%20I%20want%20to%20understand%20who%20my%20real%20competitors%20are%2C%20what%20my%20differentiators%20are%2C%20and%20how%20to%20position%20myself.%20Start%20by%20asking%20me%20what%20I%20am%20building." target="_blank" class="skill reveal">
+        <div class="skill-icon">🔍</div>
+        <div class="skill-name">Competitive analysis</div>
+        <div class="skill-desc">Map the landscape and find your edge.</div>
+        <div class="skill-arrow">Open chat</div>
+      </a>
+
+      <a href="https://claude.ai/new?q=Help%20me%20build%20and%20stress-test%20my%20business%20model.%20Work%20through%20revenue%20streams%2C%20pricing%20strategy%2C%20unit%20economics%20and%20scalability%20with%20me.%20Start%20by%20asking%20me%20what%20my%20startup%20does%20and%20how%20I%20plan%20to%20make%20money." target="_blank" class="skill amber reveal d1">
+        <div class="skill-icon">📐</div>
+        <div class="skill-name">Business model</div>
+        <div class="skill-desc">Revenue streams, pricing and unit economics.</div>
+        <div class="skill-arrow">Open chat</div>
+      </a>
+
+      <a href="https://claude.ai/new?q=I%20need%20advice%20on%20my%20first%20hire.%20Help%20me%20think%20through%20who%20to%20hire%2C%20when%2C%20how%20to%20structure%20the%20offer%20and%20what%20to%20look%20for.%20Start%20by%20asking%20me%20about%20my%20stage%20and%20what%20is%20blocking%20me%20right%20now." target="_blank" class="skill reveal d2">
+        <div class="skill-icon">🤝</div>
+        <div class="skill-name">First hire advice</div>
+        <div class="skill-desc">Who to hire first and how to do it right.</div>
+        <div class="skill-arrow">Open chat</div>
+      </a>
+
+      <a href="https://claude.ai/new?q=Help%20me%20understand%20how%20to%20use%20AI%20in%20my%20startup%3A%20from%20agents%20and%20automation%20to%20the%20latest%20tools%20and%20trends%20relevant%20for%20my%20business.%20Start%20by%20asking%20me%20what%20kind%20of%20startup%20I%20am%20building." target="_blank" class="skill amber reveal d3">
+        <div class="skill-icon">🤖</div>
+        <div class="skill-name">AI for my startup</div>
+        <div class="skill-desc">Agents, tools and trends for your business.</div>
+        <div class="skill-arrow">Open chat</div>
+      </a>
+
+      <a href="https://claude.ai/new?q=Help%20me%20build%20a%20sharp%20product%20strategy.%20What%20to%20build%2C%20what%20to%20cut%2C%20how%20to%20prioritize%20and%20how%20to%20stay%20focused%20on%20what%20matters.%20Start%20by%20asking%20me%20about%20my%20product%20and%20current%20roadmap." target="_blank" class="skill reveal">
+        <div class="skill-icon">🛠</div>
+        <div class="skill-name">Product strategy</div>
+        <div class="skill-desc">Build what matters, cut what doesn't.</div>
+        <div class="skill-arrow">Open chat</div>
+      </a>
+
+      <a href="https://claude.ai/new?q=I%20want%20to%20understand%20green%20AI%20and%20how%20to%20build%20my%20startup%20with%20sustainable%20AI%20practices.%20Help%20me%20understand%20the%20environmental%20impact%20of%20AI%2C%20best%20practices%2C%20and%20how%20to%20make%20conscious%20choices%20from%20day%20one." target="_blank" class="skill amber reveal d1">
+        <div class="skill-icon">🌱</div>
+        <div class="skill-name">Green AI</div>
+        <div class="skill-desc">Sustainable AI practices for your startup.</div>
+        <div class="skill-arrow">Open chat</div>
+      </a>
+
+      <a href="https://claude.ai/new?q=Help%20me%20think%20through%20AI%20ethics%20for%20my%20startup.%20I%20want%20to%20build%20responsibly%20from%20day%20one%3A%20bias%2C%20transparency%2C%20privacy%2C%20accountability.%20Give%20me%20a%20practical%20framework%20I%20can%20apply%20as%20a%20founder." target="_blank" class="skill reveal d2">
+        <div class="skill-icon">⚖️</div>
+        <div class="skill-name">AI ethics</div>
+        <div class="skill-desc">Build responsibly from day one.</div>
+        <div class="skill-arrow">Open chat</div>
+      </a>
+
+      <a href="https://claude.ai/new?q=I%20want%20to%20talk%20about%20my%20startup.%20I%20am%20an%20Italian%20founder%20and%20I%20need%20your%20honest%2C%20practical%20advice.%20Let%27s%20start%20with%20whatever%20is%20most%20on%20my%20mind%20right%20now." target="_blank" class="skill amber reveal d3">
+        <div class="skill-icon">💬</div>
+        <div class="skill-name">Free conversation</div>
+        <div class="skill-desc">Ask anything. No template.</div>
+        <div class="skill-arrow">Open chat</div>
+      </a>
+
+    </div>
+
+    <div class="note-band reveal">
+      <div class="note-ic">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      </div>
+      <div class="note-text">
+        <em>Free, forever.</em> You use your own Claude account, the chat is yours.
+        <small>We built the prompts. You own the conversation, the data, and the output.</small>
+      </div>
+      <a href="coaching.html" class="btn-primary" data-magnet>Want a human? <span>→</span></a>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="ng-footer">
+  <div class="ng-footer-inner">
+    <div>
+      <div class="ftag">Italian talent.<br><em>AI as leverage.</em></div>
+      <p class="fsub">A community for founders, builders and researchers who want to move fast, think clearly, and ship what matters.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <div class="flinks">
+        <a href="podcast.html">Podcast</a>
+        <a href="toolbox.html">Toolbox</a>
+        <a href="coaching.html">Coaching</a>
+        <a href="events.html">Events</a>
+        <a href="bits.html">AI Bits</a>
+      </div>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <div class="flinks">
+        <a href="mailto:mttfvll@gmail.com">Email</a>
+        <a href="https://linkedin.com/in/matteofaralli" target="_blank">LinkedIn</a>
+        <a href="https://open.spotify.com/show/6yWSAUi97PEEQXSAzNTI9z" target="_blank">Spotify</a>
+      </div>
+    </div>
+    <div>
+      <h4>Partners</h4>
+      <div class="flinks">
+        <a href="#">Startup Grind</a>
+        <a href="#">The Spoon</a>
+        <a href="#">SoBigData</a>
+      </div>
+    </div>
+  </div>
+  <div class="ng-footer-bottom">
+    <span>© 2026 NextGen Ita · All programs free</span>
+    <span>Built in Italy, for the world</span>
+  </div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/ng.js"></script>
+</body>
+</html>

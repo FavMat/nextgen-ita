@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh api:*)",
+      "WebFetch(domain:nextgenitaly.it)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "Read(//tmp/**)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/FavMat/nextgen-ita/main/index.html\" -o /tmp/index_raw.html)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/FavMat/nextgen-ita/main/podcast.html\" -o /tmp/podcast_raw.html)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/FavMat/nextgen-ita/main/index.html\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/FavMat/nextgen-ita/main/podcast.html\")",
+      "WebFetch(domain:open.spotify.com)",
+      "mcp__Claude_Preview__preview_start",
+      "mcp__linkedin__get_person_profile",
+      "Bash(python3 -c ':*)",
+      "Bash(git -C \"C:\\\\Users\\\\donat\\\\OneDrive\\\\Desktop\\\\Claude Dev\\\\NextGenIta\" rev-parse --git-dir)",
+      "Read(//c/Users/donat/OneDrive/Desktop/Claude Dev/**)",
+      "WebFetch(domain:www.linkedin.com)",
+      "Bash(python3)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(node -e ':*)",
+      "Bash(where puppeteer:*)",
+      "Bash(npm list:*)",
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+      "Bash(python -m pip install playwright)",
+      "Bash(python -m playwright install chromium)",
+      "Bash(python -c ':*)",
+      "Read(//c/c/Users/donat/OneDrive/Desktop/Claude Dev/NextGenIta/**)",
+      "Read(//c/c/Users/donat/OneDrive/Desktop/Claude Dev/**)",
+      "Bash(python3 -c ' *)",
+      "Bash(gh run *)",
+      "Bash(gh deployment *)",
+      "Bash(gh api *)"
+    ]
+  }
+}

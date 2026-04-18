@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920">
+<title>NextGen Ita — Call Background</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #ffffff;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    background: #ffffff;
+  }
+
+  /* Subtle grid */
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(29,158,117,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(29,158,117,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  /* Large faint N in background */
+  .bg-letter {
+    position: absolute;
+    right: -60px;
+    bottom: -80px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 680px;
+    color: rgba(29,158,117,0.045);
+    line-height: 1;
+    user-select: none;
+    letter-spacing: -20px;
+  }
+
+  /* Green accent bar — left edge */
+  .accent-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(180deg, #1D9E75 0%, #5DCAA5 60%, rgba(29,158,117,0.2) 100%);
+  }
+
+  /* Top strip */
+  .top-strip {
+    position: absolute;
+    top: 0;
+    left: 8px;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #1D9E75 0%, rgba(29,158,117,0.2) 100%);
+  }
+
+  /* Logo — top left */
+  .logo-wrap {
+    position: absolute;
+    top: 52px;
+    left: 64px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-badge {
+    width: 52px;
+    height: 52px;
+    background: #1D9E75;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    color: #0a0a0a;
+    letter-spacing: -0.3px;
+  }
+
+  .logo-text span {
+    color: #1D9E75;
+  }
+
+  /* Tagline under logo */
+  .tagline {
+    position: absolute;
+    top: 116px;
+    left: 64px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    color: #aaa;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* Center content */
+  .center {
+    position: absolute;
+    left: 64px;
+    right: 64px;
+    bottom: 90px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .headline-block {
+    max-width: 760px;
+  }
+
+  .headline-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: #1D9E75;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .headline {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 76px;
+    color: #0a0a0a;
+    line-height: 1.0;
+    letter-spacing: -2px;
+  }
+
+  .headline em {
+    color: #1D9E75;
+    font-style: normal;
+  }
+
+  .headline-sub {
+    margin-top: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    color: #666;
+    line-height: 1.5;
+    max-width: 580px;
+  }
+
+  /* Right side — decorative stats */
+  .stats-block {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-end;
+    padding-bottom: 4px;
+  }
+
+  .stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #f0faf6;
+    border: 1px solid #b8e8d4;
+    border-radius: 40px;
+    padding: 12px 22px 12px 16px;
+  }
+
+  .stat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #1D9E75;
+    flex-shrink: 0;
+  }
+
+  .stat-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #0a0a0a;
+    white-space: nowrap;
+  }
+
+  /* URL watermark bottom right */
+  .url-mark {
+    position: absolute;
+    bottom: 44px;
+    right: 64px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: #bbb;
+    letter-spacing: 0.5px;
+  }
+
+  /* Decorative circles */
+  .deco-circle-1 {
+    position: absolute;
+    top: -200px;
+    right: 300px;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(29,158,117,0.08);
+  }
+
+  .deco-circle-2 {
+    position: absolute;
+    top: -100px;
+    right: 250px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(29,158,117,0.12);
+  }
+
+  .deco-circle-3 {
+    position: absolute;
+    top: 0px;
+    right: 200px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 1px solid rgba(29,158,117,0.2);
+  }
+
+  /* Neural dots */
+  canvas.net {
+    position: absolute;
+    inset: 0;
+    opacity: 0.07;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="grid-overlay"></div>
+<canvas class="net" id="net" width="1920" height="1080"></canvas>
+
+<div class="deco-circle-1"></div>
+<div class="deco-circle-2"></div>
+<div class="deco-circle-3"></div>
+
+<div class="bg-letter">N</div>
+
+<div class="accent-bar"></div>
+<div class="top-strip"></div>
+
+<!-- Logo -->
+<div class="logo-wrap">
+  <div class="logo-badge">N</div>
+  <div class="logo-text">Next<span>Gen</span> Ita</div>
+</div>
+<div class="tagline">Italian AI Community</div>
+
+<!-- Bottom content -->
+<div class="center">
+
+  <div class="headline-block">
+    <div class="headline-eyebrow">AI Bits Podcast</div>
+    <div class="headline">
+      Talents build.<br><em>AI</em> makes<br>it faster.
+    </div>
+    <div class="headline-sub">
+      The Italian community at the intersection of human ambition and artificial intelligence.
+    </div>
+  </div>
+
+  <div class="stats-block">
+    <div class="stat-pill">
+      <div class="stat-dot"></div>
+      <div class="stat-label">AI Literacy Programs</div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-dot"></div>
+      <div class="stat-label">From Agents to Ethics</div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-dot"></div>
+      <div class="stat-label">IT Global Roots</div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-dot"></div>
+      <div class="stat-label">nextgenitaly.it</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="url-mark">nextgenitaly.it</div>
+
+<script>
+  var canvas = document.getElementById('net');
+  var ctx = canvas.getContext('2d');
+  var W = 1920, H = 1080;
+  var nodes = [];
+  for (var i = 0; i < 90; i++) {
+    nodes.push({ x: Math.random() * W, y: Math.random() * H });
+  }
+  ctx.strokeStyle = '#1D9E75';
+  ctx.lineWidth = 0.8;
+  for (var i = 0; i < nodes.length; i++) {
+    for (var j = i + 1; j < nodes.length; j++) {
+      var dx = nodes[i].x - nodes[j].x;
+      var dy = nodes[i].y - nodes[j].y;
+      var dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 180) {
+        ctx.globalAlpha = (1 - dist/180) * 0.6;
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.stroke();
+      }
+    }
+    ctx.globalAlpha = 0.8;
+    ctx.fillStyle = '#1D9E75';
+    ctx.beginPath();
+    ctx.arc(nodes[i].x, nodes[i].y, 1.8, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+</script>
+
+</body>
+</html>

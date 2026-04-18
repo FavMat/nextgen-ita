@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Podcast · NextGen Ita</title>
+  <meta name="description" content="Real conversations with Italian founders and builders about using AI. On Spotify, no filters." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/ng.css" />
+  <style>
+    .page-content { padding: 80px 48px 40px; max-width: 1400px; margin: 0 auto; }
+
+    .player-wrap {
+      padding: 32px;
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      margin-bottom: 80px;
+      position: relative; overflow: hidden;
+    }
+    .player-wrap::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 60% 100% at 100% 0%, rgba(45, 212, 160, .08), transparent 60%);
+    }
+    .player-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px; gap: 16px; flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
+    .player-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--f-mono); font-size: 11px;
+      color: var(--green); text-transform: uppercase; letter-spacing: 2px;
+    }
+    .player-label::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: #1DB954; box-shadow: 0 0 8px #1DB954;
+      animation: ping 2s infinite;
+    }
+    @keyframes ping { 0%,100% {opacity:1} 50% {opacity:.3} }
+    .follow-spot {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #1DB954; color: #000;
+      font-size: 13px; font-weight: 600;
+      padding: 10px 20px; border-radius: 100px;
+      transition: transform .2s;
+    }
+    .follow-spot:hover { transform: translateY(-2px); }
+    .player iframe { width: 100%; border: none; border-radius: 16px; display: block; }
+
+    /* ── Section label ── */
+    .sec-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 32px; gap: 24px; flex-wrap: wrap;
+    }
+    .sec-head h2 {
+      font-family: var(--f-display); font-size: 36px; letter-spacing: -.02em;
+    }
+    .sec-head h2 em { font-style: italic; color: var(--green); }
+    .sec-head .count { font-family: var(--f-mono); font-size: 12px; color: var(--fg-3); letter-spacing: 1.5px; }
+
+    /* ── Episodes ── */
+    .ep-list { display: flex; flex-direction: column; }
+    .ep-row {
+      display: grid;
+      grid-template-columns: 48px 64px 1fr auto 48px;
+      gap: 24px; align-items: center;
+      padding: 24px 16px;
+      border-top: 1px solid var(--line);
+      transition: padding .35s var(--ease), background .25s;
+      position: relative;
+    }
+    .ep-row:last-child { border-bottom: 1px solid var(--line); }
+    .ep-row::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+      background: var(--green); transform: scaleY(0); transform-origin: center;
+      transition: transform .3s var(--ease);
+    }
+    .ep-row:hover { background: var(--bg-1); padding: 28px 20px; }
+    .ep-row:hover::before { transform: scaleY(1); }
+    .ep-num {
+      font-family: var(--f-mono); font-size: 11px; color: var(--fg-3);
+      letter-spacing: 2px;
+    }
+    .ep-thumb {
+      width: 64px; height: 64px; border-radius: 12px;
+      background: linear-gradient(135deg, rgba(45,212,160,.15), rgba(245,184,74,.12));
+      border: 1px solid var(--line-2);
+      display: grid; place-items: center;
+      color: var(--green);
+    }
+    .ep-thumb svg { width: 22px; height: 22px; }
+    .ep-info { min-width: 0; }
+    .ep-guest {
+      font-family: var(--f-mono); font-size: 10px;
+      color: var(--green); text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 6px;
+    }
+    .ep-title {
+      font-family: var(--f-display); font-size: 22px;
+      color: var(--fg); line-height: 1.2;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .ep-dur {
+      font-family: var(--f-mono); font-size: 12px; color: var(--fg-2);
+    }
+    .ep-arrow {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid var(--line-2);
+      display: grid; place-items: center;
+      transition: all .3s var(--ease);
+    }
+    .ep-arrow svg { width: 14px; height: 14px; }
+    .ep-row:hover .ep-arrow { background: var(--green); border-color: var(--green); color: #04110c; }
+    .ep-row:hover .ep-arrow svg { transform: translate(2px, -2px); }
+
+    /* ── What we cover ── */
+    .cover {
+      margin-top: 80px; padding: 80px 48px;
+      background: var(--bg-1);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .cover-inner { max-width: 1400px; margin: 0 auto; }
+    .cover-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 20px; overflow: hidden;
+    }
+    .cover-cell {
+      padding: 36px 32px;
+      background: var(--bg);
+      transition: background .3s;
+    }
+    .cover-cell:hover { background: var(--bg-1); }
+    .cover-cell .n {
+      font-family: var(--f-mono); font-size: 11px; color: var(--green);
+      letter-spacing: 2px; margin-bottom: 16px;
+    }
+    .cover-cell h3 {
+      font-family: var(--f-display); font-size: 26px; line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .cover-cell h3 em { font-style: italic; color: var(--amber); }
+    .cover-cell p { font-size: 14px; color: var(--fg-1); line-height: 1.7; }
+
+    /* ── Subscribe CTA ── */
+    .sub-cta {
+      margin: 80px auto; max-width: 1400px;
+      padding: 0 48px;
+    }
+    .sub-box {
+      padding: 56px;
+      background: var(--bg-1);
+      border: 1px solid var(--line-2);
+      border-radius: 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 32px; flex-wrap: wrap;
+      position: relative; overflow: hidden;
+    }
+    .sub-box::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 50% 100% at 100% 50%, rgba(29, 185, 84, .12), transparent 60%);
+    }
+    .sub-text {
+      font-family: var(--f-display); font-size: 28px;
+      color: var(--fg); line-height: 1.3; max-width: 640px;
+      position: relative; z-index: 1;
+    }
+    .sub-text em { font-style: italic; color: var(--green); }
+    .sub-btn {
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #1DB954; color: #000;
+      font-weight: 600; font-size: 14px;
+      padding: 14px 28px; border-radius: 100px;
+      transition: transform .2s;
+      box-shadow: 0 8px 32px rgba(29, 185, 84, .3);
+    }
+    .sub-btn:hover { transform: translateY(-2px); }
+
+    @media (max-width: 900px) {
+      .page-content { padding: 48px 20px 20px; }
+      .player-wrap { padding: 20px; }
+      .ep-row { grid-template-columns: 36px 48px 1fr; gap: 12px; padding: 18px 10px; }
+      .ep-row:hover { padding: 18px 10px; }
+      .ep-dur, .ep-arrow { display: none; }
+      .ep-title { font-size: 16px; }
+      .cover { padding: 48px 20px; }
+      .cover-grid { grid-template-columns: 1fr; }
+      .sub-cta { padding: 0 20px; margin: 48px auto; }
+      .sub-box { padding: 32px 24px; }
+      .sub-text { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<canvas class="bg-canvas"></canvas>
+<div class="grain"></div>
+
+<nav class="ng-nav">
+  <a href="index.html" class="ng-logo">
+    <span class="mark">N</span>
+    <span>Next<em>Gen</em> Ita</span>
+  </a>
+  <ul class="ng-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="podcast.html" class="active">Podcast</a></li>
+    <li><a href="toolbox.html">Toolbox</a></li>
+    <li><a href="coaching.html">Coaching</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="bits.html">AI Bits</a></li>
+  </ul>
+  <a href="coaching.html" class="ng-cta">Join community</a>
+</nav>
+
+<main>
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow reveal">→ 01 · Podcast</div>
+      <h1 class="h-display reveal d1">Real stories.<br><em>No filters.</em></h1>
+      <p class="lead reveal d2">
+        Conversations with Italian founders, innovators and builders using AI to make something that matters.
+        On Spotify, unedited, direct.
+      </p>
+    </div>
+  </section>
+
+  <div class="page-content">
+
+    <div class="player-wrap reveal">
+      <div class="player-head">
+        <div class="player-label">Listen on Spotify</div>
+        <a href="https://open.spotify.com/show/6yWSAUi97PEEQXSAzNTI9z" target="_blank" class="follow-spot">
+          Follow show →
+        </a>
+      </div>
+      <div class="player">
+        <iframe src="https://open.spotify.com/embed/show/6yWSAUi97PEEQXSAzNTI9z?utm_source=generator&theme=0" height="352" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+    </div>
+
+    <div class="sec-head">
+      <h2>All <em>episodes</em></h2>
+      <span class="count">06 · LIVE</span>
+    </div>
+
+    <div class="ep-list">
+      <a href="https://open.spotify.com/episode/1IUxYb5QW106WJ3J19K68v" target="_blank" class="ep-row reveal">
+        <div class="ep-num">01</div>
+        <div class="ep-thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm4.6 14.4a.6.6 0 01-.86.2c-2.35-1.43-5.3-1.75-8.78-.96a.62.62 0 01-.28-1.21c3.8-.87 7.08-.5 9.7 1.11a.6.6 0 01.22.86zm1.22-2.72a.78.78 0 01-1.07.26c-2.69-1.65-6.78-2.13-9.96-1.17a.78.78 0 01-.46-1.49c3.63-1.1 8.15-.57 11.24 1.33a.78.78 0 01.25 1.07zm.1-2.84C14.7 8.95 9.37 8.78 6.3 9.71a.94.94 0 01-.54-1.79c3.53-1.07 9.4-.87 13.11 1.34a.94.94 0 01-.95 1.61z"/></svg></div>
+        <div class="ep-info">
+          <div class="ep-guest">Matteo Favilli · Salvatore Rosania</div>
+          <div class="ep-title">NextGen-Ita inizia qui</div>
+        </div>
+        <div class="ep-dur">1:00</div>
+        <div class="ep-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+    </div>
+
+  </div>
+
+  <section class="cover">
+    <div class="cover-inner">
+      <div class="sec-head">
+        <h2>What we <em>cover.</em></h2>
+        <span class="count">THE THEMES</span>
+      </div>
+      <div class="cover-grid">
+        <div class="cover-cell reveal">
+          <div class="n">→ 01</div>
+          <h3>How <em>real</em> founders ship</h3>
+          <p>Not the polished story. The 3 AM pivots, the customer calls that changed everything, the bet that paid off.</p>
+        </div>
+        <div class="cover-cell reveal d1">
+          <div class="n">→ 02</div>
+          <h3>AI as <em>leverage</em></h3>
+          <p>Not the tools they use. The workflows that compound. What changed in their team after adopting AI seriously.</p>
+        </div>
+        <div class="cover-cell reveal d2">
+          <div class="n">→ 03</div>
+          <h3>The Italian <em>angle</em></h3>
+          <p>Building from here, competing globally. What works, what breaks, what nobody tells you before you start.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sub-cta">
+    <div class="sub-box">
+      <div class="sub-text">
+        Never miss an episode. <em>Follow NextGen Ita</em> on Spotify and get notified when new conversations drop.
+      </div>
+      <a href="https://open.spotify.com/show/6yWSAUi97PEEQXSAzNTI9z" target="_blank" class="sub-btn" data-magnet>
+        Follow on Spotify →
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="ng-footer">
+  <div class="ng-footer-inner">
+    <div>
+      <div class="ftag">Italian talent.<br><em>AI as leverage.</em></div>
+      <p class="fsub">A community for founders, builders and researchers who want to move fast, think clearly, and ship what matters.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <div class="flinks">
+        <a href="podcast.html">Podcast</a>
+        <a href="toolbox.html">Toolbox</a>
+        <a href="coaching.html">Coaching</a>
+        <a href="events.html">Events</a>
+        <a href="bits.html">AI Bits</a>
+      </div>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <div class="flinks">
+        <a href="mailto:mttfvll@gmail.com">Email</a>
+        <a href="https://linkedin.com/in/matteofaralli" target="_blank">LinkedIn</a>
+        <a href="https://open.spotify.com/show/6yWSAUi97PEEQXSAzNTI9z" target="_blank">Spotify</a>
+      </div>
+    </div>
+    <div>
+      <h4>Partners</h4>
+      <div class="flinks">
+        <a href="#">Startup Grind</a>
+        <a href="#">The Spoon</a>
+        <a href="#">SoBigData</a>
+      </div>
+    </div>
+  </div>
+  <div class="ng-footer-bottom">
+    <span>© 2026 NextGen Ita · All programs free</span>
+    <span>Built in Italy, for the world</span>
+  </div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/ng.js"></script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coaching · NextGen Ita</title>
+  <meta name="description" content="Free 1:1 coaching for Italian founders. 4 slots a month. Apply direct." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/ng.css" />
+  <style>
+    .page-content { padding: 80px 48px 40px; max-width: 1400px; margin: 0 auto; }
+
+    /* ── Value prop grid ── */
+    .vprop {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 20px; overflow: hidden;
+      margin-bottom: 80px;
+    }
+    .vp {
+      padding: 40px 32px; background: var(--bg);
+      transition: background .3s;
+    }
+    .vp:hover { background: var(--bg-1); }
+    .vp .vn {
+      font-family: var(--f-mono); font-size: 11px; color: var(--green);
+      letter-spacing: 2px; margin-bottom: 16px;
+    }
+    .vp h3 {
+      font-family: var(--f-display); font-size: 28px;
+      line-height: 1.2; margin-bottom: 12px;
+    }
+    .vp h3 em { font-style: italic; color: var(--amber); }
+    .vp p { font-size: 14px; color: var(--fg-1); line-height: 1.7; }
+
+    /* ── Two column: Coach + apply ── */
+    .duo {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px;
+      margin-bottom: 80px;
+    }
+
+    .coach-card {
+      padding: 48px;
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      position: relative; overflow: hidden;
+    }
+    .coach-card::before {
+      content: ''; position: absolute; top: 0; right: 0; width: 200px; height: 200px;
+      background: radial-gradient(circle, var(--green-08), transparent 70%);
+      pointer-events: none;
+    }
+    .coach-label {
+      font-family: var(--f-mono); font-size: 11px; color: var(--green);
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px;
+      position: relative; z-index: 1;
+    }
+    .coach-head {
+      display: flex; gap: 20px; align-items: center; margin-bottom: 32px;
+      position: relative; z-index: 1;
+    }
+    .coach-avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), var(--amber));
+      color: #04110c;
+      font-family: var(--f-display); font-size: 36px; font-style: italic;
+      display: grid; place-items: center;
+      flex-shrink: 0;
+    }
+    .coach-name {
+      font-family: var(--f-display); font-size: 32px; line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .coach-title { font-family: var(--f-mono); font-size: 12px; color: var(--fg-2); letter-spacing: 1px; }
+    .coach-bio {
+      font-size: 15px; color: var(--fg-1); line-height: 1.7;
+      margin-bottom: 28px; position: relative; z-index: 1;
+    }
+    .coach-bio em { color: var(--fg); font-style: italic; }
+    .coach-bullets {
+      display: flex; flex-direction: column; gap: 12px;
+      padding-top: 24px; border-top: 1px solid var(--line);
+      position: relative; z-index: 1;
+    }
+    .cbul {
+      display: flex; gap: 14px; align-items: flex-start;
+      font-size: 14px; color: var(--fg-1); line-height: 1.5;
+    }
+    .cbul::before {
+      content: '→'; color: var(--green);
+      font-family: var(--f-mono); flex-shrink: 0;
+    }
+
+    /* ── Apply panel ── */
+    .apply-panel {
+      padding: 48px;
+      background: var(--bg);
+      border: 1px solid var(--line-2);
+      border-radius: 24px;
+      position: sticky; top: 96px;
+      position: relative; overflow: hidden;
+    }
+    .apply-panel::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 0% 100%, var(--amber-08), transparent 60%),
+        linear-gradient(180deg, transparent, rgba(0,0,0,.2));
+    }
+    .slot-count {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--f-mono); font-size: 11px; color: var(--amber);
+      letter-spacing: 2px; margin-bottom: 24px;
+      position: relative; z-index: 1;
+    }
+    .slot-count::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--amber); box-shadow: 0 0 8px var(--amber);
+    }
+    .apply-head {
+      font-family: var(--f-display); font-size: 38px; line-height: 1.1;
+      margin-bottom: 20px; position: relative; z-index: 1;
+    }
+    .apply-head em { font-style: italic; color: var(--amber); }
+    .apply-sub {
+      font-size: 15px; color: var(--fg-1); line-height: 1.7;
+      margin-bottom: 32px; position: relative; z-index: 1;
+    }
+
+    .apply-steps {
+      display: flex; flex-direction: column; gap: 14px;
+      padding-top: 24px; margin-bottom: 32px;
+      border-top: 1px solid var(--line);
+      position: relative; z-index: 1;
+    }
+    .astep {
+      display: flex; gap: 14px; font-size: 14px; color: var(--fg-1); line-height: 1.6;
+    }
+    .astep .n {
+      font-family: var(--f-mono); font-size: 11px; color: var(--green);
+      letter-spacing: 1.5px; flex-shrink: 0; padding-top: 3px;
+    }
+    .astep em { color: var(--fg); font-style: italic; }
+
+    .apply-btn {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 20px 28px;
+      background: var(--fg); color: #000;
+      font-weight: 600; font-size: 15px;
+      border: none; border-radius: 100px;
+      transition: all .3s var(--ease);
+      position: relative; z-index: 1;
+    }
+    .apply-btn:hover { background: var(--green); transform: translateY(-2px); }
+    .apply-btn svg { width: 18px; height: 18px; transition: transform .3s; }
+    .apply-btn:hover svg { transform: translate(4px, -4px); }
+
+    .apply-tiny {
+      margin-top: 16px;
+      font-family: var(--f-mono); font-size: 11px; color: var(--fg-3);
+      text-align: center; letter-spacing: 1px;
+      position: relative; z-index: 1;
+    }
+
+    /* ── Not for everyone band ── */
+    .nfe {
+      margin: 0 -48px 80px;
+      padding: 64px 48px;
+      background: var(--bg-1);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .nfe-inner { max-width: 1280px; margin: 0 auto; }
+    .nfe h2 {
+      font-family: var(--f-display); font-size: 40px;
+      letter-spacing: -.02em; margin-bottom: 40px;
+    }
+    .nfe h2 em { font-style: italic; color: var(--amber); }
+    .nfe-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+    }
+    .nfe-col h4 {
+      font-family: var(--f-mono); font-size: 12px; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .nfe-col.yes h4 { color: var(--green); }
+    .nfe-col.no h4 { color: var(--fg-3); }
+    .nfe-col ul { display: flex; flex-direction: column; gap: 14px; }
+    .nfe-col li {
+      font-size: 16px; color: var(--fg-1); line-height: 1.5;
+      padding-left: 24px; position: relative;
+    }
+    .nfe-col.yes li::before {
+      content: '✓'; color: var(--green);
+      position: absolute; left: 0; top: 0;
+      font-family: var(--f-mono);
+    }
+    .nfe-col.no li {
+      color: var(--fg-3); text-decoration: line-through;
+      text-decoration-color: rgba(239, 109, 109, .4);
+    }
+    .nfe-col.no li::before {
+      content: '✗'; color: #ef6d6d;
+      position: absolute; left: 0; top: 0;
+      font-family: var(--f-mono);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .page-content { padding: 48px 20px 20px; }
+      .vprop { grid-template-columns: 1fr; }
+      .duo { grid-template-columns: 1fr; gap: 24px; margin-bottom: 48px; }
+      .coach-card, .apply-panel { padding: 28px; }
+      .apply-panel { position: static; }
+      .coach-name, .apply-head { font-size: 28px; }
+      .nfe { margin: 0 -20px 48px; padding: 40px 20px; }
+      .nfe h2 { font-size: 28px; }
+      .nfe-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<canvas class="bg-canvas"></canvas>
+<div class="grain"></div>
+
+<nav class="ng-nav">
+  <a href="index.html" class="ng-logo">
+    <span class="mark">N</span>
+    <span>Next<em>Gen</em> Ita</span>
+  </a>
+  <ul class="ng-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="podcast.html">Podcast</a></li>
+    <li><a href="toolbox.html">Toolbox</a></li>
+    <li><a href="coaching.html" class="active">Coaching</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="bits.html">AI Bits</a></li>
+  </ul>
+  <a href="#apply" class="ng-cta">Apply now</a>
+</nav>
+
+<main>
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow reveal">→ 03 · 1:1 Coaching</div>
+      <h1 class="h-display reveal d1">Free coaching<br>for <em>founders</em><br>who mean it.</h1>
+      <p class="lead reveal d2">
+        One hour with Matteo Favilli. No forms, no upsell.
+        4 slots a month. Whichever is most useful to you: strategy, AI adoption, or the
+        question keeping you up at 3 AM.
+      </p>
+    </div>
+  </section>
+
+  <div class="page-content">
+
+    <div class="vprop">
+      <div class="vp reveal">
+        <div class="vn">→ 01 · Duration</div>
+        <h3><em>60 minutes.</em></h3>
+        <p>One call, one problem. Direct, prepared, actionable. No chitchat, no fluff, no 15-minute recaps at the end.</p>
+      </div>
+      <div class="vp reveal d1">
+        <div class="vn">→ 02 · Format</div>
+        <h3><em>Video call.</em></h3>
+        <p>Google Meet. Bring notes, context, and the specific thing you are stuck on. Italian or English.</p>
+      </div>
+      <div class="vp reveal d2">
+        <div class="vn">→ 03 · Price</div>
+        <h3><em>Zero.</em></h3>
+        <p>Forever free. I give back to the Italian startup ecosystem — one meaningful conversation at a time.</p>
+      </div>
+    </div>
+
+    <div class="duo">
+
+      <div class="coach-card reveal">
+        <div class="coach-label">Who you are talking to</div>
+        <div class="coach-head">
+          <div class="coach-avatar">M</div>
+          <div>
+            <div class="coach-name">Matteo Favilli</div>
+            <div class="coach-title">FOUNDER · NEXTGEN ITA</div>
+          </div>
+        </div>
+        <p class="coach-bio">
+          I've spent years in <em>pharma and life sciences</em> leading AI projects,
+          working with founders, and scaling teams through messy transitions.
+          Now I give back to the Italian startup ecosystem, one conversation at a time.
+        </p>
+        <div class="coach-bullets">
+          <div class="cbul">AI strategy for regulated industries (pharma, life sciences, fintech)</div>
+          <div class="cbul">Go-to-market and positioning for early-stage founders</div>
+          <div class="cbul">Fundraising prep — seed to Series A</div>
+          <div class="cbul">Hiring your first 5 — what breaks, what doesn't</div>
+          <div class="cbul">How to actually use AI without becoming a chatbot company</div>
+        </div>
+      </div>
+
+      <div class="apply-panel reveal d1" id="apply">
+        <div class="slot-count">4 SLOTS · THIS MONTH</div>
+        <h2 class="apply-head">Apply in <em>one email.</em></h2>
+        <p class="apply-sub">
+          Tell me what you're building and what's blocking you.
+          If there's signal, you'll hear back within 48 hours.
+          If it's not a fit, I'll point you somewhere better.
+        </p>
+
+        <div class="apply-steps">
+          <div class="astep"><span class="n">01</span><span><em>What are you building?</em> Two sentences, max.</span></div>
+          <div class="astep"><span class="n">02</span><span><em>What's the blocker?</em> The real one, not the one that sounds good.</span></div>
+          <div class="astep"><span class="n">03</span><span><em>Why now?</em> Why this conversation matters today.</span></div>
+        </div>
+
+        <a href="mailto:mttfvll@gmail.com?subject=NextGen%20Ita%20Coaching%20Application&body=Hi%20Matteo%2C%0A%0A1.%20What%20I'm%20building%3A%0A%0A2.%20The%20real%20blocker%3A%0A%0A3.%20Why%20now%3A%0A%0A%20Grazie%2C" class="apply-btn" data-magnet>
+          <span>mttfvll@gmail.com</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+            <line x1="7" y1="17" x2="17" y2="7"/>
+            <polyline points="7 7 17 7 17 17"/>
+          </svg>
+        </a>
+        <div class="apply-tiny">NO CALENDARS · NO FORMS · JUST HUMANS</div>
+      </div>
+    </div>
+
+    <div class="nfe">
+      <div class="nfe-inner">
+        <h2>Not for <em>everyone.</em></h2>
+        <div class="nfe-grid">
+          <div class="nfe-col yes reveal">
+            <h4>→ YES, APPLY IF</h4>
+            <ul>
+              <li>You've started building — even a hacky MVP counts.</li>
+              <li>You have a specific question, not "let's chat."</li>
+              <li>You're ready to be honest about what's not working.</li>
+              <li>You'll actually do something with what we discuss.</li>
+              <li>You're Italian, Italy-based, or building for Italy.</li>
+            </ul>
+          </div>
+          <div class="nfe-col no reveal d1">
+            <h4>→ NOT A FIT IF</h4>
+            <ul>
+              <li>You want someone to validate your idea without pushback.</li>
+              <li>You're looking for funding, introductions or a team.</li>
+              <li>You haven't started building — come back when you have.</li>
+              <li>You want to "pick my brain" about AI in general.</li>
+              <li>You expect a second, third, fourth session.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="ng-footer">
+  <div class="ng-footer-inner">
+    <div>
+      <div class="ftag">Italian talent.<br><em>AI as leverage.</em></div>
+      <p class="fsub">A community for founders, builders and researchers who want to move fast, think clearly, and ship what matters.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <div class="flinks">
+        <a href="podcast.html">Podcast</a>
+        <a href="toolbox.html">Toolbox</a>
+        <a href="coaching.html">Coaching</a>
+        <a href="events.html">Events</a>
+        <a href="bits.html">AI Bits</a>
+      </div>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <div class="flinks">
+        <a href="mailto:mttfvll@gmail.com">Email</a>
+        <a href="https://linkedin.com/in/matteofaralli" target="_blank">LinkedIn</a>
+        <a href="https://open.spotify.com/show/6yWSAUi97PEEQXSAzNTI9z" target="_blank">Spotify</a>
+      </div>
+    </div>
+    <div>
+      <h4>Partners</h4>
+      <div class="flinks">
+        <a href="#">Startup Grind</a>
+        <a href="#">The Spoon</a>
+        <a href="#">SoBigData</a>
+      </div>
+    </div>
+  </div>
+  <div class="ng-footer-bottom">
+    <span>© 2026 NextGen Ita · All programs free</span>
+    <span>Built in Italy, for the world</span>
+  </div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/ng.js"></script>
+</body>
+</html>
