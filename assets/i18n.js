@@ -300,8 +300,8 @@
     'Team · NextGen Ita': 'Team · NextGen Ita',
   };
 
-  /* ── Detect language ──────────────────────────────────────── */
-  const stored = localStorage.getItem('ng_lang');
+  /* ── Detect language — browser always wins, session override only ── */
+  const stored = sessionStorage.getItem('ng_lang');
   const browser = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
   const detected = browser.startsWith('it') ? 'it' : 'en';
   const LANG = (stored === 'it' || stored === 'en') ? stored : detected;
@@ -397,7 +397,7 @@
       if (!b) return;
       const next = b.dataset.lang;
       if (next === LANG) return;
-      localStorage.setItem('ng_lang', next);
+      sessionStorage.setItem('ng_lang', next);
       location.reload();
     });
   }
