@@ -1,0 +1,384 @@
+/* ═══════════════════════════════════════════════════════════════════
+   NEXTGEN ITA — SHARED DESIGN SYSTEM
+   Dark, warm, cinematic. Green + amber over deep obsidian.
+═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* base — warm deep black, not a cold pure black */
+  --bg:        #0a0d0c;
+  --bg-1:     #0f1412;
+  --bg-2:     #151b18;
+  --bg-3:     #1c2420;
+  --line:      rgba(255, 245, 230, .07);
+  --line-2:    rgba(255, 245, 230, .12);
+
+  /* text */
+  --fg:        #e8ece9;
+  --fg-1:      rgba(232, 236, 233, .72);
+  --fg-2:      rgba(232, 236, 233, .46);
+  --fg-3:      rgba(232, 236, 233, .28);
+
+  /* brand */
+  --green:     #2dd4a0;
+  --green-dim: #1fb287;
+  --green-50:  rgba(45, 212, 160, .5);
+  --green-20:  rgba(45, 212, 160, .2);
+  --green-08:  rgba(45, 212, 160, .08);
+
+  /* warm accent — amber for human warmth */
+  --amber:     #f5b84a;
+  --amber-dim: #d99a2a;
+  --amber-20:  rgba(245, 184, 74, .2);
+  --amber-08:  rgba(245, 184, 74, .08);
+
+  /* type */
+  --f-display: 'Instrument Serif', 'Times New Roman', serif;
+  --f-sans:    'Geist', 'Inter', system-ui, sans-serif;
+  --f-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* easing */
+  --ease:      cubic-bezier(.22, 1, .36, 1);
+  --ease-out:  cubic-bezier(.16, 1, .3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body {
+  font-family: var(--f-sans);
+  background: var(--bg);
+  color: var(--fg);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11";
+  line-height: 1.5;
+}
+body.has-cursor { cursor: none; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; background: none; border: none; color: inherit; cursor: pointer; }
+img, svg { display: block; max-width: 100%; }
+::selection { background: var(--green); color: #04110c; }
+
+/* ─── Grain overlay (ambient noise) ─── */
+.grain {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9000;
+  opacity: .035; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* ─── Background grid + global canvas ─── */
+.bg-grid {
+  position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background-image:
+    linear-gradient(to right,  rgba(255,245,230,.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,245,230,.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 30%, #000 20%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 30%, #000 20%, transparent 80%);
+}
+.bg-canvas {
+  position: fixed; inset: 0; z-index: -1; width: 100%; height: 100%;
+  pointer-events: none; opacity: .9;
+}
+
+/* ─── Custom cursor ─── */
+.cursor-dot, .cursor-ring {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  pointer-events: none; transform: translate(-50%, -50%);
+  will-change: transform;
+}
+.cursor-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  transition: width .2s, height .2s, background .2s;
+}
+.cursor-ring {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid rgba(45, 212, 160, .45);
+  transition: width .3s var(--ease), height .3s var(--ease), border-color .3s, background .3s;
+}
+.cursor-dot.hov  { width: 0; height: 0; }
+.cursor-ring.hov { width: 52px; height: 52px; background: rgba(45, 212, 160, .08); border-color: var(--green); }
+
+/* ─── NAV ─── */
+.ng-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 48px;
+  background: rgba(10, 13, 12, .55);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--line);
+  transition: padding .3s, background .3s;
+}
+.ng-nav.shrunk { padding: 10px 48px; background: rgba(10, 13, 12, .85); }
+
+.ng-logo {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--f-display);
+  white-space: nowrap;
+  font-size: 22px; font-style: italic; letter-spacing: -.3px;
+  color: var(--fg);
+}
+.ng-logo .mark {
+  width: 32px; height: 32px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dim) 100%);
+  display: grid; place-items: center;
+  font-family: var(--f-sans); font-style: normal;
+  font-weight: 700; font-size: 14px; color: #04110c;
+  box-shadow: 0 0 0 1px rgba(45, 212, 160, .3), 0 8px 24px rgba(45, 212, 160, .25);
+  position: relative; overflow: hidden;
+}
+.ng-logo .mark::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,.4) 50%, transparent 100%);
+  transform: translateX(-100%);
+  animation: shimmer 4s infinite;
+}
+@keyframes shimmer { 0%,100%{transform:translateX(-100%)} 50%{transform:translateX(100%)} }
+.ng-logo em { font-style: italic; color: var(--green); }
+
+.ng-links {
+  display: flex; align-items: center; gap: 2px;
+  list-style: none;
+  padding: 4px; border-radius: 100px;
+  background: rgba(255, 245, 230, .03);
+  border: 1px solid var(--line);
+}
+.ng-links a {
+  display: block;
+  font-size: 13px; font-weight: 450;
+  color: var(--fg-2);
+  padding: 7px 14px; border-radius: 100px;
+  transition: color .2s, background .2s;
+  position: relative;
+}
+.ng-links a:hover { color: var(--fg); }
+.ng-links a.active {
+  color: var(--fg);
+  background: rgba(255, 245, 230, .06);
+}
+
+.ng-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green); color: #04110c;
+  white-space: nowrap;
+  font-family: var(--f-sans); font-weight: 600; font-size: 13px;
+  padding: 9px 18px 9px 22px; border-radius: 100px;
+  transition: transform .2s var(--ease), box-shadow .3s;
+  box-shadow: 0 4px 20px rgba(45, 212, 160, .25);
+}
+.ng-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(45, 212, 160, .4); }
+.ng-cta::after {
+  content: '→'; font-size: 14px;
+  transition: transform .2s;
+}
+.ng-cta:hover::after { transform: translateX(3px); }
+
+/* ─── Buttons ─── */
+.btn-primary, .btn-ghost, .btn-amber {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--f-sans); font-size: 14px; font-weight: 500;
+  padding: 14px 26px; border-radius: 100px;
+  transition: transform .2s var(--ease), background .2s, border-color .2s, box-shadow .3s;
+  position: relative; overflow: hidden;
+}
+.btn-primary {
+  background: var(--green); color: #04110c;
+  box-shadow: 0 8px 32px rgba(45, 212, 160, .25);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(45, 212, 160, .4); }
+.btn-ghost {
+  background: rgba(255, 245, 230, .04);
+  border: 1px solid var(--line-2);
+  color: var(--fg);
+}
+.btn-ghost:hover { background: rgba(255, 245, 230, .08); border-color: rgba(255, 245, 230, .2); transform: translateY(-2px); }
+.btn-amber {
+  background: var(--amber); color: #1a0f00;
+  box-shadow: 0 8px 32px rgba(245, 184, 74, .22);
+}
+.btn-amber:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(245, 184, 74, .35); }
+
+/* ─── Typography ─── */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--f-mono);
+  font-size: 11px; font-weight: 500;
+  color: var(--green);
+  text-transform: uppercase; letter-spacing: 2px;
+}
+.eyebrow::before {
+  content: ''; width: 18px; height: 1px;
+  background: var(--green);
+}
+.eyebrow.amber { color: var(--amber); }
+.eyebrow.amber::before { background: var(--amber); }
+
+.h-display {
+  font-family: var(--f-display);
+  font-weight: 400;
+  line-height: .98;
+  letter-spacing: -.03em;
+  color: var(--fg);
+}
+.h-display em { font-style: italic; color: var(--green); }
+.h-display .amber { font-style: italic; color: var(--amber); }
+
+h1.h-display { font-size: clamp(52px, 8vw, 120px); }
+h2.h-display { font-size: clamp(40px, 5.5vw, 72px); }
+h3.h-display { font-size: clamp(28px, 3.5vw, 44px); }
+
+.h-mono {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--fg-3);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ─── Page header (for inner pages) ─── */
+.page-hero {
+  position: relative;
+  padding: 160px 48px 80px;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+.page-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 70% 20%, rgba(45, 212, 160, .08) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 50% at 10% 90%, rgba(245, 184, 74, .05) 0%, transparent 50%);
+  pointer-events: none;
+}
+.page-hero-inner { position: relative; z-index: 1; max-width: 1400px; }
+.page-hero .eyebrow { margin-bottom: 32px; }
+.page-hero h1 { margin-bottom: 28px; max-width: 1000px; }
+.page-hero .lead {
+  font-size: 20px; line-height: 1.55; max-width: 580px;
+  color: var(--fg-1); font-weight: 350;
+}
+
+/* ─── Footer ─── */
+.ng-footer {
+  border-top: 1px solid var(--line);
+  padding: 80px 48px 40px;
+  margin-top: 120px;
+  background: var(--bg);
+  position: relative; overflow: hidden;
+}
+.ng-footer::before {
+  content: 'NEXTGEN';
+  position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
+  font-family: var(--f-display); font-style: italic;
+  font-size: clamp(120px, 20vw, 280px);
+  color: rgba(255, 245, 230, .025);
+  pointer-events: none; white-space: nowrap;
+  line-height: 1;
+}
+.ng-footer-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+  margin-bottom: 72px;
+}
+.ng-footer h4 {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+  color: var(--fg-3); text-transform: uppercase; letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+.ng-footer .flinks { display: flex; flex-direction: column; gap: 12px; }
+.ng-footer .flinks a { font-size: 14px; color: var(--fg-1); transition: color .2s; }
+.ng-footer .flinks a:hover { color: var(--green); }
+.ng-footer .ftag {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 24px; color: var(--fg); line-height: 1.4;
+  margin-bottom: 20px;
+}
+.ng-footer .ftag em { color: var(--green); }
+.ng-footer .fsub { font-size: 14px; color: var(--fg-2); max-width: 320px; line-height: 1.7; }
+.ng-footer-bottom {
+  position: relative; z-index: 1;
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  font-family: var(--f-mono); font-size: 11px;
+  color: var(--fg-3); text-transform: uppercase; letter-spacing: 1.5px;
+}
+.ng-footer-bottom a:hover { color: var(--green); }
+
+/* ─── Scroll reveal ─── */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity .9s var(--ease-out), transform .9s var(--ease-out); }
+.reveal.vis { opacity: 1; transform: none; }
+.d1 { transition-delay: .08s; } .d2 { transition-delay: .16s; } .d3 { transition-delay: .24s; }
+.d4 { transition-delay: .32s; } .d5 { transition-delay: .4s; }
+
+/* ─── Utility ─── */
+.container { max-width: 1400px; margin: 0 auto; padding: 0 48px; }
+.divider {
+  height: 1px; background: var(--line);
+  position: relative; overflow: hidden;
+}
+.divider::before {
+  content: ''; position: absolute; top: 0; left: -20%; width: 20%; height: 100%;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  animation: slide 6s infinite;
+}
+@keyframes slide { 0%,100% {left:-20%} 50% {left:100%} }
+
+/* ─── Mobile ─── */
+@media (max-width: 900px) {
+  body.has-cursor { cursor: auto; }
+  .cursor-dot, .cursor-ring { display: none; }
+  .ng-nav { padding: 10px 20px; }
+  .ng-nav.shrunk { padding: 8px 20px; }
+  .ng-links { display: none; }
+  .page-hero { padding: 120px 20px 60px; }
+  .ng-footer { padding: 60px 20px 32px; }
+  .ng-footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+  .ng-footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+  .container { padding: 0 20px; }
+}
+
+/* ═══════════════════════════════════════════════════
+   Language switch pill (bottom-right)
+═══════════════════════════════════════════════════ */
+.lang-switch {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  z-index: 120;
+  display: flex; gap: 2px;
+  padding: 4px;
+  background: rgba(10, 12, 13, .85);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid var(--line-2);
+  border-radius: 100px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .5);
+  font-family: var(--f-mono);
+  transition: all .3s var(--ease);
+}
+.lang-switch:hover { border-color: var(--green-20); }
+.lang-switch button {
+  background: transparent;
+  border: none;
+  color: var(--fg-3);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  padding: 7px 14px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.lang-switch button:hover { color: var(--fg); }
+.lang-switch button.active {
+  background: var(--fg);
+  color: #000;
+}
+@media (max-width: 900px) {
+  .lang-switch { bottom: 14px; right: 14px; }
+  .lang-switch button { padding: 6px 11px; font-size: 10px; }
+}
+

@@ -3,269 +3,407 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Startup Coaching · NextGen Ita</title>
+  <title>Coaching · NextGen Ita</title>
+  <meta name="description" content="Free 1:1 coaching for Italian founders. 4 slots a month. Apply direct." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/ng.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0f0f0f; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.05; pointer-events: none; }
-    nav, main, footer { position: relative; z-index: 1; }
+    .page-content { padding: 80px 48px 40px; max-width: 1400px; margin: 0 auto; }
 
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 0 64px; height: 64px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); z-index: 100; }
-    .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
-    .logo-badge { width: 30px; height: 30px; background: #1D9E75; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; letter-spacing: -0.5px; }
-    .logo-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #0f0f0f; letter-spacing: -0.3px; }
-    .logo-name span { color: #1D9E75; }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a { font-size: 13.5px; font-weight: 400; color: #888; text-decoration: none; transition: color 0.15s; }
-    .nav-links a:hover, .nav-links a.active { color: #0f0f0f; }
-    .nav-cta { background: #0f0f0f; color: #fff; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 9px 22px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.15s; }
-    .nav-cta:hover { opacity: 0.75; }
+    /* ── Value prop grid ── */
+    .vprop {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 20px; overflow: hidden;
+      margin-bottom: 80px;
+    }
+    .vp {
+      padding: 40px 32px; background: var(--bg);
+      transition: background .3s;
+    }
+    .vp:hover { background: var(--bg-1); }
+    .vp .vn {
+      font-family: var(--f-mono); font-size: 11px; color: var(--green);
+      letter-spacing: 2px; margin-bottom: 16px;
+    }
+    .vp h3 {
+      font-family: var(--f-display); font-size: 28px;
+      line-height: 1.2; margin-bottom: 12px;
+    }
+    .vp h3 em { font-style: italic; color: var(--amber); }
+    .vp p { font-size: 14px; color: var(--fg-1); line-height: 1.7; }
 
-    .page-header { padding: 80px 64px 60px; border-bottom: 0.5px solid #f0f0f0; }
-    .page-tag { font-size: 11px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 16px; }
-    .page-h1 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 48px; line-height: 1.2; letter-spacing: 0.2px; margin-bottom: 24px; }
-    .page-h1 em { font-style: normal; color: #1D9E75; }
-    .page-sub { font-size: 18px; color: #666; line-height: 1.8; max-width: 560px; font-weight: 300; }
+    /* ── Two column: Coach + apply ── */
+    .duo {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px;
+      margin-bottom: 80px;
+    }
 
-    .page-content { padding: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .coach-card {
+      padding: 48px;
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      position: relative; overflow: hidden;
+    }
+    .coach-card::before {
+      content: ''; position: absolute; top: 0; right: 0; width: 200px; height: 200px;
+      background: radial-gradient(circle, var(--green-08), transparent 70%);
+      pointer-events: none;
+    }
+    .coach-label {
+      font-family: var(--f-mono); font-size: 11px; color: var(--green);
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px;
+      position: relative; z-index: 1;
+    }
+    .coach-head {
+      display: flex; gap: 20px; align-items: center; margin-bottom: 32px;
+      position: relative; z-index: 1;
+    }
+    .coach-avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), var(--amber));
+      color: #04110c;
+      font-family: var(--f-display); font-size: 36px; font-style: italic;
+      display: grid; place-items: center;
+      flex-shrink: 0;
+    }
+    .coach-name {
+      font-family: var(--f-display); font-size: 32px; line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .coach-title { font-family: var(--f-mono); font-size: 12px; color: var(--fg-2); letter-spacing: 1px; }
+    .coach-bio {
+      font-size: 15px; color: var(--fg-1); line-height: 1.7;
+      margin-bottom: 28px; position: relative; z-index: 1;
+    }
+    .coach-bio em { color: var(--fg); font-style: italic; }
+    .coach-bullets {
+      display: flex; flex-direction: column; gap: 12px;
+      padding-top: 24px; border-top: 1px solid var(--line);
+      position: relative; z-index: 1;
+    }
+    .cbul {
+      display: flex; gap: 14px; align-items: flex-start;
+      font-size: 14px; color: var(--fg-1); line-height: 1.5;
+    }
+    .cbul::before {
+      content: '→'; color: var(--green);
+      font-family: var(--f-mono); flex-shrink: 0;
+    }
 
-    /* LEFT — INFO */
-    .session-pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(29,158,117,0.07); border: 0.5px solid #b8e8d4; padding: 7px 16px; border-radius: 100px; margin-bottom: 36px; }
-    .session-pill-dot { width: 6px; height: 6px; background: #1D9E75; border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.2} }
-    .session-pill-text { font-size: 11px; color: #1D9E75; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; }
+    /* ── Apply panel ── */
+    .apply-panel {
+      padding: 48px;
+      background: var(--bg);
+      border: 1px solid var(--line-2);
+      border-radius: 24px;
+      position: sticky; top: 96px;
+      position: relative; overflow: hidden;
+    }
+    .apply-panel::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 0% 100%, var(--amber-08), transparent 60%),
+        linear-gradient(180deg, transparent, rgba(0,0,0,.2));
+    }
+    .slot-count {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--f-mono); font-size: 11px; color: var(--amber);
+      letter-spacing: 2px; margin-bottom: 24px;
+      position: relative; z-index: 1;
+    }
+    .slot-count::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--amber); box-shadow: 0 0 8px var(--amber);
+    }
+    .apply-head {
+      font-family: var(--f-display); font-size: 38px; line-height: 1.1;
+      margin-bottom: 20px; position: relative; z-index: 1;
+    }
+    .apply-head em { font-style: italic; color: var(--amber); }
+    .apply-sub {
+      font-size: 15px; color: var(--fg-1); line-height: 1.7;
+      margin-bottom: 32px; position: relative; z-index: 1;
+    }
 
-    .info-block { margin-bottom: 36px; }
-    .info-label { font-size: 10px; color: #1D9E75; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; margin-bottom: 14px; }
-    .get-list { display: flex; flex-direction: column; gap: 12px; }
-    .get-item { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #666; line-height: 1.65; font-weight: 300; }
-    .get-dot { width: 4px; height: 4px; background: #1D9E75; border-radius: 50%; flex-shrink: 0; margin-top: 8px; }
-    .info-text { font-size: 15px; color: #888; line-height: 1.8; font-weight: 300; }
+    .apply-steps {
+      display: flex; flex-direction: column; gap: 14px;
+      padding-top: 24px; margin-bottom: 32px;
+      border-top: 1px solid var(--line);
+      position: relative; z-index: 1;
+    }
+    .astep {
+      display: flex; gap: 14px; font-size: 14px; color: var(--fg-1); line-height: 1.6;
+    }
+    .astep .n {
+      font-family: var(--f-mono); font-size: 11px; color: var(--green);
+      letter-spacing: 1.5px; flex-shrink: 0; padding-top: 3px;
+    }
+    .astep em { color: var(--fg); font-style: italic; }
 
-    /* RIGHT — FORM */
-    .form-card { background: #ffffff; border: 0.5px solid #ebebeb; border-radius: 20px; padding: 40px; }
-    .form-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.5px; margin-bottom: 6px; }
-    .form-sub { font-size: 14px; color: #888; margin-bottom: 32px; font-weight: 300; line-height: 1.6; }
+    .apply-btn {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 20px 28px;
+      background: var(--fg); color: #000;
+      font-weight: 600; font-size: 15px;
+      border: none; border-radius: 100px;
+      transition: all .3s var(--ease);
+      position: relative; z-index: 1;
+    }
+    .apply-btn:hover { background: var(--green); transform: translateY(-2px); }
+    .apply-btn svg { width: 18px; height: 18px; transition: transform .3s; }
+    .apply-btn:hover svg { transform: translate(4px, -4px); }
 
-    .form-group { margin-bottom: 20px; }
-    .form-label { font-size: 11px; color: #888; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 500; margin-bottom: 8px; display: block; }
-    .form-input { width: 100%; background: #f5f5f5; border: 0.5px solid #e0e0e0; border-radius: 10px; padding: 13px 16px; font-size: 14px; color: #0a0a0a; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; font-weight: 300; }
-    .form-input:focus { border-color: rgba(29,158,117,0.4); }
-    .form-input::placeholder { color: #bbb; }
-    textarea.form-input { resize: vertical; min-height: 110px; }
+    .apply-tiny {
+      margin-top: 16px;
+      font-family: var(--f-mono); font-size: 11px; color: var(--fg-3);
+      text-align: center; letter-spacing: 1px;
+      position: relative; z-index: 1;
+    }
 
-    .radio-group { display: flex; gap: 10px; flex-wrap: wrap; }
-    .radio-opt { display: flex; align-items: center; gap: 8px; background: #f5f5f5; border: 0.5px solid #e0e0e0; border-radius: 100px; padding: 9px 16px; cursor: pointer; transition: all 0.2s; }
-    .radio-opt:hover { border-color: rgba(29,158,117,0.3); }
-    .radio-opt input { display: none; }
-    .radio-opt.selected { border-color: #1D9E75; background: rgba(29,158,117,0.07); }
-    .radio-opt-text { font-size: 13px; color: #555; font-weight: 400; transition: color 0.2s; }
-    .radio-opt.selected .radio-opt-text { color: #5DCAA5; }
-
-    .form-submit { width: 100%; background: #1D9E75; color: #ffffff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; padding: 15px; border-radius: 100px; border: none; cursor: pointer; transition: opacity 0.2s; margin-top: 8px; }
-    .form-submit:hover { opacity: 0.85; }
-    .form-note { font-size: 12px; color: #bbb; text-align: center; margin-top: 14px; font-weight: 300; }
-
-    .success-msg { display: none; text-align: center; padding: 40px 20px; }
-    .success-icon { width: 56px; height: 56px; background: rgba(29,158,117,0.08); border: 0.5px solid #b8e8d4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
-    .success-icon svg { width: 22px; height: 22px; stroke: #1D9E75; fill: none; stroke-width: 2; stroke-linecap: round; }
-    .success-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 10px; }
-    .success-text { font-size: 14px; color: #888; line-height: 1.7; font-weight: 300; }
-
-    footer { padding: 32px 64px; border-top: 0.5px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; margin-top: 80px; }
-    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #bbb; text-decoration: none; }
-    .footer-logo span { color: rgba(29,158,117,0.5); }
-    .footer-copy { font-size: 12px; color: #ccc; }
+    /* ── Not for everyone band ── */
+    .nfe {
+      margin: 0 -48px 80px;
+      padding: 64px 48px;
+      background: var(--bg-1);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .nfe-inner { max-width: 1280px; margin: 0 auto; }
+    .nfe h2 {
+      font-family: var(--f-display); font-size: 40px;
+      letter-spacing: -.02em; margin-bottom: 40px;
+    }
+    .nfe h2 em { font-style: italic; color: var(--amber); }
+    .nfe-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+    }
+    .nfe-col h4 {
+      font-family: var(--f-mono); font-size: 12px; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .nfe-col.yes h4 { color: var(--green); }
+    .nfe-col.no h4 { color: var(--fg-3); }
+    .nfe-col ul { display: flex; flex-direction: column; gap: 14px; }
+    .nfe-col li {
+      font-size: 16px; color: var(--fg-1); line-height: 1.5;
+      padding-left: 24px; position: relative;
+    }
+    .nfe-col.yes li::before {
+      content: '✓'; color: var(--green);
+      position: absolute; left: 0; top: 0;
+      font-family: var(--f-mono);
+    }
+    .nfe-col.no li {
+      color: var(--fg-3); text-decoration: line-through;
+      text-decoration-color: rgba(239, 109, 109, .4);
+    }
+    .nfe-col.no li::before {
+      content: '✗'; color: #ef6d6d;
+      position: absolute; left: 0; top: 0;
+      font-family: var(--f-mono);
+      text-decoration: none;
+    }
 
     @media (max-width: 900px) {
-      nav { padding: 18px 24px; }
-      .nav-links { display: none; }
-      .page-header { padding: 56px 24px 40px; }
-      .page-h1 { font-size: 38px; }
-      .page-content { padding: 32px 24px; grid-template-columns: 1fr; gap: 32px; }
-      footer { padding: 24px; flex-direction: column; gap: 8px; }
+      .page-content { padding: 48px 20px 20px; }
+      .vprop { grid-template-columns: 1fr; }
+      .duo { grid-template-columns: 1fr; gap: 24px; margin-bottom: 48px; }
+      .coach-card, .apply-panel { padding: 28px; }
+      .apply-panel { position: static; }
+      .coach-name, .apply-head { font-size: 28px; }
+      .nfe { margin: 0 -20px 48px; padding: 40px 20px; }
+      .nfe h2 { font-size: 28px; }
+      .nfe-grid { grid-template-columns: 1fr; gap: 32px; }
     }
   </style>
 </head>
 <body>
-  <canvas id="ai-canvas"></canvas>
-  <nav>
-    <a href="index.html" class="logo">
-      <div class="logo-badge">N</div>
-      <span class="logo-name">Next<span>Gen</span> Ita</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="index.html#work">What we do</a></li>
-      <li><a href="podcast.html">Podcast</a></li>
-      <li><a href="toolbox.html">Toolbox</a></li>
-      <li><a href="coaching.html" class="active">Coaching</a></li>
-      <li><a href="events.html">Events</a></li>
-      <li><a href="bits.html">AI Bits</a></li>
-    </ul>
-    <a href="coaching.html" class="nav-cta">Join the community</a>
-  </nav>
 
-  <main>
-    <div class="page-header">
-      <div class="page-tag">03 · Startup Coaching</div>
-      <h1 class="page-h1">Human expertise.<br><em>AI-powered.</em></h1>
-      <p class="page-sub">A 45-minute session to map where you are, where you want to go, and exactly how to get there. First session is free.</p>
+<div class="bg-grid"></div>
+<canvas class="bg-canvas"></canvas>
+<div class="grain"></div>
+
+<nav class="ng-nav">
+  <a href="index.html" class="ng-logo">
+    <span class="mark">N</span>
+    <span>Next<em>Gen</em> Ita</span>
+  </a>
+  <ul class="ng-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="podcast.html">Podcast</a></li>
+    <li><a href="toolbox.html">Toolbox</a></li>
+    <li><a href="coaching.html" class="active">Coaching</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="bits.html">AI Bits</a></li>
+    <li><a href="apps.html">Cool Apps</a></li>
+    <li><a href="team.html">Team</a></li>
+  </ul>
+  <a href="#apply" class="ng-cta">Apply now</a>
+</nav>
+
+<main>
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow reveal">→ 03 · 1:1 Coaching</div>
+      <h1 class="h-display reveal d1">Free coaching<br>for <em>founders</em><br>who mean it.</h1>
+      <p class="lead reveal d2">
+        One hour with Matteo Favilli. No forms, no upsell.
+        4 slots a month. Whichever is most useful to you: strategy, AI adoption, or the
+        question keeping you up at 3 AM.
+      </p>
+    </div>
+  </section>
+
+  <div class="page-content">
+
+    <div class="vprop">
+      <div class="vp reveal">
+        <div class="vn">→ 01 · Duration</div>
+        <h3><em>60 minutes.</em></h3>
+        <p>One call, one problem. Direct, prepared, actionable. No chitchat, no fluff, no 15-minute recaps at the end.</p>
+      </div>
+      <div class="vp reveal d1">
+        <div class="vn">→ 02 · Format</div>
+        <h3><em>Video call.</em></h3>
+        <p>Google Meet. Bring notes, context, and the specific thing you are stuck on. Italian or English.</p>
+      </div>
+      <div class="vp reveal d2">
+        <div class="vn">→ 03 · Price</div>
+        <h3><em>Zero.</em></h3>
+        <p>Forever free. I give back to the Italian startup ecosystem — one meaningful conversation at a time.</p>
+      </div>
     </div>
 
-    <div class="page-content">
+    <div class="duo">
 
-      <div class="coaching-info">
-        <div class="session-pill">
-          <div class="session-pill-dot"></div>
-          <span class="session-pill-text">45 min · Free</span>
-        </div>
-
-        <div class="info-block">
-          <div class="info-label">What we cover</div>
-          <div class="get-list">
-            <div class="get-item"><div class="get-dot"></div>Where your startup stands and what's blocking you</div>
-            <div class="get-item"><div class="get-dot"></div>AI-powered analysis of your market in real time</div>
-            <div class="get-item"><div class="get-dot"></div>A clear action plan for the next 30 days</div>
-            <div class="get-item"><div class="get-dot"></div>Fundraising strategy and investor positioning</div>
-            <div class="get-item"><div class="get-dot"></div>Honest feedback, no filler, no generic advice</div>
+      <div class="coach-card reveal">
+        <div class="coach-label">Who you are talking to</div>
+        <div class="coach-head">
+          <div class="coach-avatar">M</div>
+          <div>
+            <div class="coach-name">Matteo Favilli</div>
+            <div class="coach-title">FOUNDER · NEXTGEN ITA</div>
           </div>
         </div>
-
-        <div class="info-block">
-          <div class="info-label">Who it's for</div>
-          <div class="info-text">Founders at any stage — from pre-idea to first revenue. If you have a real problem you're trying to solve and the drive to build, this session is for you.</div>
-        </div>
-
-        <div class="info-block">
-          <div class="info-label">What happens next</div>
-          <div class="info-text">We'll get back to you within 24 hours to confirm your slot. Sessions are held via video call. You'll leave with a concrete next step.</div>
+        <p class="coach-bio">
+          I've spent years in <em>pharma and life sciences</em> leading AI projects,
+          working with founders, and scaling teams through messy transitions.
+          Now I give back to the Italian startup ecosystem, one conversation at a time.
+        </p>
+        <div class="coach-bullets">
+          <div class="cbul">AI strategy for regulated industries (pharma, life sciences, fintech)</div>
+          <div class="cbul">Go-to-market and positioning for early-stage founders</div>
+          <div class="cbul">Fundraising prep — seed to Series A</div>
+          <div class="cbul">Hiring your first 5 — what breaks, what doesn't</div>
+          <div class="cbul">How to actually use AI without becoming a chatbot company</div>
         </div>
       </div>
 
-      <div class="form-card">
-        <div id="formContent">
-          <div class="form-title">Book your free session</div>
-          <div class="form-sub">Three quick questions. We'll confirm your slot within 24 hours.</div>
+      <div class="apply-panel reveal d1" id="apply">
+        <div class="slot-count">4 SLOTS · THIS MONTH</div>
+        <h2 class="apply-head">Apply in <em>one email.</em></h2>
+        <p class="apply-sub">
+          Tell me what you're building and what's blocking you.
+          If there's signal, you'll hear back within 48 hours.
+          If it's not a fit, I'll point you somewhere better.
+        </p>
 
-          <div class="form-group">
-            <label class="form-label">Your full name</label>
-            <input type="text" class="form-input" id="fname" placeholder="Marco Rossi" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Company or team</label>
-            <input type="text" class="form-input" id="fcompany" placeholder="Startup name or 'Solo founder'" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Are you incorporated?</label>
-            <div class="radio-group" id="incorporatedGroup">
-              <label class="radio-opt" onclick="selectRadio(this)">
-                <input type="radio" name="incorporated" value="Yes" />
-                <span class="radio-opt-text">Yes</span>
-              </label>
-              <label class="radio-opt" onclick="selectRadio(this)">
-                <input type="radio" name="incorporated" value="No" />
-                <span class="radio-opt-text">No</span>
-              </label>
-              <label class="radio-opt" onclick="selectRadio(this)">
-                <input type="radio" name="incorporated" value="In progress" />
-                <span class="radio-opt-text">In progress</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">What are you building and what do you need most?</label>
-            <textarea class="form-input" id="fneed" placeholder="Tell us about your startup and your main challenge or need right now..."></textarea>
-          </div>
-
-          <button class="form-submit" onclick="submitForm()">Request my free session</button>
-          <div class="form-note">We read every message personally. You'll hear from us within 24 hours.</div>
+        <div class="apply-steps">
+          <div class="astep"><span class="n">01</span><span><em>What are you building?</em> Two sentences, max.</span></div>
+          <div class="astep"><span class="n">02</span><span><em>What's the blocker?</em> The real one, not the one that sounds good.</span></div>
+          <div class="astep"><span class="n">03</span><span><em>Why now?</em> Why this conversation matters today.</span></div>
         </div>
 
-        <div class="success-msg" id="successMsg">
-          <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div class="success-title">Request received.</div>
-          <div class="success-text">We'll get back to you within 24 hours to confirm your session. Talk soon.</div>
+        <a href="mailto:mttfvll@gmail.com?subject=NextGen%20Ita%20Coaching%20Application&body=Hi%20Matteo%2C%0A%0A1.%20What%20I'm%20building%3A%0A%0A2.%20The%20real%20blocker%3A%0A%0A3.%20Why%20now%3A%0A%0A%20Grazie%2C" class="apply-btn" data-magnet>
+          <span>mttfvll@gmail.com</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+            <line x1="7" y1="17" x2="17" y2="7"/>
+            <polyline points="7 7 17 7 17 17"/>
+          </svg>
+        </a>
+        <div class="apply-tiny">NO CALENDARS · NO FORMS · JUST HUMANS</div>
+      </div>
+    </div>
+
+    <div class="nfe">
+      <div class="nfe-inner">
+        <h2>Not for <em>everyone.</em></h2>
+        <div class="nfe-grid">
+          <div class="nfe-col yes reveal">
+            <h4>→ YES, APPLY IF</h4>
+            <ul>
+              <li>You've started building — even a hacky MVP counts.</li>
+              <li>You have a specific question, not "let's chat."</li>
+              <li>You're ready to be honest about what's not working.</li>
+              <li>You'll actually do something with what we discuss.</li>
+              <li>You're Italian, Italy-based, or building for Italy.</li>
+            </ul>
+          </div>
+          <div class="nfe-col no reveal d1">
+            <h4>→ NOT A FIT IF</h4>
+            <ul>
+              <li>You want someone to validate your idea without pushback.</li>
+              <li>You're looking for funding, introductions or a team.</li>
+              <li>You haven't started building — come back when you have.</li>
+              <li>You want to "pick my brain" about AI in general.</li>
+              <li>You expect a second, third, fourth session.</li>
+            </ul>
+          </div>
         </div>
       </div>
-
     </div>
-  </main>
 
-  <footer>
-    <a href="index.html" class="footer-logo">Next<span>Gen</span> Ita</a>
-    <p class="footer-copy">Italy's next generation community · 2025</p>
-  </footer>
+  </div>
 
-  <script>
-    const canvas = document.getElementById('ai-canvas');
-    const ctx = canvas.getContext('2d');
-    let nodes = [], W, H;
-    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-    resize();
-    window.addEventListener('resize', () => { resize(); init(); });
-    function init() {
-      nodes = [];
-      const count = Math.floor((W * H) / 18000);
-      for (let i = 0; i < count; i++) nodes.push({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-0.5)*0.28, vy: (Math.random()-0.5)*0.28, r: Math.random()*1.2+0.4 });
-    }
-    init();
-    function draw() {
-      ctx.clearRect(0,0,W,H);
-      for (let i = 0; i < nodes.length; i++) {
-        const a = nodes[i];
-        a.x += a.vx; a.y += a.vy;
-        if (a.x<0||a.x>W) a.vx*=-1;
-        if (a.y<0||a.y>H) a.vy*=-1;
-        for (let j = i+1; j < nodes.length; j++) {
-          const b = nodes[j];
-          const dx = a.x-b.x, dy = a.y-b.y, dist = Math.sqrt(dx*dx+dy*dy);
-          if (dist < 150) { ctx.beginPath(); ctx.strokeStyle=`rgba(29,158,117,${(1-dist/150)*0.28})`; ctx.lineWidth=0.5; ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
-        }
-        ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,Math.PI*2); ctx.fillStyle='rgba(29,158,117,0.55)'; ctx.fill();
-      }
-      requestAnimationFrame(draw);
-    }
-    draw();
+</main>
 
-    function selectRadio(label) {
-      document.querySelectorAll('.radio-opt').forEach(l => l.classList.remove('selected'));
-      label.classList.add('selected');
-      label.querySelector('input').checked = true;
-    }
+<footer class="ng-footer">
+  <div class="ng-footer-inner">
+    <div>
+      <div class="ftag">Italian talent.<br><em>AI as leverage.</em></div>
+      <p class="fsub">A community for founders, builders and researchers who want to move fast, think clearly, and ship what matters.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <div class="flinks">
+        <a href="podcast.html">Podcast</a>
+        <a href="toolbox.html">Toolbox</a>
+        <a href="coaching.html">Coaching</a>
+        <a href="events.html">Events</a>
+        <a href="bits.html">AI Bits</a>
+        <a href="apps.html">Cool Apps</a>
+        <a href="team.html">Team</a>
+      </div>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <div class="flinks">
+        <a href="mailto:mttfvll@gmail.com">Email</a>
+        <a href="https://linkedin.com/in/matteofaralli" target="_blank">LinkedIn</a>
+        <a href="https://open.spotify.com/show/6yWSAUi97PEEQXSAzNTI9z" target="_blank">Spotify</a>
+      </div>
+    </div>
+    <div>
+      <h4>Partners</h4>
+      <div class="flinks">
+        <a href="#">Startup Grind</a>
+        <a href="#">The Spoon</a>
+        <a href="#">SoBigData</a>
+      </div>
+    </div>
+  </div>
+  <div class="ng-footer-bottom">
+    <span>© 2026 NextGen Ita · All programs free</span>
+    <span>Built in Italy, for the world</span>
+  </div>
+</footer>
 
-    function submitForm() {
-      const name = document.getElementById('fname').value.trim();
-      const company = document.getElementById('fcompany').value.trim();
-      const need = document.getElementById('fneed').value.trim();
-      const incorporated = document.querySelector('input[name="incorporated"]:checked');
-
-      if (!name || !company || !need || !incorporated) {
-        alert('Please fill in all fields.');
-        return;
-      }
-
-      const subject = encodeURIComponent('NextGen Coaching Request — ' + name);
-      const body = encodeURIComponent(
-        'NAME: ' + name + '\n' +
-        'COMPANY/TEAM: ' + company + '\n' +
-        'INCORPORATED: ' + incorporated.value + '\n\n' +
-        'WHAT THEY ARE BUILDING / MAIN NEED:\n' + need
-      );
-
-      window.location.href = 'mailto:mttfvll@gmail.com?subject=' + subject + '&body=' + body;
-
-      setTimeout(() => {
-        document.getElementById('formContent').style.display = 'none';
-        document.getElementById('successMsg').style.display = 'block';
-      }, 500);
-    }
-  </script>
+<script src="assets/i18n.js"></script>
+<script src="assets/ng.js"></script>
 </body>
 </html>

@@ -4,297 +4,792 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NextGen Ita · Where Italian Talent Meets AI</title>
-  <meta name="description" content="The Italian community at the intersection of AI and human ambition." />
+  <meta name="description" content="The Italian community at the intersection of AI and human ambition. Podcast, toolbox, coaching, events, writing. Free." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/ng.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0f0f0f; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    #ai-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.05; pointer-events: none; }
-    nav, main, footer { position: relative; z-index: 1; }
+    /* ═══════ HERO ═══════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      padding: 160px 48px 80px;
+      display: flex; flex-direction: column; justify-content: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 50% 80% at 80% 30%, rgba(45, 212, 160, .12) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 50% at 10% 90%, rgba(245, 184, 74, .08) 0%, transparent 55%);
+    }
+    .hero-inner { position: relative; z-index: 2; max-width: 1400px; }
 
-    /* NAV */
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 0 64px; height: 64px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); z-index: 100; }
-    .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
-    .logo-badge { width: 30px; height: 30px; background: #1D9E75; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; letter-spacing: -0.5px; }
-    .logo-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #0f0f0f; letter-spacing: -0.3px; }
-    .logo-name span { color: #1D9E75; }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a { font-size: 13.5px; font-weight: 400; color: #888; text-decoration: none; transition: color 0.15s; letter-spacing: -0.1px; }
-    .nav-links a:hover, .nav-links a.active { color: #0f0f0f; }
-    .nav-cta { background: #0f0f0f; color: #fff; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; padding: 9px 22px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.15s; letter-spacing: -0.1px; }
-    .nav-cta:hover { opacity: 0.75; }
+    .hero-status {
+      display: inline-flex; align-items: center; gap: 14px;
+      padding: 8px 14px 8px 8px;
+      border: 1px solid var(--line-2);
+      background: rgba(10, 13, 12, .5);
+      border-radius: 100px;
+      backdrop-filter: blur(12px);
+      margin-bottom: 48px;
+      font-family: var(--f-mono); font-size: 11px;
+      color: var(--fg-1); letter-spacing: .5px;
+    }
+    .hero-status .live {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--green-08);
+      border: 1px solid var(--green-20);
+      color: var(--green);
+      padding: 4px 10px; border-radius: 100px;
+      text-transform: uppercase; letter-spacing: 1.2px;
+    }
+    .hero-status .live::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: ping 1.8s infinite;
+    }
+    @keyframes ping { 0%,100% {opacity:1} 50% {opacity:.35} }
+    .hero-status .sep { width: 1px; height: 14px; background: var(--line-2); }
 
-    /* HERO */
-    .hero { padding: 120px 64px 100px; max-width: 1100px; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: #f0faf6; border: 1px solid #c8e6d8; color: #1D9E75; font-size: 11px; font-weight: 500; padding: 5px 14px; border-radius: 100px; margin-bottom: 36px; letter-spacing: 0.8px; text-transform: uppercase; }
-    .hero-tag-dot { width: 5px; height: 5px; background: #1D9E75; border-radius: 50%; animation: pulse 2.5s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-    h1 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 68px; line-height: 1.1; letter-spacing: -1px; margin-bottom: 28px; color: #0f0f0f; }
-    h1 em { font-style: normal; color: #1D9E75; }
-    .hero-sub { font-size: 17px; color: #6b7280; line-height: 1.8; max-width: 540px; margin-bottom: 44px; font-weight: 400; }
-    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
-    .btn-primary { background: #1D9E75; color: #fff; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 14px; padding: 13px 28px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.15s; letter-spacing: -0.1px; }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-ghost { background: transparent; color: #0f0f0f; font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; padding: 13px 28px; border-radius: 100px; border: 1px solid #e5e7eb; cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.15s; }
-    .btn-ghost:hover { border-color: #9ca3af; }
-    .hero-footnote { font-size: 12.5px; color: #bbb; font-weight: 300; }
-    .hero-footnote em { font-style: normal; color: #1D9E75; }
+    h1.mega {
+      font-family: var(--f-display);
+      font-weight: 400;
+      font-size: clamp(64px, 10vw, 172px);
+      line-height: .92;
+      letter-spacing: -.045em;
+      margin-bottom: 40px;
+      max-width: 1280px;
+    }
+    h1.mega .line { display: block; overflow: hidden; }
+    h1.mega em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--green) 0%, var(--amber) 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    h1.mega .arrow {
+      display: inline-block;
+      font-family: var(--f-sans);
+      font-size: .55em;
+      color: var(--fg-2);
+      margin-left: .1em;
+      vertical-align: middle;
+    }
 
-    /* STATS */
-    .stats { display: flex; border-top: 1px solid #f3f4f6; border-bottom: 1px solid #f3f4f6; margin: 0 64px; }
-    .stat { flex: 1; padding: 36px 0; text-align: center; border-right: 1px solid #f3f4f6; }
-    .stat:last-child { border-right: none; }
-    .stat-num { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 34px; color: #0f0f0f; letter-spacing: -1px; }
-    .stat-label { font-size: 11px; color: #9ca3af; margin-top: 6px; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 500; }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.3fr 1fr;
+      gap: 80px; align-items: end;
+      margin-bottom: 80px;
+    }
+    .hero-lead {
+      font-size: 20px; line-height: 1.55;
+      color: var(--fg-1); font-weight: 350;
+      max-width: 520px;
+    }
+    .hero-lead em { font-style: italic; color: var(--amber); }
 
-    /* SECTION */
-    section { padding: 100px 64px; }
-    .section-tag { font-size: 11px; color: #1D9E75; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; margin-bottom: 14px; }
-    h2 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 42px; letter-spacing: -0.5px; margin-bottom: 14px; line-height: 1.15; color: #0f0f0f; }
-    .section-intro { font-size: 16px; color: #6b7280; line-height: 1.8; max-width: 520px; margin-bottom: 52px; font-weight: 400; }
+    .hero-ctas { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 28px; }
 
-    /* CARDS */
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: #e5e7eb; border-radius: 16px; overflow: hidden; }
-    .card { background: #fff; padding: 32px 28px; text-decoration: none; display: block; color: #0f0f0f; transition: background 0.15s; }
-    .card:hover { background: #fafafa; }
-    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-    .card-badge { font-size: 10px; color: #1D9E75; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; }
-    .card-arrow { width: 24px; height: 24px; border: 1px solid #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
-    .card-arrow svg { width: 10px; height: 10px; stroke: #bbb; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: all 0.15s; }
-    .card:hover .card-arrow { border-color: #1D9E75; }
-    .card:hover .card-arrow svg { stroke: #1D9E75; transform: translate(2px, 0); }
-    .card-number { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; color: #d1d5db; letter-spacing: 2px; margin-bottom: 10px; }
-    .card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 10px; letter-spacing: -0.2px; line-height: 1.25; }
-    .card-desc { font-size: 13.5px; color: #6b7280; line-height: 1.75; font-weight: 400; }
+    .hero-side {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .hero-pill {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 20px;
+      background: rgba(255, 245, 230, .025);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      font-size: 13px;
+      transition: border-color .3s, background .3s, transform .3s var(--ease);
+    }
+    .hero-pill:hover {
+      border-color: var(--green-20);
+      background: rgba(45, 212, 160, .04);
+      transform: translateX(-4px);
+    }
+    .hero-pill .num {
+      font-family: var(--f-display); font-style: italic;
+      font-size: 32px; line-height: 1;
+      color: var(--green);
+      min-width: 48px;
+    }
+    .hero-pill .lab {
+      font-family: var(--f-mono); font-size: 10px; color: var(--fg-3);
+      text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px;
+    }
+    .hero-pill .val { color: var(--fg); font-size: 14px; }
+    .hero-pill:nth-child(2) .num { color: var(--amber); }
 
-    /* TYPEWRITER BAR */
-    .typewriter-bar { margin: 0 64px; padding: 28px 40px; border: 1px solid #f3f4f6; border-radius: 12px; display: flex; align-items: center; gap: 20px; background: #fafafa; }
-    .tw-label { font-size: 11px; color: #d1d5db; letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; font-weight: 500; }
-    .tw-text { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 18px; color: #0f0f0f; letter-spacing: -0.3px; }
-    .tw-cursor { display: inline-block; width: 2px; height: 0.85em; background: #1D9E75; margin-left: 2px; animation: blink 1s infinite; vertical-align: middle; }
+    .hero-meta-row {
+      display: flex; align-items: center; gap: 32px;
+      padding-top: 40px;
+      border-top: 1px solid var(--line);
+      font-family: var(--f-mono); font-size: 11px;
+      color: var(--fg-3); letter-spacing: 1.2px; text-transform: uppercase;
+      flex-wrap: wrap;
+    }
+    .hero-meta-row > span { display: inline-flex; align-items: center; gap: 8px; }
+    .hero-meta-row strong { color: var(--fg-1); font-weight: 400; }
+    .hero-meta-row .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--fg-3); }
+
+    /* ═══════ MARQUEE ═══════ */
+    .marquee {
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--bg-1);
+      overflow: hidden; position: relative;
+    }
+    .marquee::before, .marquee::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2;
+      pointer-events: none;
+    }
+    .marquee::before { left: 0;  background: linear-gradient(90deg, var(--bg-1), transparent); }
+    .marquee::after  { right: 0; background: linear-gradient(-90deg, var(--bg-1), transparent); }
+    .marquee-track {
+      display: flex; gap: 56px;
+      animation: marquee 45s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    .marquee-item {
+      font-family: var(--f-display); font-style: italic;
+      font-size: 28px; color: var(--fg-2);
+      display: inline-flex; align-items: center; gap: 56px;
+    }
+    .marquee-item::after { content: '✦'; color: var(--green); font-size: 18px; font-style: normal; }
+
+    /* ═══════ WHAT WE DO — Interactive rail ═══════ */
+    .work {
+      padding: 140px 48px 120px;
+      position: relative;
+    }
+    .section-head {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      margin-bottom: 80px;
+      align-items: end;
+    }
+    .section-head .eyebrow { margin-bottom: 24px; }
+    .section-head h2 { max-width: 640px; }
+    .section-head p {
+      font-size: 17px; line-height: 1.7;
+      color: var(--fg-1); max-width: 480px; font-weight: 350;
+    }
+
+    .rail {
+      display: grid; grid-template-columns: 1fr; gap: 1px;
+      background: var(--line);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .rail-row {
+      display: grid; grid-template-columns: 80px 1fr 1.2fr auto;
+      gap: 48px; align-items: center;
+      padding: 40px 8px;
+      background: var(--bg);
+      position: relative;
+      transition: padding .5s var(--ease), background .4s;
+      cursor: pointer;
+    }
+    .rail-row::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(90deg, var(--green-08), transparent 60%);
+      opacity: 0; transition: opacity .4s;
+    }
+    .rail-row:hover { padding: 48px 8px; background: var(--bg-1); }
+    .rail-row:hover::before { opacity: 1; }
+
+    .rail-num {
+      font-family: var(--f-mono); font-size: 11px;
+      color: var(--fg-3); letter-spacing: 2px;
+    }
+    .rail-title {
+      font-family: var(--f-display);
+      font-size: clamp(36px, 4.5vw, 62px);
+      line-height: 1.0;
+      letter-spacing: -.02em;
+      color: var(--fg);
+      transition: transform .4s var(--ease);
+    }
+    .rail-title em { font-style: italic; color: var(--green); }
+    .rail-row:nth-child(2) .rail-title em { color: var(--amber); }
+    .rail-row:nth-child(4) .rail-title em { color: var(--amber); }
+    .rail-row:hover .rail-title { transform: translateX(12px); }
+
+    .rail-desc {
+      font-size: 15px; line-height: 1.7;
+      color: var(--fg-1); font-weight: 350;
+      max-width: 440px;
+    }
+    .rail-desc .tag {
+      display: inline-block;
+      font-family: var(--f-mono); font-size: 10px;
+      color: var(--green);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      margin-top: 10px;
+      padding: 4px 10px;
+      background: var(--green-08);
+      border: 1px solid var(--green-20);
+      border-radius: 100px;
+    }
+    .rail-row:nth-child(2) .tag,
+    .rail-row:nth-child(4) .tag {
+      color: var(--amber);
+      background: var(--amber-08);
+      border-color: var(--amber-20);
+    }
+
+    .rail-cta {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      border: 1px solid var(--line-2);
+      display: grid; place-items: center;
+      transition: all .4s var(--ease);
+      flex-shrink: 0;
+    }
+    .rail-cta svg { width: 18px; height: 18px; transition: transform .4s var(--ease); }
+    .rail-row:hover .rail-cta {
+      background: var(--green);
+      border-color: var(--green);
+      color: #04110c;
+    }
+    .rail-row:hover .rail-cta svg { transform: translate(3px, -3px); }
+
+    /* ═══════ LIVE BAND ═══════ */
+    .live-band {
+      padding: 48px 48px;
+      background: var(--bg-1);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: grid; grid-template-columns: auto 1fr auto; gap: 32px; align-items: center;
+    }
+    .live-band .label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--f-mono); font-size: 11px;
+      color: var(--fg-3); text-transform: uppercase; letter-spacing: 2px;
+      white-space: nowrap;
+    }
+    .live-band .now {
+      font-family: var(--f-display); font-style: italic;
+      font-size: clamp(20px, 2.4vw, 34px);
+      color: var(--fg);
+      min-height: 1.4em;
+    }
+    .live-band .cursor {
+      display: inline-block; width: 2px; height: .9em;
+      background: var(--green); margin-left: 4px;
+      animation: blink 1s infinite; vertical-align: -3px;
+    }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .live-band .clock {
+      font-family: var(--f-mono); font-size: 12px;
+      color: var(--green); letter-spacing: 1px;
+    }
 
-    /* MISSION */
-    .mission-wrap { margin: 100px 64px 0; padding: 64px; border-top: 1px solid #f3f4f6; border-bottom: 1px solid #f3f4f6; }
-    .mission-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 28px; line-height: 1.5; max-width: 760px; margin-bottom: 24px; letter-spacing: -0.3px; color: #0f0f0f; }
-    .mission-text em { font-style: normal; color: #1D9E75; }
-    .mission-sub { font-size: 16px; color: #6b7280; max-width: 560px; line-height: 1.8; font-weight: 400; }
+    /* ═══════ MANIFESTO ═══════ */
+    .manifesto {
+      padding: 160px 48px;
+      position: relative; overflow: hidden;
+    }
+    .manifesto::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 40% 60% at 80% 30%, rgba(45, 212, 160, .1) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 40% at 20% 80%, rgba(245, 184, 74, .06) 0%, transparent 60%);
+    }
+    .manifesto-inner {
+      max-width: 1200px; margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+    .manifesto-text {
+      font-family: var(--f-display);
+      font-size: clamp(32px, 4.5vw, 64px);
+      line-height: 1.12;
+      letter-spacing: -.02em;
+      color: var(--fg);
+      margin-bottom: 48px;
+    }
+    .manifesto-text .muted { color: var(--fg-3); }
+    .manifesto-text em { font-style: italic; color: var(--green); }
+    .manifesto-text .amber { font-style: italic; color: var(--amber); }
+    .manifesto-sig {
+      font-family: var(--f-mono); font-size: 12px;
+      color: var(--fg-2); letter-spacing: 1px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .manifesto-sig .line { flex: 1; height: 1px; background: var(--line); max-width: 60px; }
 
-    /* CTA */
-    .cta-section { padding: 100px 64px; }
-    .cta-box { border: 1px solid #c8e6d8; border-radius: 20px; padding: 72px 64px; background: #f0faf6; }
-    .cta-eyebrow { font-size: 11px; color: #1D9E75; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 18px; font-weight: 500; }
-    .cta-box h2 { font-size: 44px; letter-spacing: -0.5px; margin-bottom: 16px; }
-    .cta-sub { font-size: 17px; color: #6b7280; margin-bottom: 40px; max-width: 480px; line-height: 1.75; font-weight: 400; }
-    .cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn-green { background: #1D9E75; color: #fff; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 14px; padding: 13px 28px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.15s; }
-    .btn-green:hover { opacity: 0.85; }
-    .btn-border { background: #fff; color: #0f0f0f; font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; padding: 13px 28px; border-radius: 100px; border: 1px solid #d1d5db; cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.15s; }
-    .btn-border:hover { border-color: #9ca3af; }
+    /* ═══════ SIGNAL / STATS ═══════ */
+    .signal {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .signal-cell {
+      padding: 48px 36px;
+      border-right: 1px solid var(--line);
+      position: relative;
+      transition: background .3s;
+    }
+    .signal-cell:last-child { border-right: none; }
+    .signal-cell:hover { background: var(--bg-1); }
+    .signal-cell .num {
+      font-family: var(--f-display); font-style: italic;
+      font-size: clamp(56px, 6vw, 88px);
+      line-height: 1;
+      color: var(--fg);
+      margin-bottom: 12px;
+      display: flex; align-items: baseline; gap: 8px;
+    }
+    .signal-cell .num em { color: var(--green); font-style: italic; }
+    .signal-cell .num .small {
+      font-size: .4em; color: var(--fg-3);
+      font-family: var(--f-mono); font-style: normal;
+      letter-spacing: 1px;
+    }
+    .signal-cell .label {
+      font-family: var(--f-mono); font-size: 11px;
+      color: var(--fg-2); text-transform: uppercase; letter-spacing: 1.5px;
+    }
 
-    /* FOOTER */
-    footer { padding: 32px 64px; border-top: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; }
-    .footer-logo { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
-    .footer-badge { width: 22px; height: 22px; background: #e5e7eb; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 800; color: #9ca3af; }
-    .footer-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; color: #d1d5db; }
-    .footer-copy { font-size: 12px; color: #d1d5db; font-weight: 400; }
+    /* ═══════ FEATURED IN ═══════ */
+    .featured {
+      padding: 100px 48px;
+      background: var(--bg-1);
+    }
+    .featured-head {
+      display: flex; align-items: baseline; gap: 24px;
+      margin-bottom: 48px; flex-wrap: wrap;
+    }
+    .featured-head h3 {
+      font-family: var(--f-display); font-style: italic;
+      font-size: 32px; color: var(--fg);
+    }
+    .featured-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .featured-card {
+      padding: 32px;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      transition: border-color .3s, transform .4s var(--ease);
+      display: block;
+    }
+    .featured-card:hover {
+      border-color: var(--green-20);
+      transform: translateY(-4px);
+    }
+    .featured-outlet {
+      font-family: var(--f-mono); font-size: 10px;
+      color: var(--green); text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 20px;
+    }
+    .featured-title {
+      font-family: var(--f-display); font-size: 22px;
+      line-height: 1.25; margin-bottom: 14px;
+      color: var(--fg);
+    }
+    .featured-desc { font-size: 13px; color: var(--fg-2); line-height: 1.7; }
 
+    /* ═══════ CTA ═══════ */
+    .cta {
+      padding: 140px 48px;
+      position: relative; overflow: hidden;
+    }
+    .cta-box {
+      max-width: 1200px; margin: 0 auto;
+      padding: 96px 80px;
+      background:
+        radial-gradient(ellipse 80% 120% at 100% 0%, rgba(45, 212, 160, .12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 0% 100%, rgba(245, 184, 74, .08) 0%, transparent 60%),
+        var(--bg-1);
+      border: 1px solid var(--line-2);
+      border-radius: 32px;
+      position: relative; overflow: hidden;
+    }
+    .cta-box::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to right,  rgba(255,245,230,.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,245,230,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000, transparent 75%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta h2 {
+      font-family: var(--f-display);
+      font-size: clamp(44px, 6vw, 88px);
+      line-height: 1;
+      letter-spacing: -.03em;
+      margin-bottom: 32px;
+      max-width: 900px;
+    }
+    .cta h2 em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--green), var(--amber));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .cta p {
+      font-size: 18px; color: var(--fg-1); line-height: 1.6;
+      max-width: 540px; margin-bottom: 48px; font-weight: 350;
+    }
+    .cta .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* ═══════ Mobile ═══════ */
     @media (max-width: 900px) {
-      nav { padding: 0 24px; }
-      .nav-links { display: none; }
-      .hero { padding: 80px 24px 64px; }
-      h1 { font-size: 44px; letter-spacing: -0.5px; }
-      .hero-sub { font-size: 16px; }
-      .stats { margin: 0 24px; flex-wrap: wrap; }
-      .stat { min-width: 50%; }
-      section { padding: 64px 24px; }
-      h2 { font-size: 32px; }
-      .typewriter-bar { margin: 0 24px; flex-direction: column; align-items: flex-start; padding: 24px; }
-      .mission-wrap { margin: 64px 24px 0; padding: 40px 24px; }
-      .mission-text { font-size: 22px; }
-      .cta-section { padding: 64px 24px; }
-      .cta-box { padding: 40px 24px; }
-      .cta-box h2 { font-size: 30px; }
-      footer { padding: 24px; flex-direction: column; gap: 10px; text-align: center; }
+      .hero { padding: 120px 20px 60px; min-height: auto; }
+      h1.mega { font-size: 56px; line-height: .95; letter-spacing: -.03em; }
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; margin-bottom: 48px; }
+      .hero-meta-row { gap: 12px; font-size: 10px; }
+      .work { padding: 80px 20px; }
+      .section-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
+      .rail-row { grid-template-columns: 1fr; gap: 16px; padding: 28px 8px; }
+      .rail-row:hover { padding: 28px 8px; }
+      .rail-num { font-size: 10px; }
+      .rail-cta { width: 48px; height: 48px; }
+      .live-band { grid-template-columns: 1fr; gap: 12px; padding: 28px 20px; }
+      .manifesto { padding: 80px 20px; }
+      .signal { grid-template-columns: 1fr 1fr; }
+      .signal-cell { padding: 28px 20px; }
+      .signal-cell:nth-child(1), .signal-cell:nth-child(2) { border-bottom: 1px solid var(--line); }
+      .signal-cell:nth-child(2), .signal-cell:nth-child(4) { border-right: none; }
+      .featured { padding: 60px 20px; }
+      .featured-grid { grid-template-columns: 1fr; }
+      .cta { padding: 80px 20px; }
+      .cta-box { padding: 48px 28px; border-radius: 24px; }
     }
   </style>
 </head>
 <body>
 
-  <canvas id="ai-canvas"></canvas>
+<div class="bg-grid"></div>
+<canvas class="bg-canvas"></canvas>
+<div class="grain"></div>
 
-  <nav>
-    <a href="index.html" class="logo">
-      <div class="logo-badge">N</div>
-      <span class="logo-name">Next<span>Gen</span> Ita</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="index.html#work">What we do</a></li>
-      <li><a href="podcast.html">Podcast</a></li>
-      <li><a href="toolbox.html">Toolbox</a></li>
-      <li><a href="coaching.html">Coaching</a></li>
-      <li><a href="events.html">Events</a></li>
-      <li><a href="bits.html">AI Bits</a></li>
-    </ul>
-    <a href="coaching.html" class="nav-cta">Join the community</a>
-  </nav>
+<nav class="ng-nav">
+  <a href="index.html" class="ng-logo">
+    <span class="mark">N</span>
+    <span>Next<em>Gen</em> Ita</span>
+  </a>
+  <ul class="ng-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="podcast.html">Podcast</a></li>
+    <li><a href="toolbox.html">Toolbox</a></li>
+    <li><a href="coaching.html">Coaching</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="bits.html">AI Bits</a></li>
+    <li><a href="apps.html">Cool Apps</a></li>
+    <li><a href="team.html">Team</a></li>
+  </ul>
+  <a href="coaching.html" class="ng-cta">Join community</a>
+</nav>
 
-  <main>
+<main>
 
-    <section class="hero">
-      <div class="hero-tag"><div class="hero-tag-dot"></div>Italy's next generation community</div>
-      <h1>Talents build.<br><em>AI makes</em><br>it faster.</h1>
-      <p class="hero-sub">NextGen Ita is the Italian community at the intersection of human ambition and artificial intelligence. We build AI literacy from agents to ethics, from tools to green AI. So you can lead it, not follow it.</p>
-      <div class="hero-btns">
-        <a href="#contact" class="btn-primary">Join the community</a>
-        <a href="podcast.html" class="btn-ghost">Listen to the podcast &#8599;</a>
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="hero">
+    <div class="hero-inner">
+
+      <div class="hero-status reveal">
+        <span class="live">Live</span>
+        <span>Italy's next-generation AI community</span>
+        <span class="sep"></span>
+        <span data-clock>—</span>
       </div>
-      <p class="hero-footnote">The talent is yours. <em>The leverage is AI.</em></p>
-    </section>
 
-    <div class="stats">
-      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Active programs</div></div>
-      <div class="stat"><div class="stat-num">AI</div><div class="stat-label">At your service</div></div>
-      <div class="stat"><div class="stat-num">IT</div><div class="stat-label">Global roots</div></div>
-    </div>
+      <h1 class="mega" data-i18n-skip>
+        <span class="line reveal">Talents build.</span>
+        <span class="line reveal d1"><em>AI makes</em> <span class="arrow">↗</span></span>
+        <span class="line reveal d2">it faster?</span>
+      </h1>
 
-    <section id="work">
-      <p class="section-tag">What we do</p>
-      <h2>Tools built around<br>your ambition.</h2>
-      <p class="section-intro">Four programs designed to put AI at the service of the founder, not the other way around.</p>
-      <div class="cards">
-
-        <a href="podcast.html" class="card">
-          <div class="card-top">
-            <span class="card-badge">Podcast</span>
-            <div class="card-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      <div class="hero-grid">
+        <div>
+          <p class="hero-lead reveal d3">
+            NextGen Ita is where Italian founders, researchers and builders use AI as real leverage.
+            Not a buzzword. <em>A tool that compounds.</em>
+          </p>
+          <div class="hero-ctas reveal d4">
+            <a href="coaching.html" class="btn-primary" data-magnet>
+              Join community
+              <span>→</span>
+            </a>
+            <a href="podcast.html" class="btn-ghost" data-magnet>
+              Listen to podcast
+              <span>↗</span>
+            </a>
           </div>
-          <div class="card-number">01</div>
-          <div class="card-title">NextGen Podcast</div>
-          <div class="card-desc">Real conversations with Italian founders and innovators using AI to build something worth building.</div>
-        </a>
+        </div>
 
-        <a href="toolbox.html" class="card">
-          <div class="card-top">
-            <span class="card-badge">AI Tool · Free</span>
-            <div class="card-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          </div>
-          <div class="card-number">02</div>
-          <div class="card-title">Founder's Toolbox</div>
-          <div class="card-desc">An AI trained on Y Combinator, P&amp;P and the world's best startup thinking. Your co-founder that never sleeps.</div>
-        </a>
-
-        <a href="coaching.html" class="card">
-          <div class="card-top">
-            <span class="card-badge">Coaching · First session free</span>
-            <div class="card-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          </div>
-          <div class="card-number">03</div>
-          <div class="card-title">Startup Coaching</div>
-          <div class="card-desc">Human expertise combined with real-time AI analysis. The kind of support no traditional accelerator can offer.</div>
-        </a>
-
-        <a href="events.html" class="card">
-          <div class="card-top">
-            <span class="card-badge">Events · Live</span>
-            <div class="card-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          </div>
-          <div class="card-number">04</div>
-          <div class="card-title">AI Events</div>
-          <div class="card-desc">Where AI meets the people who actually use it. Universities, startups and companies working on the same future.</div>
-          <div style="margin-top:14px;display:inline-flex;align-items:center;gap:6px;background:#f0faf6;border:1px solid #c8e6d8;padding:4px 10px;border-radius:100px;"><div style="width:4px;height:4px;background:#1D9E75;border-radius:50%;"></div><span style="font-size:10px;color:#1D9E75;letter-spacing:0.8px;text-transform:uppercase;font-weight:500;">In partnership with Startup Grind</span></div>
-        </a>
-
-        <a href="bits.html" class="card">
-          <div class="card-top">
-            <span class="card-badge">Writing</span>
-            <div class="card-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          </div>
-          <div class="card-number">05</div>
-          <div class="card-title">AI Bits</div>
-          <div class="card-desc">Short-form thinking on AI, startups and what's actually happening in Italian innovation. Full articles, straight from the source.</div>
-        </a>
-
-      </div>
-    </section>
-
-    <div class="typewriter-bar">
-      <span class="tw-label">NextGen is building</span>
-      <span><span class="tw-text" id="typewriter"></span><span class="tw-cursor"></span></span>
-    </div>
-
-    <div class="mission-wrap" id="mission">
-      <p class="section-tag" style="margin-bottom:16px">Mission</p>
-      <p class="mission-text">The talent was always there. <em>Now it has the tools to match.</em> We exist to make sure that the best Italian minds have everything they need to build, grow and compete on a global level.</p>
-      <p class="mission-sub">We connect startups, universities and companies. We build bridges between human intelligence and artificial intelligence, turning ideas into measurable impact.</p>
-    </div>
-
-    <section class="cta-section" id="contact">
-      <div class="cta-box">
-        <p class="cta-eyebrow">Get started</p>
-        <h2>The next great Italian idea starts here.</h2>
-        <p class="cta-sub">Join the community, talk to us, access the tools. Everything free. Everything now.</p>
-        <div class="cta-btns">
-          <a href="https://wa.me/" class="btn-green">WhatsApp us &#8599;</a>
-          <a href="mailto:mttfvll@gmail.com" class="btn-border">Send us an email</a>
+        <div class="hero-side">
+          <a href="podcast.html" class="hero-pill reveal d3">
+            <div class="num">6</div>
+            <div>
+              <div class="lab">Podcast</div>
+              <div class="val">episodes on Spotify</div>
+            </div>
+          </a>
+          <a href="toolbox.html" class="hero-pill reveal d4">
+            <div class="num">12</div>
+            <div>
+              <div class="lab">Toolbox</div>
+              <div class="val">AI founder skills, free</div>
+            </div>
+          </a>
+          <a href="bits.html" class="hero-pill reveal d5">
+            <div class="num">∞</div>
+            <div>
+              <div class="lab">AI Bits</div>
+              <div class="val">writing on what actually ships</div>
+            </div>
+          </a>
         </div>
       </div>
-    </section>
 
-  </main>
+      <div class="hero-meta-row reveal d5">
+        <span><strong>01</strong> <span class="dot"></span> based in Italy, built global</span>
+        <span><strong>02</strong> <span class="dot"></span> zero cost, zero gatekeeping</span>
+        <span><strong>03</strong> <span class="dot"></span> official partner · Startup Grind</span>
+        <span><strong>04</strong> <span class="dot"></span> move your cursor, watch the field</span>
+      </div>
+    </div>
+  </section>
 
-  <footer>
-    <a href="index.html" class="footer-logo">
-      <div class="footer-badge">N</div>
-      <span class="footer-name">NextGen Ita</span>
-    </a>
-    <p class="footer-copy">Italy's AI-native community · 2025</p>
-  </footer>
+  <!-- ═══════════════ MARQUEE ═══════════════ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">Real builders</span>
+      <span class="marquee-item">AI as leverage</span>
+      <span class="marquee-item">Italian founders</span>
+      <span class="marquee-item">Global ambition</span>
+      <span class="marquee-item">Zero filler</span>
+      <span class="marquee-item">Green AI</span>
+      <span class="marquee-item">Honest coaching</span>
+      <span class="marquee-item">Real builders</span>
+      <span class="marquee-item">AI as leverage</span>
+      <span class="marquee-item">Italian founders</span>
+      <span class="marquee-item">Global ambition</span>
+      <span class="marquee-item">Zero filler</span>
+      <span class="marquee-item">Green AI</span>
+      <span class="marquee-item">Honest coaching</span>
+    </div>
+  </div>
 
-  <script>
-    const canvas = document.getElementById('ai-canvas');
-    const ctx = canvas.getContext('2d');
-    let nodes = [], W, H;
-    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-    resize();
-    window.addEventListener('resize', () => { resize(); init(); });
-    function init() {
-      nodes = [];
-      const count = Math.floor((W * H) / 18000);
-      for (let i = 0; i < count; i++) nodes.push({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-0.5)*0.25, vy: (Math.random()-0.5)*0.25, r: Math.random()*1.2+0.4 });
-    }
-    init();
-    function draw() {
-      ctx.clearRect(0,0,W,H);
-      for (let i = 0; i < nodes.length; i++) {
-        const a = nodes[i];
-        a.x += a.vx; a.y += a.vy;
-        if (a.x<0||a.x>W) a.vx*=-1;
-        if (a.y<0||a.y>H) a.vy*=-1;
-        for (let j = i+1; j < nodes.length; j++) {
-          const b = nodes[j];
-          const dx = a.x-b.x, dy = a.y-b.y, dist = Math.sqrt(dx*dx+dy*dy);
-          if (dist < 140) { ctx.beginPath(); ctx.strokeStyle=`rgba(29,158,117,${(1-dist/140)*0.25})`; ctx.lineWidth=0.5; ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
-        }
-        ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,Math.PI*2); ctx.fillStyle='rgba(29,158,117,0.5)'; ctx.fill();
-      }
-      requestAnimationFrame(draw);
-    }
-    draw();
+  <!-- ═══════════════ WHAT WE DO ═══════════════ -->
+  <section class="work" id="work">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow reveal">What we do</div>
+        <h2 class="h-display reveal d1">Five programs.<br><em>One direction.</em></h2>
+      </div>
+      <p class="reveal d2">
+        Built for founders who want to move fast and think clearly.
+        Every tool, session, article and event has one goal: give you an edge.
+      </p>
+    </div>
 
-    const phrases = ["the next generation of Italian founders","AI-native companies from Italy","a new kind of ecosystem","tools that give founders an edge","real connections that last","the future of Italian innovation"];
-    let pi=0,ci=0,del=false;
-    const tw=document.getElementById('typewriter');
-    function type() {
-      const p=phrases[pi];
-      if(!del){tw.textContent=p.slice(0,++ci);if(ci===p.length){del=true;setTimeout(type,2000);return;}}
-      else{tw.textContent=p.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;}}
-      setTimeout(type,del?40:80);
-    }
-    type();
-  </script>
+    <div class="rail">
+
+      <a href="podcast.html" class="rail-row reveal">
+        <div class="rail-num">→ 01</div>
+        <div class="rail-title"><em>Podcast.</em></div>
+        <div class="rail-desc">
+          Real conversations with Italian founders and builders about what it actually means to use AI. On Spotify, no filters.
+          <span class="tag">6 episodes · live</span>
+        </div>
+        <div class="rail-cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </div>
+      </a>
+
+      <a href="toolbox.html" class="rail-row reveal">
+        <div class="rail-num">→ 02</div>
+        <div class="rail-title"><em>Founder's Toolbox.</em></div>
+        <div class="rail-desc">
+          12 AI tools trained on Y Combinator, P&amp;P and the world's best startup thinking. Pitch decks, GTM, fundraising prep, more.
+          <span class="tag">12 skills · free</span>
+        </div>
+        <div class="rail-cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </div>
+      </a>
+
+      <a href="coaching.html" class="rail-row reveal">
+        <div class="rail-num">→ 03</div>
+        <div class="rail-title"><em>Startup Coaching.</em></div>
+        <div class="rail-desc">
+          Human expertise with real-time AI analysis. 1:1 sessions for Italian founders at any stage.
+          <span class="tag">45 min · 1st free</span>
+        </div>
+        <div class="rail-cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </div>
+      </a>
+
+      <a href="events.html" class="rail-row reveal">
+        <div class="rail-num">→ 04</div>
+        <div class="rail-title"><em>AI Events.</em></div>
+        <div class="rail-desc">
+          Where AI meets the people who actually build with it. Universities, startups and companies at the same table. With Startup Grind.
+          <span class="tag">across Italy</span>
+        </div>
+        <div class="rail-cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </div>
+      </a>
+
+      <a href="bits.html" class="rail-row reveal">
+        <div class="rail-num">→ 05</div>
+        <div class="rail-title"><em>AI Bits.</em></div>
+        <div class="rail-desc">
+          Short-form analysis on AI research, tools and what is actually moving in Italian innovation. No hype, no filler.
+          <span class="tag">writing · weekly</span>
+        </div>
+        <div class="rail-cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════ LIVE BAND ═══════════════ -->
+  <div class="live-band">
+    <span class="label">⊹ Now building</span>
+    <div class="now">
+      <span data-typewriter='["the next generation of Italian founders","AI-native companies from Italy","tools that give founders an edge","a new kind of ecosystem","the future of Italian innovation","real connections that last"]'></span><span class="cursor"></span>
+    </div>
+    <span class="clock" data-clock>—</span>
+  </div>
+
+  <!-- ═══════════════ MANIFESTO ═══════════════ -->
+  <section class="manifesto">
+    <div class="manifesto-inner">
+      <p class="eyebrow amber reveal">The thesis</p>
+      <p class="manifesto-text reveal d1" style="margin-top:32px;">
+        The talent was always there. <em>Now it has the tools to match.</em>
+        <span class="muted">We exist so the best Italian minds have everything they need to build, grow and compete on a global level.</span>
+        We connect startups, universities and companies. <span class="amber">We build bridges</span> between human intelligence and artificial intelligence.
+      </p>
+      <div class="manifesto-sig reveal d2">
+        <span class="line"></span>
+        <span>Matteo Favilli · Founder, NextGen Ita</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ SIGNAL / STATS ═══════════════ -->
+  <div class="signal">
+    <div class="signal-cell reveal">
+      <div class="num"><em data-count="5">5</em></div>
+      <div class="label">Programs running</div>
+    </div>
+    <div class="signal-cell reveal d1">
+      <div class="num"><em data-count="12">12</em></div>
+      <div class="label">Free AI tools</div>
+    </div>
+    <div class="signal-cell reveal d2">
+      <div class="num">IT <span class="small">↗ global</span></div>
+      <div class="label">Made in Italy roots</div>
+    </div>
+    <div class="signal-cell reveal d3">
+      <div class="num">Free</div>
+      <div class="label">To access everything</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ FEATURED IN ═══════════════ -->
+  <section class="featured">
+    <div class="featured-head">
+      <div class="eyebrow">Featured in</div>
+      <h3 class="reveal">Where our work <em>shows up.</em></h3>
+    </div>
+    <div class="featured-grid">
+      <a href="https://www.youtube.com/watch?v=Y2gNdHGvt0A" target="_blank" class="featured-card reveal" data-tilt>
+        <div class="featured-outlet">The Spoon · FoodAI CoLab</div>
+        <div class="featured-title">How Generative AI Is Transforming the Way We Work</div>
+        <div class="featured-desc">A live conversation with Michael Wolf on AI adoption across industries and what it takes for organizations to evolve.</div>
+      </a>
+      <a href="https://www.santannapisa.it" target="_blank" class="featured-card reveal d1" data-tilt>
+        <div class="featured-outlet">Sant'Anna · CNR-ISTI · SoBigData</div>
+        <div class="featured-title">Big Data in Healthcare: AI Transforming Patient Care</div>
+        <div class="featured-desc">Speaker at the SoBigData webinar series on how innovative technologies are reshaping healthcare and patient well-being.</div>
+      </a>
+      <a href="events.html" class="featured-card reveal d2" data-tilt>
+        <div class="featured-outlet">Startup Grind</div>
+        <div class="featured-title">Official partner on AI events across Italy</div>
+        <div class="featured-desc">Live gatherings connecting universities, startups and companies. The world's largest independent startup community.</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CTA ═══════════════ -->
+  <section class="cta">
+    <div class="cta-box reveal">
+      <div class="cta-inner">
+        <div class="eyebrow" style="margin-bottom:24px;">Get started</div>
+        <h2>The next great<br>Italian idea <em>starts here.</em></h2>
+        <p>Join the community, access the tools, talk to us. Everything free. Everything now.</p>
+        <div class="ctas">
+          <a href="coaching.html" class="btn-primary" data-magnet>Book free session <span>→</span></a>
+          <a href="mailto:mttfvll@gmail.com" class="btn-ghost" data-magnet>Send us an email</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="ng-footer">
+  <div class="ng-footer-inner">
+    <div>
+      <div class="ftag">Italian talent.<br><em>AI as leverage.</em></div>
+      <p class="fsub">A community for founders, builders and researchers who want to move fast, think clearly, and ship what matters.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <div class="flinks">
+        <a href="podcast.html">Podcast</a>
+        <a href="toolbox.html">Toolbox</a>
+        <a href="coaching.html">Coaching</a>
+        <a href="events.html">Events</a>
+        <a href="bits.html">AI Bits</a>
+        <a href="apps.html">Cool Apps</a>
+        <a href="team.html">Team</a>
+      </div>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <div class="flinks">
+        <a href="mailto:mttfvll@gmail.com">Email</a>
+        <a href="https://linkedin.com/in/matteofaralli" target="_blank">LinkedIn</a>
+        <a href="https://open.spotify.com/show/6yWSAUi97PEEQXSAzNTI9z" target="_blank">Spotify</a>
+      </div>
+    </div>
+    <div>
+      <h4>Partners</h4>
+      <div class="flinks">
+        <a href="#">Startup Grind</a>
+        <a href="#">The Spoon</a>
+        <a href="#">SoBigData</a>
+      </div>
+    </div>
+  </div>
+  <div class="ng-footer-bottom">
+    <span>© 2026 NextGen Ita · All programs free</span>
+    <span>Built in Italy, for the world</span>
+  </div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/ng.js"></script>
 </body>
 </html>
