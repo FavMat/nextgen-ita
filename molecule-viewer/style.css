@@ -315,32 +315,33 @@ main{flex:1;display:flex;flex-direction:column}
   box-shadow:0 2px 0 rgba(255,255,255,.03) inset,0 24px 64px rgba(0,0,0,.4);
 }
 
-/* Category Tabs */
+/* ── PRESETS TITLE ── */
+.presets-title {
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:.9rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--text-secondary);margin-bottom:12px;opacity:0.8;
+}
+
+/* ── CATEGORY TABS (Segmented) ── */
 .category-tabs{
-  display:flex;gap:6px;flex-wrap:wrap;justify-content:center;
-  margin-bottom:16px;
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.05);
 }
 .category-tab{
-  display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  padding:7px 18px;
-  background:rgba(15,32,53,.8);
-  border:1px solid var(--border);
-  border-radius:50px;
-  font-family:'Inter',sans-serif;font-size:.8rem;font-weight:500;
-  color:var(--text-secondary);cursor:pointer;
-  transition:all var(--tr);white-space:nowrap;
-}
-.category-tab:hover{border-color:var(--border-hover);color:var(--text-primary)}
-.category-tab.active{
-  background:rgba(0,212,255,.1);border-color:var(--border-active);
-  color:var(--accent-cyan);font-weight:600;
-  box-shadow:0 0 0 1px rgba(0,212,255,.15);
+  background:transparent;border:none;border-bottom:2px solid transparent;
+  border-radius:0;padding:8px 12px;color:var(--text-muted);
+  cursor:pointer;display:flex;align-items:center;gap:6px;
+  font-family:'Inter',sans-serif;font-size:.85rem;font-weight:500;
+  transition:all var(--tr);margin-bottom:-1px;
 }
 .tab-emoji{font-size:16px;line-height:1;margin-top:-2px;}
-.tab-title{line-height:1;}
+.category-tab:hover{color:var(--text-primary)}
+.category-tab.active{
+  border-bottom-color:var(--accent-cyan);color:var(--text-primary);font-weight:600;
+}
 
 /* Category Panels */
-.category-panels{min-height:80px}
+.category-panels{min-height:125px}
 .category-panel{display:none;flex-wrap:wrap;gap:8px;justify-content:center;animation:fadeInUp .3s ease both}
 .category-panel.active{display:flex}
 
@@ -573,7 +574,7 @@ main{flex:1;display:flex;flex-direction:column}
 }
 
 /* Description card */
-.desc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.desc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;flex-shrink:0}
 .desc-text{
   padding:10px 13px;font-size:.82rem;color:var(--text-secondary);line-height:1.75;
   font-style:normal;
@@ -584,13 +585,13 @@ main{flex:1;display:flex;flex-direction:column}
 }
 
 /* 2D image */
-.mol-2d-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.mol-2d-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;flex-shrink:0}
 .mol-2d-img-wrap{background:#fff;width:100%;min-height:140px;display:flex;align-items:center;justify-content:center;padding:10px}
 #mol-2d-img{max-width:100%;max-height:150px;object-fit:contain;cursor:zoom-in;transition:transform .18s,opacity .18s}
 #mol-2d-img:hover{transform:scale(1.04);opacity:.88}
 
 /* Properties */
-.props-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.props-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;flex-shrink:0}
 .props-list{padding:4px 0}
 .prop-row{display:flex;align-items:center;justify-content:space-between;padding:7px 13px;border-bottom:1px solid rgba(255,255,255,.03);gap:8px}
 .prop-row:last-child{border-bottom:none}
@@ -663,9 +664,9 @@ footer a:hover{color:var(--accent-cyan)}
 
 /* ══ Responsive ══ */
 @media(max-width:900px){
-  .viewer-layout{grid-template-columns:1fr;grid-template-rows:380px auto}
-  #viewer-container{border-right:none;border-bottom:1px solid var(--border)}
-  .info-panel{max-height:none;overflow-y:visible}
+  .viewer-layout{grid-template-columns:1fr;grid-template-rows:1fr 1fr}
+  #viewer-container{border-right:none;border-bottom:1px solid var(--border);min-height:0}
+  .info-panel{max-height:100%;overflow-y:auto;height:100%}
   .hero-title{font-size:clamp(2.8rem,9vw,4.5rem)}
 }
 @media(max-width:600px){

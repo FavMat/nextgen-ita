@@ -44,6 +44,7 @@ const TRANSLATIONS = {
     // Cards
     cardDesc: 'Descrizione', cardStruct2d: 'Struttura 2D',
     cardStructPreview: 'Anteprima struttura', cardProps: 'Proprietà',
+    quickChoices: 'Scelte Rapide',
     cardLegend: 'Schema Colori CPK',
     legendIntro: 'Con colori <strong>Elemento (CPK)</strong>, ogni atomo ha un colore convenzionale. <strong>Passa il mouse sugli atomi</strong> per identificarli.',
     // Toolbar
@@ -151,6 +152,7 @@ const TRANSLATIONS = {
     legToggleCollapse: 'Collapse',
     kbdSearch: 'Press', kbdOr: 'to search · Enter a name or PDB ID (e.g.',
     searchPromo: 'Search across 111M+ molecules on PubChem...',
+    quickChoices: 'Quick Choices',
   },
   fr: {
     heroBadge: 'WebGL · PubChem · RCSB PDB',
@@ -178,6 +180,7 @@ const TRANSLATIONS = {
     propChains: 'Chaînes', propAtoms: 'Atomes', propOrganism: 'Organisme',
     cardDesc: 'Description', cardStruct2d: 'Structure 2D',
     cardStructPreview: 'Aperçu structure', cardProps: 'Propriétés',
+    quickChoices: 'Choix Rapides',
     cardLegend: 'Schéma couleurs CPK',
     legendIntro: 'En mode <strong>Élément (CPK)</strong>, chaque atome a une couleur conventionnelle. <strong>Survolez les atomes</strong> pour les identifier.',
     toolRepr: 'Représentation', toolColors: 'Schéma couleurs',
@@ -1319,6 +1322,11 @@ function buildPresets() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const title = document.createElement('h3');
+  title.className = 'presets-title';
+  title.innerHTML = `<iconify-icon icon="mdi:flash"></iconify-icon> ${t('quickChoices') || 'Quick Choices'}`;
+  
+  presetsArea.appendChild(title);
   presetsArea.appendChild(tabs);
   presetsArea.appendChild(panels);
   presetsArea.appendChild(searchPromo);
