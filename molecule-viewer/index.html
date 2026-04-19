@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoleculeViewer — 3D Molecular Visualization</title>
+  <meta name="description" content="Visualizzatore 3D di molecole e proteine interattivo. Cerca per nome, esplora struttura, ruota, cambia stile. Dati da PubChem e RCSB PDB." />
+  <meta name="theme-color" content="#060b14" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js" defer></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js" defer></script>
+</head>
+<body>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <div class="app-wrapper">
+
+    <!-- ══════ HEADER ══════ -->
+    <header>
+      <a href="#" class="logo" id="logo-home" title="Home">
+        <div class="logo-icon">⚗️</div>
+        <span class="logo-text">Molecule<span>Viewer</span></span>
+      </a>
+
+      <div class="search-wrapper" id="search-wrapper">
+        <div class="search-backdrop" id="search-backdrop"></div>
+        <div class="search-input-wrap">
+          <iconify-icon icon="mdi:magnify" class="search-icon" aria-hidden="true"></iconify-icon>
+          <input
+            type="search" id="search-input"
+            placeholder="Cerca molecola o PDB ID... (es. caffeine, dopamine, 2HHB)"
+            autocomplete="off" spellcheck="false"
+            aria-label="Cerca una molecola"
+          />
+          <button class="search-btn" id="search-btn" aria-label="Cerca">
+            <iconify-icon icon="mdi:arrow-right" aria-hidden="true"></iconify-icon>
+          </button>
+        </div>
+        <div id="autocomplete-list" role="listbox"></div>
+      </div>
+      <div class="header-actions">
+        <a href="https://pubchem.ncbi.nlm.nih.gov/" target="_blank" rel="noopener" class="btn-icon" title="PubChem">
+          <iconify-icon icon="mdi:database"></iconify-icon>
+        </a>
+        <a href="https://www.rcsb.org/" target="_blank" rel="noopener" class="btn-icon" title="RCSB PDB">
+          <iconify-icon icon="mdi:dna"></iconify-icon>
+        </a>
+      </div>
+    </header>
+
+    <!-- ══════ MAIN ══════ -->
+    <main>
+
+      <!-- ── WELCOME ── -->
+      <section id="welcome-screen" role="main">
+
+        <!-- Floating CPK atoms (parallax) -->
+        <div class="float-layer" id="float-layer" aria-hidden="true"></div>
+
+        <!-- Mouse spotlight ring -->
+        <div class="hero-spotlight" id="hero-spotlight" aria-hidden="true"></div>
+
+        <!-- Hero content -->
+        <div class="hero-content">
+          <span class="hero-badge">
+            <iconify-icon icon="mdi:atom" aria-hidden="true"></iconify-icon>
+            WebGL · PubChem · RCSB PDB
+          </span>
+
+          <h1 class="hero-title">
+            Esplora il<br /><span class="gradient-text">Mondo<br />Molecolare</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Piccole molecole da <strong>PubChem</strong> e proteine da <strong>RCSB PDB</strong>.
+            Visualizza in 3D, leggi dati scientifici, chatta con l’AI.
+          </p>
+
+          <div class="hero-stats" aria-label="Statistiche piattaforma">
+            <div class="hero-stat"><span class="stat-n">111M+</span><span class="stat-l">Molecole</span></div>
+            <div class="hero-stat-div"></div>
+            <div class="hero-stat"><span class="stat-n">2</span><span class="stat-l">Database</span></div>
+            <div class="hero-stat-div"></div>
+            <div class="hero-stat"><span class="stat-n">4</span><span class="stat-l">Stili 3D</span></div>
+            <div class="hero-stat-div"></div>
+
+          </div>
+        </div>
+
+        <!-- Populated by JS -->
+        <div id="presets-area" class="presets-section"></div>
+
+        <div class="search-hint">
+          <iconify-icon icon="mdi:keyboard" aria-hidden="true"></iconify-icon>
+          Premi <kbd>/</kbd> per cercare · Inserisci un nome o un PDB ID (es. <code>2HHB</code>)
+        </div>
+      </section>
+
+      <!-- ── VIEWER ── -->
+      <section id="viewer-screen" aria-label="Visualizzatore molecola">
+
+        <!-- Title bar -->
+        <div class="mol-titlebar">
+          <div class="mol-name-block">
+            <div class="mol-name-row">
+              <h2 class="mol-display-name" id="mol-display-name">—</h2>
+              <span id="mol-type-badge" class="mol-type-badge"></span>
+            </div>
+            <div class="mol-iupac" id="mol-iupac"></div>
+          </div>
+          <div class="mol-actions">
+            <button class="btn btn-outline" id="btn-back">
+              <iconify-icon icon="mdi:arrow-left"></iconify-icon> Indietro
+            </button>
+            <button class="btn btn-outline" id="btn-download-sdf">
+              <iconify-icon icon="mdi:download"></iconify-icon> Download
+            </button>
+            <a class="btn btn-primary" id="btn-pubchem" href="#" target="_blank" rel="noopener">
+              <iconify-icon icon="mdi:open-in-new"></iconify-icon> Fonte
+            </a>
+          </div>
+        </div>
+
+        <!-- Viewer + Panel -->
+        <div class="viewer-layout">
+
+          <!-- 3D Canvas -->
+          <div id="viewer-container">
+
+            <!-- Loading overlay -->
+            <div id="loading-overlay" role="status">
+              <div class="mol-spinner" aria-hidden="true"></div>
+              <p class="loading-text" id="loading-text">Caricamento...</p>
+              <div class="loading-steps" id="loading-steps"></div>
+            </div>
+
+            <!-- 3Dmol target -->
+            <div id="mol-viewer" aria-label="Visualizzatore 3D"></div>
+
+            <button class="btn-fullscreen" id="btn-fullscreen" aria-label="Schermo intero" title="Schermo intero">
+              <iconify-icon icon="mdi:fullscreen"></iconify-icon>
+            </button>
+
+            <!-- Atom tooltip -->
+            <div id="atom-tooltip" class="atom-tooltip" aria-hidden="true"></div>
+
+            <!-- Style toolbar -->
+            <div class="viewer-toolbar" role="group" aria-label="Stile rappresentazione">
+              <div class="toolbar-group">
+                <span class="toolbar-label">Rappresentazione</span>
+                <button class="style-btn active" data-style="stick" id="style-stick">
+                  <iconify-icon icon="mdi:vector-line"></iconify-icon> Stick
+                </button>
+                <button class="style-btn" data-style="sphere" id="style-sphere">
+                  <iconify-icon icon="mdi:circle-outline"></iconify-icon> Sphere (CPK)
+                </button>
+                <button class="style-btn" data-style="surface" id="style-surface">
+                  <iconify-icon icon="mdi:blur"></iconify-icon> Surface (VDW)
+                </button>
+                <button class="style-btn" data-style="cartoon" id="style-cartoon">
+                  <iconify-icon icon="mdi:sine-wave"></iconify-icon> Cartoon
+                  <span class="style-badge" id="cartoon-badge">Solo proteine</span>
+                </button>
+              </div>
+
+              <div class="toolbar-group">
+                <span class="toolbar-label">Schema colori</span>
+                <button class="style-btn active" data-color="element" id="color-element">
+                  <iconify-icon icon="mdi:palette"></iconify-icon> Elemento (CPK)
+                </button>
+                <button class="style-btn" data-color="spectrum" id="color-spectrum">
+                  <iconify-icon icon="mdi:gradient-horizontal"></iconify-icon> Spettro N→C
+                </button>
+                <button class="style-btn" data-color="chain" id="color-chain">
+                  <iconify-icon icon="mdi:link-variant"></iconify-icon> Per catena
+                </button>
+              </div>
+            </div>
+
+            <!-- Bottom controls -->
+            <div class="viewer-bottom">
+              <button class="viewer-control-btn" id="btn-reset-view" title="Centra vista">
+                <iconify-icon icon="mdi:fit-to-screen-outline"></iconify-icon>
+              </button>
+              <button class="viewer-control-btn" id="btn-spin" title="Rotazione automatica">
+                <iconify-icon icon="mdi:rotate-3d-variant"></iconify-icon>
+              </button>
+              <button class="viewer-control-btn" id="btn-screenshot" title="Salva PNG">
+                <iconify-icon icon="mdi:camera-outline"></iconify-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- Info Panel -->
+          <aside class="info-panel">
+
+            <!-- Description -->
+            <div class="desc-card" id="desc-card" style="display:none">
+              <div class="card-header"><iconify-icon icon="mdi:text-box-outline"></iconify-icon> Descrizione</div>
+              <p class="desc-text" id="desc-text"></p>
+            </div>
+
+            <!-- 2D / Thumbnail -->
+            <div class="mol-2d-card" id="mol-2d-card">
+              <div class="card-header">
+                <iconify-icon icon="mdi:image-outline"></iconify-icon>
+                <span id="struct2d-label">Struttura 2D</span>
+              </div>
+              <div class="mol-2d-img-wrap">
+                <img id="mol-2d-img" src="" alt="Struttura 2D" loading="lazy" title="Clicca per ingrandire" />
+              </div>
+            </div>
+
+            <!-- Properties -->
+            <div class="props-card">
+              <div class="card-header">
+                <iconify-icon icon="mdi:list-box-outline"></iconify-icon>
+                Proprietà
+              </div>
+              <div class="props-list" id="props-list"></div>
+            </div>
+
+            <!-- CPK Color Legend -->
+            <div class="legend-card" id="legend-panel"></div>
+
+            <!-- Source link -->
+            <a href="#" id="source-link" target="_blank" rel="noopener" class="source-card">
+              <span class="source-logo" id="source-logo">🔬</span>
+              <div>
+                <div class="source-name" id="source-name">PubChem</div>
+                <div class="source-sub" id="source-sub">National Library of Medicine · NIH</div>
+              </div>
+              <iconify-icon icon="mdi:open-in-new" style="margin-left:auto;color:var(--text-muted)"></iconify-icon>
+            </a>
+
+          </aside>
+        </div>
+      </section>
+    </main>
+
+  </div><!-- end app-wrapper -->
+
+  <!-- ══════ LIGHTBOX ══════ -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Struttura 2D ingrandita">
+    <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <button class="lb-close" id="lightbox-close" aria-label="Chiudi">
+        <iconify-icon icon="mdi:close"></iconify-icon>
+      </button>
+      <img id="lightbox-img" src="" alt="Struttura 2D ingrandita" />
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+      <div class="lightbox-hint">Struttura 2D da PubChem</div>
+    </div>
+  </div>
+
+
+
+  <footer>
+      Dati: <a href="https://pubchem.ncbi.nlm.nih.gov/" target="_blank" rel="noopener">PubChem (NIH)</a>
+      · <a href="https://www.rcsb.org/" target="_blank" rel="noopener">RCSB PDB</a>
+      · Rendering: <a href="https://3dmol.csb.pitt.edu/" target="_blank" rel="noopener">3Dmol.js</a>
+      · 100% client-side
+    </footer>
+  </div>
+
+  <div id="toast-container" role="alert" aria-live="assertive"></div>
+
+
+  <script src="app.js" defer></script>
+</body>
+</html>
