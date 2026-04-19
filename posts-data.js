@@ -2,7 +2,7 @@
 // Manage which posts appear on bits.html
 // Use admin.html to toggle and generate articles visually
 
-const NEXTGEN_POSTS = [
+window.NEXTGEN_POSTS = [
   {
     id: "02",
     published: true,
