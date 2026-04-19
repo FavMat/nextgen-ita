@@ -847,7 +847,6 @@ async function fetchDescription(cid) {
   } catch { return null; }
 }
 
-
 /* ══════════════════════════════════════════════════
    RCSB PDB API
 ══════════════════════════════════════════════════ */
@@ -1229,8 +1228,7 @@ async function loadProtein(pdbId, displayName) {
     toast(t('toastLoadedProtein', {name: short, pdb: pdbId.toUpperCase()}), 'success');
 
     const protDesc = meta?.struct?.title || '';
-    generateAiDescription(short, 'protein', protDesc, null, null)
-      .then(aiDesc => { if (aiDesc) renderDescription(aiDesc); });
+    renderDescription(protDesc || t('descNoData'));
 
   } catch(err) {
     hideLoad();
