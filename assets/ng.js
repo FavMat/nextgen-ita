@@ -141,6 +141,44 @@
       if (window.scrollY > 40) nav.classList.add('shrunk');
       else nav.classList.remove('shrunk');
     }, { passive: true });
+
+    /* ── Hamburger mobile menu ─────────────────────────────── */
+    const btn = document.createElement('button');
+    btn.className = 'hamburger';
+    btn.setAttribute('aria-label', 'Menu');
+    btn.innerHTML = '<span></span><span></span><span></span>';
+    nav.appendChild(btn);
+
+    const menu = document.createElement('div');
+    menu.className = 'mobile-menu';
+
+    const navLinks = nav.querySelector('.ng-links');
+    if (navLinks) {
+      navLinks.querySelectorAll('a').forEach(a => {
+        const clone = a.cloneNode(true);
+        menu.appendChild(clone);
+      });
+    }
+
+    const cta = nav.querySelector('.ng-cta');
+    if (cta) {
+      const ctaClone = cta.cloneNode(true);
+      ctaClone.classList.add('m-cta');
+      ctaClone.style.transform = '';
+      menu.appendChild(ctaClone);
+    }
+
+    document.body.appendChild(menu);
+
+    function toggleMenu(open) {
+      btn.classList.toggle('open', open);
+      menu.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    btn.addEventListener('click', () => toggleMenu(!menu.classList.contains('open')));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
   }
 
   /* ── Scroll reveal ─────────────────────────────────────────── */
