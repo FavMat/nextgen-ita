@@ -458,6 +458,7 @@ const CATEGORIES = [
       { name: 'Insulin',            emoji: '💉', pdb: '3I40' },
       { name: 'GFP',                emoji: '🟢', pdb: '1EMA' },
       { name: 'DNA (B-form)',        emoji: '🧬', pdb: '1BNA' },
+      { name: 'RNA (tRNA)',          emoji: '🧬', pdb: '1YRS' },
       { name: 'Myoglobin',          emoji: '🫀', pdb: '1MBO' },
       { name: 'Bacteriorhodopsin',   emoji: '🟣', pdb: '1C3W' },
       { name: 'Collagen',            emoji: '🦴', pdb: '1CAG' },

@@ -40,7 +40,7 @@ html{scroll-behavior:smooth}
 body{
   font-family:'Inter',system-ui,sans-serif;
   background:var(--bg-base);color:var(--text-primary);
-  min-height:100vh;overflow-x:hidden;line-height:1.6;
+  min-height:100dvh;overflow-x:hidden;line-height:1.6;
 }
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--bg-base)}
@@ -50,7 +50,7 @@ body{
 #bg-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.4}
 
 /* ══ App wrapper ══ */
-.app-wrapper{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
+.app-wrapper{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100dvh}
 
 /* ══════════════════════════════════════════════════
    HEADER
@@ -402,7 +402,7 @@ main{flex:1;display:flex;flex-direction:column}
    VIEWER SCREEN
 ══════════════════════════════════════════════════ */
 #viewer-screen{display:none;flex-direction:column;flex:1}
-#viewer-screen.visible{display:flex;height:calc(100vh - 68px);overflow:hidden}
+#viewer-screen.visible{display:flex;height:calc(100dvh - 68px);overflow:hidden}
 
 .mol-titlebar{
   display:flex;align-items:center;justify-content:space-between;
