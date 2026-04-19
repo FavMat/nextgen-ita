@@ -137,6 +137,11 @@
             <!-- 3Dmol target -->
             <div id="mol-viewer" aria-label="Visualizzatore 3D"></div>
 
+            <!-- Toolbar Toggle Button -->
+            <button class="btn-toolbar-toggle" id="btn-toolbar-toggle" aria-label="Visualizza strumenti" title="Visualizza strumenti">
+              <iconify-icon icon="mdi:tune"></iconify-icon>
+            </button>
+
             <button class="btn-fullscreen" id="btn-fullscreen" aria-label="Schermo intero" title="Schermo intero">
               <iconify-icon icon="mdi:fullscreen"></iconify-icon>
             </button>
@@ -145,7 +150,7 @@
             <div id="atom-tooltip" class="atom-tooltip" aria-hidden="true"></div>
 
             <!-- Style toolbar -->
-            <div class="viewer-toolbar" role="group" aria-label="Stile rappresentazione">
+            <div class="viewer-toolbar" id="viewer-toolbar" role="group" aria-label="Stile rappresentazione">
               <div class="toolbar-group">
                 <span class="toolbar-label">Rappresentazione</span>
                 <button class="style-btn active" data-style="stick" id="style-stick">

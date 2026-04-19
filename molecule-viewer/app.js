@@ -1587,8 +1587,17 @@ console.log('%c⚗️ MoleculeViewer v3', 'color:#00d4ff;font-size:18px;font-wei
 console.log(`%cLanguage: ${LANG.toUpperCase()} | Sources: PubChem (NIH) · RCSB PDB | Renderer: 3Dmol.js`, 'color:#7a9bbf;font-size:12px');
 
 /* ══════════════════════════════════════════════════
-   FULLSCREEN MODE
+   TOOLBAR TOGGLE & FULLSCREEN MODE
 ══════════════════════════════════════════════════ */
+const btnToolbarToggle = $('btn-toolbar-toggle');
+const viewerToolbar = $('viewer-toolbar');
+
+if (btnToolbarToggle && viewerToolbar) {
+  btnToolbarToggle.addEventListener('click', () => {
+    viewerToolbar.classList.toggle('hidden');
+  });
+}
+
 if (btnFullscreen) {
   btnFullscreen.addEventListener('click', () => {
     const vc = $('viewer-container');
@@ -1596,6 +1605,9 @@ if (btnFullscreen) {
       if (vc.requestFullscreen) vc.requestFullscreen();
       else if (vc.webkitRequestFullscreen) vc.webkitRequestFullscreen(); // Safari
       else if (vc.msRequestFullscreen) vc.msRequestFullscreen(); // IE11
+      
+      // Auto-hide toolbar to see molecule clearly on fullscreen
+      if (viewerToolbar) viewerToolbar.classList.add('hidden');
     } else {
       if (document.exitFullscreen) document.exitFullscreen();
       else if (document.webkitExitFullscreen) document.webkitExitFullscreen();

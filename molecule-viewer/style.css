@@ -321,8 +321,8 @@ main{flex:1;display:flex;flex-direction:column}
   margin-bottom:16px;
 }
 .category-tab{
-  display:flex;align-items:center;gap:6px;
-  padding:7px 16px;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:7px 18px;
   background:rgba(15,32,53,.8);
   border:1px solid var(--border);
   border-radius:50px;
@@ -336,7 +336,8 @@ main{flex:1;display:flex;flex-direction:column}
   color:var(--accent-cyan);font-weight:600;
   box-shadow:0 0 0 1px rgba(0,212,255,.15);
 }
-.tab-emoji{font-size:15px}
+.tab-emoji{font-size:16px;line-height:1;margin-top:-2px;}
+.tab-title{line-height:1;}
 
 /* Category Panels */
 .category-panels{min-height:80px}
@@ -456,7 +457,16 @@ main{flex:1;display:flex;flex-direction:column}
 #mol-viewer{width:100%;height:100%}
 
 /* Toolbar */
-.viewer-toolbar{position:absolute;top:14px;left:14px;z-index:10;display:flex;flex-direction:column;gap:8px}
+.btn-toolbar-toggle {
+  position:absolute;top:14px;left:14px;z-index:20;
+  background:rgba(6,11,20,.82);border:1px solid var(--border);
+  color:var(--text-secondary);border-radius:8px;padding:6px 8px;
+  cursor:pointer;backdrop-filter:blur(14px);transition:all var(--tr);
+}
+.btn-toolbar-toggle:hover { color:var(--text-primary);border-color:var(--border-hover); }
+
+.viewer-toolbar{position:absolute;top:54px;left:14px;z-index:10;display:flex;flex-direction:column;gap:8px;transform-origin:top left;transition:opacity 0.2s, transform 0.2s;}
+.viewer-toolbar.hidden { opacity:0;pointer-events:none;transform:scale(0.95); }
 .toolbar-group{
   background:rgba(6,11,20,.82);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
@@ -664,9 +674,12 @@ footer a:hover{color:var(--accent-cyan)}
   .header-actions{display:none}
   .search-wrapper{flex:1;max-width:none}
   .mol-titlebar{padding:.7rem 1rem}
-  .viewer-toolbar{top:8px;left:8px}
+  .btn-toolbar-toggle{top:8px;left:8px}
+  .viewer-toolbar{top:45px;left:8px;transform:scale(0.85);transform-origin:top left}
   .hero-stats{gap:1rem;padding:8px 16px}
   .stat-n{font-size:.95rem}
+  .presets-section { padding: 1.5rem 1rem; }
+  .mol-card { min-width: 130px; }
 }
 
 /* ══════════════════════════════════════════════════
