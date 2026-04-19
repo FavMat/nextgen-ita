@@ -113,13 +113,62 @@
     }
     .app-card:hover .app-link { color: var(--green); gap: 10px; }
 
-    /* Empty slot */
-    .app-card.empty {
-      border-style: dashed;
-      opacity: .45;
-      pointer-events: none;
+    /* Visual preview area */
+    .app-preview {
+      height: 140px;
+      border-bottom: 1px solid var(--line);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
     }
-    .app-card.empty .app-icon { opacity: .5; }
+    .app-preview.generalist {
+      background: radial-gradient(ellipse 80% 80% at 50% 110%, rgba(45,212,160,.18), transparent 70%);
+    }
+    .app-preview.life-science {
+      background: radial-gradient(ellipse 80% 80% at 50% 110%, rgba(245,184,74,.15), transparent 70%);
+    }
+
+    /* SubTrack preview — subscription pills */
+    .prev-subs { display: flex; flex-direction: column; gap: 7px; width: 200px; }
+    .prev-sub {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 12px; border-radius: 8px;
+      background: rgba(45,212,160,.07); border: 1px solid rgba(45,212,160,.15);
+      font-family: var(--f-mono); font-size: 10px; letter-spacing: .5px;
+    }
+    .prev-sub .name { color: var(--fg-2); }
+    .prev-sub .amt { color: var(--green); }
+
+    /* MoleculeViewer preview — atom rings */
+    .prev-atom {
+      position: relative; width: 90px; height: 90px;
+    }
+    .prev-ring {
+      position: absolute; border-radius: 50%;
+      border: 1px solid rgba(245,184,74,.35);
+    }
+    .prev-ring:nth-child(1) { inset: 0; animation: spin 8s linear infinite; }
+    .prev-ring:nth-child(2) { inset: 14px; border-color: rgba(245,184,74,.25); animation: spin 12s linear infinite reverse; }
+    .prev-ring:nth-child(3) { inset: 28px; border-color: rgba(245,184,74,.4); }
+    .prev-nucleus {
+      position: absolute; inset: 36px; border-radius: 50%;
+      background: var(--amber); opacity: .7;
+      box-shadow: 0 0 16px var(--amber);
+    }
+    .prev-electron {
+      position: absolute; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--amber); top: -3px; left: calc(50% - 3px);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Assistenza preview — hospital grid */
+    .prev-map {
+      display: grid; grid-template-columns: repeat(6,1fr); gap: 5px;
+    }
+    .prev-dot {
+      width: 8px; height: 8px; border-radius: 2px;
+      background: rgba(245,184,74,.25);
+    }
+    .prev-dot.active { background: var(--amber); box-shadow: 0 0 6px var(--amber); opacity: .8; }
 
     @media (max-width: 900px) {
       .page-content { padding: 40px 20px 80px; }
@@ -175,6 +224,13 @@
 
         <!-- SubTrack -->
         <a href="https://subtrack-v2.vercel.app" target="_blank" class="app-card" data-cat="generalist">
+          <div class="app-preview generalist">
+            <div class="prev-subs">
+              <div class="prev-sub"><span class="name">Netflix</span><span class="amt">€17.99/mo</span></div>
+              <div class="prev-sub"><span class="name">Spotify</span><span class="amt">€9.99/mo</span></div>
+              <div class="prev-sub"><span class="name">Adobe CC</span><span class="amt">€54.99/mo</span></div>
+            </div>
+          </div>
           <div class="app-card-top">
             <div class="app-icon generalist">💳</div>
             <div class="app-name">SubTrack</div>
@@ -200,10 +256,18 @@
 
         <!-- MoleculeViewer -->
         <a href="/molecule-viewer/" target="_blank" class="app-card" data-cat="life-science">
+          <div class="app-preview life-science">
+            <div class="prev-atom">
+              <div class="prev-ring"><div class="prev-electron"></div></div>
+              <div class="prev-ring"></div>
+              <div class="prev-ring"></div>
+              <div class="prev-nucleus"></div>
+            </div>
+          </div>
           <div class="app-card-top">
             <div class="app-icon life-science">⚗️</div>
             <div class="app-name">MoleculeViewer</div>
-            <p class="app-desc">3D interactive molecular visualization. Search any compound or protein by name, rotate, explore structure. Data from PubChem and RCSB PDB.</p>
+            <p class="app-desc">3D interactive molecular visualization. Search any compound or protein by name, rotate and explore its structure. Data from PubChem and RCSB PDB.</p>
           </div>
           <div class="app-card-foot">
             <span class="app-tag life-science">Life Science</span>
@@ -213,10 +277,18 @@
 
         <!-- Assistenza Ospedaliera -->
         <a href="/salute/" target="_blank" class="app-card" data-cat="life-science">
+          <div class="app-preview life-science">
+            <div class="prev-map">
+              <div class="prev-dot active"></div><div class="prev-dot"></div><div class="prev-dot active"></div><div class="prev-dot active"></div><div class="prev-dot"></div><div class="prev-dot active"></div>
+              <div class="prev-dot"></div><div class="prev-dot active"></div><div class="prev-dot"></div><div class="prev-dot"></div><div class="prev-dot active"></div><div class="prev-dot"></div>
+              <div class="prev-dot active"></div><div class="prev-dot active"></div><div class="prev-dot"></div><div class="prev-dot active"></div><div class="prev-dot"></div><div class="prev-dot active"></div>
+              <div class="prev-dot"></div><div class="prev-dot active"></div><div class="prev-dot active"></div><div class="prev-dot"></div><div class="prev-dot active"></div><div class="prev-dot"></div>
+            </div>
+          </div>
           <div class="app-card-top">
             <div class="app-icon life-science">🏥</div>
             <div class="app-name">Assistenza Ospedaliera</div>
-            <p class="app-desc">3D monitor of Italian hospital assistance data. Real locations, real numbers, interactive map.</p>
+            <p class="app-desc">Live 3D monitor of Italian hospital data. Real locations, real numbers across all regions — built on open government datasets.</p>
           </div>
           <div class="app-card-foot">
             <span class="app-tag life-science">Life Science</span>
