@@ -1,0 +1,629 @@
+{
+  "topSponsors": [
+    {
+      "name": "Fudan University",
+      "count": 134
+    },
+    {
+      "name": "M.D. Anderson Cancer Center",
+      "count": 128
+    },
+    {
+      "name": "Sun Yat-sen University",
+      "count": 115
+    },
+    {
+      "name": "Memorial Sloan Kettering Cancer Center",
+      "count": 90
+    },
+    {
+      "name": "Mayo Clinic",
+      "count": 84
+    },
+    {
+      "name": "National Cancer Institute (NCI)",
+      "count": 79
+    },
+    {
+      "name": "AstraZeneca",
+      "count": 77
+    },
+    {
+      "name": "Assiut University",
+      "count": 69
+    },
+    {
+      "name": "Peking Union Medical College Hospital",
+      "count": 68
+    },
+    {
+      "name": "Cancer Institute and Hospital, Chinese Academy of Medical Sciences",
+      "count": 67
+    },
+    {
+      "name": "Assistance Publique - Hôpitaux de Paris",
+      "count": 58
+    },
+    {
+      "name": "Tianjin Medical University Cancer Institute and Hospital",
+      "count": 57
+    },
+    {
+      "name": "Washington University School of Medicine",
+      "count": 57
+    },
+    {
+      "name": "Ruijin Hospital",
+      "count": 53
+    },
+    {
+      "name": "Fondazione Policlinico Universitario Agostino Gemelli IRCCS",
+      "count": 50
+    },
+    {
+      "name": "Novartis Pharmaceuticals",
+      "count": 50
+    },
+    {
+      "name": "Sun Yat-Sen Memorial Hospital of Sun Yat-Sen University",
+      "count": 50
+    },
+    {
+      "name": "City of Hope Medical Center",
+      "count": 49
+    },
+    {
+      "name": "Pfizer",
+      "count": 45
+    },
+    {
+      "name": "Merck Sharp & Dohme LLC",
+      "count": 42
+    }
+  ],
+  "topTumors": [
+    {
+      "name": "Other Oncology",
+      "count": 2278
+    },
+    {
+      "name": "Leukemia",
+      "count": 1184
+    },
+    {
+      "name": "Breast",
+      "count": 1054
+    },
+    {
+      "name": "Lung",
+      "count": 927
+    },
+    {
+      "name": "Colorectal",
+      "count": 624
+    },
+    {
+      "name": "Prostate",
+      "count": 417
+    },
+    {
+      "name": "Lymphoma",
+      "count": 356
+    },
+    {
+      "name": "Liver",
+      "count": 292
+    },
+    {
+      "name": "Pancreatic",
+      "count": 246
+    },
+    {
+      "name": "Gastric",
+      "count": 237
+    },
+    {
+      "name": "Brain (Glioma)",
+      "count": 219
+    },
+    {
+      "name": "Ovarian",
+      "count": 216
+    },
+    {
+      "name": "Head & Neck",
+      "count": 174
+    },
+    {
+      "name": "Multiple Myeloma",
+      "count": 159
+    },
+    {
+      "name": "Melanoma",
+      "count": 134
+    }
+  ],
+  "globeData": [
+    {
+      "country": "Italy",
+      "count": 648
+    },
+    {
+      "country": "United States",
+      "count": 2961
+    },
+    {
+      "country": "China",
+      "count": 2785
+    },
+    {
+      "country": "Australia",
+      "count": 369
+    },
+    {
+      "country": "Brazil",
+      "count": 196
+    },
+    {
+      "country": "Germany",
+      "count": 399
+    },
+    {
+      "country": "Spain",
+      "count": 588
+    },
+    {
+      "country": "Turkey (Türkiye)",
+      "count": 360
+    },
+    {
+      "country": "Austria",
+      "count": 133
+    },
+    {
+      "country": "Belgium",
+      "count": 243
+    },
+    {
+      "country": "Bulgaria",
+      "count": 59
+    },
+    {
+      "country": "Canada",
+      "count": 456
+    },
+    {
+      "country": "Croatia",
+      "count": 19
+    },
+    {
+      "country": "Czechia",
+      "count": 117
+    },
+    {
+      "country": "Denmark",
+      "count": 184
+    },
+    {
+      "country": "France",
+      "count": 780
+    },
+    {
+      "country": "Greece",
+      "count": 123
+    },
+    {
+      "country": "Hungary",
+      "count": 93
+    },
+    {
+      "country": "Israel",
+      "count": 160
+    },
+    {
+      "country": "Japan",
+      "count": 259
+    },
+    {
+      "country": "Netherlands",
+      "count": 294
+    },
+    {
+      "country": "New Zealand",
+      "count": 42
+    },
+    {
+      "country": "Poland",
+      "count": 235
+    },
+    {
+      "country": "Portugal",
+      "count": 74
+    },
+    {
+      "country": "Puerto Rico",
+      "count": 61
+    },
+    {
+      "country": "Slovakia",
+      "count": 28
+    },
+    {
+      "country": "South Africa",
+      "count": 31
+    },
+    {
+      "country": "South Korea",
+      "count": 408
+    },
+    {
+      "country": "Sweden",
+      "count": 142
+    },
+    {
+      "country": "Switzerland",
+      "count": 120
+    },
+    {
+      "country": "Taiwan",
+      "count": 310
+    },
+    {
+      "country": "United Kingdom",
+      "count": 479
+    },
+    {
+      "country": "Pakistan",
+      "count": 30
+    },
+    {
+      "country": "Indonesia",
+      "count": 27
+    },
+    {
+      "country": "Russia",
+      "count": 71
+    },
+    {
+      "country": "Hong Kong",
+      "count": 99
+    },
+    {
+      "country": "Argentina",
+      "count": 99
+    },
+    {
+      "country": "Malaysia",
+      "count": 67
+    },
+    {
+      "country": "Romania",
+      "count": 70
+    },
+    {
+      "country": "Singapore",
+      "count": 73
+    },
+    {
+      "country": "Thailand",
+      "count": 74
+    },
+    {
+      "country": "Vietnam",
+      "count": 23
+    },
+    {
+      "country": "Chile",
+      "count": 62
+    },
+    {
+      "country": "India",
+      "count": 81
+    },
+    {
+      "country": "Egypt",
+      "count": 211
+    },
+    {
+      "country": "Ukraine",
+      "count": 20
+    },
+    {
+      "country": "Georgia",
+      "count": 45
+    },
+    {
+      "country": "Serbia",
+      "count": 32
+    },
+    {
+      "country": "Slovenia",
+      "count": 28
+    },
+    {
+      "country": "Togo",
+      "count": 1
+    },
+    {
+      "country": "Senegal",
+      "count": 1
+    },
+    {
+      "country": "Nigeria",
+      "count": 9
+    },
+    {
+      "country": "Norway",
+      "count": 69
+    },
+    {
+      "country": "Mexico",
+      "count": 85
+    },
+    {
+      "country": "Iran",
+      "count": 10
+    },
+    {
+      "country": "Colombia",
+      "count": 49
+    },
+    {
+      "country": "Estonia",
+      "count": 10
+    },
+    {
+      "country": "Ireland",
+      "count": 67
+    },
+    {
+      "country": "Latvia",
+      "count": 16
+    },
+    {
+      "country": "Lithuania",
+      "count": 30
+    },
+    {
+      "country": "Peru",
+      "count": 26
+    },
+    {
+      "country": "Ecuador",
+      "count": 4
+    },
+    {
+      "country": "Bangladesh",
+      "count": 12
+    },
+    {
+      "country": "United Arab Emirates",
+      "count": 15
+    },
+    {
+      "country": "Finland",
+      "count": 49
+    },
+    {
+      "country": "Iceland",
+      "count": 3
+    },
+    {
+      "country": "Jordan",
+      "count": 8
+    },
+    {
+      "country": "Lebanon",
+      "count": 11
+    },
+    {
+      "country": "Cyprus",
+      "count": 8
+    },
+    {
+      "country": "Belarus",
+      "count": 7
+    },
+    {
+      "country": "Philippines",
+      "count": 12
+    },
+    {
+      "country": "Panama",
+      "count": 5
+    },
+    {
+      "country": "Kuwait",
+      "count": 2
+    },
+    {
+      "country": "Algeria",
+      "count": 2
+    },
+    {
+      "country": "Qatar",
+      "count": 2
+    },
+    {
+      "country": "Saudi Arabia",
+      "count": 25
+    },
+    {
+      "country": "North Macedonia",
+      "count": 2
+    },
+    {
+      "country": "Nepal",
+      "count": 3
+    },
+    {
+      "country": "Rwanda",
+      "count": 2
+    },
+    {
+      "country": "Uruguay",
+      "count": 3
+    },
+    {
+      "country": "Guam",
+      "count": 2
+    },
+    {
+      "country": "Costa Rica",
+      "count": 3
+    },
+    {
+      "country": "Guinea-Bissau",
+      "count": 1
+    },
+    {
+      "country": "Kenya",
+      "count": 17
+    },
+    {
+      "country": "Oman",
+      "count": 6
+    },
+    {
+      "country": "Tanzania",
+      "count": 6
+    },
+    {
+      "country": "Guadeloupe",
+      "count": 1
+    },
+    {
+      "country": "Ghana",
+      "count": 6
+    },
+    {
+      "country": "Moldova",
+      "count": 11
+    },
+    {
+      "country": "Iraq",
+      "count": 1
+    },
+    {
+      "country": "Cuba",
+      "count": 1
+    },
+    {
+      "country": "Uganda",
+      "count": 5
+    },
+    {
+      "country": "Syria",
+      "count": 2
+    },
+    {
+      "country": "Bosnia and Herzegovina",
+      "count": 4
+    },
+    {
+      "country": "Côte d’Ivoire",
+      "count": 3
+    },
+    {
+      "country": "Armenia",
+      "count": 6
+    },
+    {
+      "country": "El Salvador",
+      "count": 2
+    },
+    {
+      "country": "Guatemala",
+      "count": 4
+    },
+    {
+      "country": "Honduras",
+      "count": 2
+    },
+    {
+      "country": "Luxembourg",
+      "count": 5
+    },
+    {
+      "country": "Martinique",
+      "count": 3
+    },
+    {
+      "country": "Cameroon",
+      "count": 2
+    },
+    {
+      "country": "Laos",
+      "count": 2
+    },
+    {
+      "country": "Kazakhstan",
+      "count": 4
+    },
+    {
+      "country": "Tunisia",
+      "count": 4
+    },
+    {
+      "country": "Monaco",
+      "count": 2
+    },
+    {
+      "country": "Botswana",
+      "count": 1
+    },
+    {
+      "country": "Dominican Republic",
+      "count": 2
+    },
+    {
+      "country": "Democratic Republic of the Congo",
+      "count": 1
+    },
+    {
+      "country": "Sierra Leone",
+      "count": 1
+    },
+    {
+      "country": "Zambia",
+      "count": 2
+    },
+    {
+      "country": "Mauritius",
+      "count": 1
+    },
+    {
+      "country": "Reunion",
+      "count": 2
+    },
+    {
+      "country": "Venezuela",
+      "count": 1
+    },
+    {
+      "country": "Lesotho",
+      "count": 1
+    },
+    {
+      "country": "Ethiopia",
+      "count": 1
+    },
+    {
+      "country": "Uzbekistan",
+      "count": 1
+    },
+    {
+      "country": "Mozambique",
+      "count": 1
+    },
+    {
+      "country": "Mongolia",
+      "count": 1
+    },
+    {
+      "country": "American Samoa",
+      "count": 2
+    }
+  ],
+  "generatedAt": "2026-04-19T23:43:12.156Z"
+}

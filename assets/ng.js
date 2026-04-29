@@ -282,6 +282,30 @@
     type();
   }
 
+  /* ── Cookie consent banner ────────────────────────────────── */
+  (function () {
+    if (localStorage.getItem('ng_cookie')) return;
+    const bar = document.createElement('div');
+    bar.className = 'cookie-bar';
+    bar.innerHTML =
+      '<p>Questo sito utilizza cookie tecnici e servizi di terze parti (Google Fonts, Spotify) che possono trattare il tuo indirizzo IP. ' +
+      'Nessun dato personale viene raccolto direttamente. ' +
+      '<a href="privacy.html">Privacy &amp; Cookie Policy</a></p>' +
+      '<div class="cookie-bar-btns">' +
+      '<button class="cookie-btn-no" id="cookie-no">Rifiuta</button>' +
+      '<button class="cookie-btn-ok" id="cookie-ok">Accetto</button>' +
+      '</div>';
+    document.body.appendChild(bar);
+    requestAnimationFrame(() => bar.classList.add('show'));
+    function dismiss(val) {
+      localStorage.setItem('ng_cookie', val);
+      bar.style.transform = 'translateY(100%)';
+      setTimeout(() => bar.remove(), 400);
+    }
+    bar.querySelector('#cookie-ok').addEventListener('click', () => dismiss('ok'));
+    bar.querySelector('#cookie-no').addEventListener('click', () => dismiss('no'));
+  })();
+
   /* ── Clock (live Italy time) ───────────────────────────────── */
   const clock = document.querySelector('[data-clock]');
   if (clock) {
