@@ -8,8 +8,36 @@
     <script type="module" crossorigin src="/cgt-radar/assets/index-ZYJFBSj2.js"></script>
     <link rel="modulepreload" crossorigin href="/cgt-radar/assets/quantize-Q8pB6gva.js">
     <link rel="stylesheet" crossorigin href="/cgt-radar/assets/index-DxKdC_3G.css">
+    <style>
+      #pw-gate{position:fixed;inset:0;z-index:9999;background:#060e1a;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif}
+      #pw-box{text-align:center;color:#fff}
+      #pw-box h2{font-size:1.1rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#8899aa;margin-bottom:32px}
+      #pw-input{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-size:1.6rem;letter-spacing:.4em;text-align:center;width:160px;padding:14px 16px;outline:none}
+      #pw-input:focus{border-color:rgba(0,212,255,.5);box-shadow:0 0 0 3px rgba(0,212,255,.1)}
+      #pw-err{color:#ff6b6b;font-size:.85rem;margin-top:16px;opacity:0;transition:opacity .2s}
+      #pw-err.show{opacity:1}
+    </style>
   </head>
   <body>
+    <div id="pw-gate">
+      <div id="pw-box">
+        <h2>Early Access</h2>
+        <input id="pw-input" type="password" maxlength="4" placeholder="····" autofocus />
+        <div id="pw-err">Wrong password</div>
+      </div>
+    </div>
     <div id="root"></div>
+    <script>
+      (function(){
+        if(sessionStorage.getItem('cgt_ok')==='1'){document.getElementById('pw-gate').remove();return;}
+        var inp=document.getElementById('pw-input'),err=document.getElementById('pw-err');
+        inp.addEventListener('input',function(){
+          if(inp.value.length===4){
+            if(inp.value==='0564'){sessionStorage.setItem('cgt_ok','1');document.getElementById('pw-gate').remove();}
+            else{err.classList.add('show');inp.value='';setTimeout(function(){err.classList.remove('show');},1800);}
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
