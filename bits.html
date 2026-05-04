@@ -407,7 +407,7 @@
 
     filtered.slice(1).forEach(p => {
       const el = document.createElement('a');
-      el.className = 'bit reveal';
+      el.className = 'bit';
       el.href = p.linkedin || p.file;
       if (p.linkedin) { el.target = '_blank'; el.rel = 'noopener'; }
       el.innerHTML = `
