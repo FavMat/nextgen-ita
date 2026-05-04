@@ -395,7 +395,7 @@
         </div>
         <div class="feat-bottom">
           <div class="feat-author">${window.NG_T ? window.NG_T('BY') : 'BY'} ${f.author.toUpperCase()}</div>
-          <a class="feat-read-btn" href="${f.linkedin || f.file}" ${f.linkedin ? 'target="_blank" rel="noopener"' : ''}>${window.NG_T ? window.NG_T('Read bit →') : 'Read bit →'}</a>
+          <a class="feat-read-btn" href="bit.html?id=${f.id}">${window.NG_T ? window.NG_T('Read bit →') : 'Read bit →'}</a>
         </div>
       </div>
       <div class="featured-right" ${f.image ? `style="background-image:url('${f.image}');background-size:cover;background-position:center;"` : ''}>
@@ -408,8 +408,7 @@
     filtered.slice(1).forEach(p => {
       const el = document.createElement('a');
       el.className = 'bit';
-      el.href = p.linkedin || p.file;
-      if (p.linkedin) { el.target = '_blank'; el.rel = 'noopener'; }
+      el.href = `bit.html?id=${p.id}`;
       el.innerHTML = `
         ${p.image ? `<div class="bit-image" style="background-image:url('${p.image}');"></div>` : ''}
         <div class="bit-meta">
