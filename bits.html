@@ -177,6 +177,12 @@
       transition: all .2s;
     }
     .bit:hover .bit-read { color: var(--green); gap: 10px; }
+    .bit-image {
+      width: calc(100% + 56px); margin: -32px -28px 20px;
+      height: 160px;
+      background-size: cover; background-position: center;
+      border-bottom: 1px solid var(--line);
+    }
 
     /* ── Subscribe CTA ── */
     .subscribe {
@@ -392,9 +398,9 @@
           <a class="feat-read-btn" href="${f.linkedin || f.file}" ${f.linkedin ? 'target="_blank" rel="noopener"' : ''}>${window.NG_T ? window.NG_T('Read bit →') : 'Read bit →'}</a>
         </div>
       </div>
-      <div class="featured-right">
+      <div class="featured-right" ${f.image ? `style="background-image:url('${f.image}');background-size:cover;background-position:center;"` : ''}>
         <div class="feat-stamp">FEATURED<strong>BIT · ${f.id}</strong></div>
-        <div class="feat-visual">"</div>
+        ${f.image ? '' : '<div class="feat-visual">"</div>'}
       </div>
     `;
     featuredSlot.appendChild(feat);
@@ -405,6 +411,7 @@
       el.href = p.linkedin || p.file;
       if (p.linkedin) { el.target = '_blank'; el.rel = 'noopener'; }
       el.innerHTML = `
+        ${p.image ? `<div class="bit-image" style="background-image:url('${p.image}');"></div>` : ''}
         <div class="bit-meta">
           <span class="bit-tag ${p.tag.toLowerCase()}">${p.tag}</span>
           <span>${p.date.toUpperCase()}</span>

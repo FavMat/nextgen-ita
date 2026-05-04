@@ -13,8 +13,23 @@ window.NEXTGEN_POSTS = [
     file: "",
     readTime: "3 min",
     author: "Matteo Favilli",
+    image: "",
     linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7450922149759983616/",
     text: `Last week the FDA ran the first real-time clinical trial in history. Patient data streaming live to regulators as it's collected, no waiting months for sponsors to compile reports, no stop-and-go between phases. Their chief AI officer said it could cut 20 to 30% off trial time. 10 to 12 years to bring a drug to market is one of those numbers that gets repeated so often it starts to feel inevitable. This announcement is a reminder that a meaningful part of that timeline was also a process problem, not just a scientific one. The organizations making real progress are the ones that stopped asking 'should we invest in AI' and started asking 'what do we need to build so AI actually works here.' Data infrastructure, governance, people who understand both the science and the technology. The FDA moving on real-time trials signals the regulatory environment is catching up. The gap between pharma companies that are ready and those still in pilot mode is about to get a lot more visible.`
+  },
+  {
+    id: "08",
+    published: true,
+    date: "Apr 2026",
+    tag: "AI",
+    title: "OpenAI Just Confirmed the Direction. Twice in One Week.",
+    excerpt: "April 14: strategic partnership with Novo Nordisk, AI embedded across the whole company. April 16: GPT-Rosalind, OpenAI's first model built for biology and drug discovery.",
+    file: "",
+    readTime: "4 min",
+    author: "Matteo Favilli",
+    image: "",
+    linkedin: "https://www.linkedin.com/posts/matteo-favilli_ai-genai-pharma-share-7456844670950629376-0Ij1",
+    text: `Last week I wrote about Anthropic buying a biotech startup for $400 million. Now OpenAI confirmed the direction. Twice in one week. April 14th: a strategic partnership with Novo Nordisk. AI embedded across the whole company, from drug discovery to manufacturing to commercial operations. Full integration by end of 2026. Also: OpenAI will upskill Novo Nordisk's entire global workforce. That part is underreported and probably the hardest to execute. April 16th: GPT-Rosalind, their first model built specifically for biology and drug discovery. Named after Rosalind Franklin, whose work helped crack the structure of DNA. It reasons through biology, not just text about biology. Launch partners include Amgen, Moderna, the Allen Institute and Thermo Fisher Scientific. Access restricted to vetted institutions, because a model that reasons about molecular biology at this level is dual-use by definition. The pattern I highlighted for months is getting clearer. The big AI labs are not just selling API access to pharma. They are building vertical infrastructure, with domain-specific models and enterprise partnerships that go deep into operations. The gap between announcement and what actually changes on the ground is still real. But this is the kind of move that has to happen if pharma is ever going to operate at a different level: AI-powered Pharma. The results are still pending. The direction is not.`
   },
   {
     id: "02",
