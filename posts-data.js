@@ -4,7 +4,7 @@
 
 window.NEXTGEN_POSTS = [
   {
-    id: "07",
+    id: "09",
     published: true,
     date: "May 2026",
     tag: "AI",
@@ -18,7 +18,7 @@ window.NEXTGEN_POSTS = [
     text: `Last week the FDA ran the first real-time clinical trial in history. Patient data streaming live to regulators as it's collected, no waiting months for sponsors to compile reports, no stop-and-go between phases. Their chief AI officer said it could cut 20 to 30% off trial time. 10 to 12 years to bring a drug to market is one of those numbers that gets repeated so often it starts to feel inevitable. This announcement is a reminder that a meaningful part of that timeline was also a process problem, not just a scientific one. The organizations making real progress are the ones that stopped asking 'should we invest in AI' and started asking 'what do we need to build so AI actually works here.' Data infrastructure, governance, people who understand both the science and the technology. The FDA moving on real-time trials signals the regulatory environment is catching up. The gap between pharma companies that are ready and those still in pilot mode is about to get a lot more visible.`
   },
   {
-    id: "09",
+    id: "07",
     published: true,
     date: "Apr 2026",
     tag: "AI",
