@@ -13,7 +13,6 @@ window.NEXTGEN_POSTS = [
     file: "bit-02.html",
     readTime: "3 min",
     author: "Matteo Favilli",
-    linkedin: "https://www.linkedin.com/in/matteo-favilli/",
     text: `The new 2026 AI Index from Stanford Institute for Human-Centered Artificial Intelligence (HAI) is officially out. The data highlights a massive shift: the performance gap between top models has shrunk to a razor-thin 2.7% (Anthropic at the top), and global adoption is moving faster than the internet ever did. A reflection for organizations: How can we use these insights to actually evolve our business models, rather than just automating what we have?`
   },
   {
@@ -26,7 +25,6 @@ window.NEXTGEN_POSTS = [
     file: "bit-01.html",
     readTime: "4 min",
     author: "Matteo Favilli",
-    linkedin: "https://www.linkedin.com/in/matteo-favilli/",
     text: `Last week Anthropic paid $400 million for a startup that was eight months old. Fewer than 10 people. No product. No revenue. I spend a lot of time with pharma clients leading AI projects. One thing comes up constantly: the models don't speak biology. They speak English. That's the gap Coefficient Bio was working on. Anthropic didn't buy a product but paid $400 million for a problem most of the industry is still pretending doesn't exist.`
   },
   {
@@ -91,7 +89,6 @@ window.NEXTGEN_POSTS = [
     file: "",
     readTime: "2 min",
     author: "Matteo Favilli",
-    linkedin: "https://www.linkedin.com/in/matteo-favilli/",
     text: `Ci vediamo in Piazza Dario. Anthropic CEO Dario Amodei announced he is moving to Massa Marittima, a small town in Tuscany, his father's hometown. He will lead Anthropic in full remote for 6 months a year from the Maremma.`
   }
 ];
