@@ -4,6 +4,20 @@
 
 window.NEXTGEN_POSTS = [
   {
+    id: "10",
+    published: true,
+    date: "Apr 2026",
+    tag: "AI",
+    title: "Notes on LLM Research",
+    excerpt: "A short take on the latest LLM research and what it means for builders. Read the full thread on LinkedIn.",
+    file: "",
+    readTime: "2 min",
+    author: "Matteo Favilli",
+    image: "",
+    linkedin: "https://www.linkedin.com/posts/matteo-favilli_ai-llm-research-activity-7444311234470100992-Vmth",
+    text: `A short take on the latest LLM research and what it means for builders. Click "View original on LinkedIn" below to read the full post and join the discussion.`
+  },
+  {
     id: "09",
     published: true,
     date: "May 2026",
@@ -55,6 +69,8 @@ window.NEXTGEN_POSTS = [
     file: "bit-02.html",
     readTime: "3 min",
     author: "Matteo Favilli",
+    image: "",
+    linkedin: "https://www.linkedin.com/posts/matteo-favilli_the-2026-ai-index-report-stanford-aielaborationfavilli-ugcPost-7449630213459812352-coxL",
     text: `The new 2026 AI Index from Stanford Institute for Human-Centered Artificial Intelligence (HAI) is officially out. The data highlights a massive shift: the performance gap between top models has shrunk to a razor-thin 2.7% (Anthropic at the top), and global adoption is moving faster than the internet ever did. A reflection for organizations: How can we use these insights to actually evolve our business models, rather than just automating what we have?`
   },
   {
@@ -67,6 +83,8 @@ window.NEXTGEN_POSTS = [
     file: "bit-01.html",
     readTime: "4 min",
     author: "Matteo Favilli",
+    image: "",
+    linkedin: "https://www.linkedin.com/posts/matteo-favilli_ai-pharma-biotech-ugcPost-7447809879718699008-9o_n",
     text: `Last week Anthropic paid $400 million for a startup that was eight months old. Fewer than 10 people. No product. No revenue. I spend a lot of time with pharma clients leading AI projects. One thing comes up constantly: the models don't speak biology. They speak English. That's the gap Coefficient Bio was working on. Anthropic didn't buy a product but paid $400 million for a problem most of the industry is still pretending doesn't exist.`
   },
   {
