@@ -18,6 +18,20 @@ window.NEXTGEN_POSTS = [
     text: `Last week the FDA ran the first real-time clinical trial in history. Patient data streaming live to regulators as it's collected, no waiting months for sponsors to compile reports, no stop-and-go between phases. Their chief AI officer said it could cut 20 to 30% off trial time. 10 to 12 years to bring a drug to market is one of those numbers that gets repeated so often it starts to feel inevitable. This announcement is a reminder that a meaningful part of that timeline was also a process problem, not just a scientific one. The organizations making real progress are the ones that stopped asking 'should we invest in AI' and started asking 'what do we need to build so AI actually works here.' Data infrastructure, governance, people who understand both the science and the technology. The FDA moving on real-time trials signals the regulatory environment is catching up. The gap between pharma companies that are ready and those still in pilot mode is about to get a lot more visible.`
   },
   {
+    id: "09",
+    published: true,
+    date: "Apr 2026",
+    tag: "AI",
+    title: "Claude Design Dropped. The Capabilities Are Insane.",
+    excerpt: "We are living in weird, fast times. Disruption is already here. Being alive right now is a wild experience, but let's be honest: it's hard to keep up.",
+    file: "",
+    readTime: "2 min",
+    author: "Matteo Favilli",
+    image: "",
+    linkedin: "https://www.linkedin.com/posts/matteo-favilli_nextgenita-ai-claudedesign-ugcPost-7451283675834503168-5zGk",
+    text: `Claude Design by Anthropic dropped yesterday. The capabilities, UX, and slides are insane. We are living in weird, fast times. Disruption is already here. Being alive right now is a wild experience, but let's be honest: it's hard to keep up. Like my guests on #NextGenITA said yesterday: "staying in the AI field might be a struggle because everything moves too fast." And sometimes, it is exhausting to stay updated, even if I put all my efforts towards it. I look at where we are going and I feel a mix of curiosity and fear. It's exciting to see what we can build, but also strange to think how much everything will change so soon. I'm curious to see what happens next, even if it feels a bit overwhelming. It's going to be a different world very, very, very soon. In Italian: non mi aspettavo fossimo già a questo punto.`
+  },
+  {
     id: "08",
     published: true,
     date: "Apr 2026",
