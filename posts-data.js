@@ -4,20 +4,6 @@
 
 window.NEXTGEN_POSTS = [
   {
-    id: "10",
-    published: true,
-    date: "Apr 2026",
-    tag: "AI",
-    title: "Notes on LLM Research",
-    excerpt: "A short take on the latest LLM research and what it means for builders. Read the full thread on LinkedIn.",
-    file: "",
-    readTime: "2 min",
-    author: "Matteo Favilli",
-    image: "",
-    linkedin: "https://www.linkedin.com/posts/matteo-favilli_ai-llm-research-activity-7444311234470100992-Vmth",
-    text: `A short take on the latest LLM research and what it means for builders. Click "View original on LinkedIn" below to read the full post and join the discussion.`
-  },
-  {
     id: "09",
     published: true,
     date: "May 2026",
