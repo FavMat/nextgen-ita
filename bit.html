@@ -104,23 +104,21 @@
 
     .deep-dive-section {
       margin-top: 56px;
-      background: #f0faf6;
-      border: 1px solid #b8e8d4;
+      background: rgba(29, 158, 117, 0.07);
+      border: 1px solid rgba(29, 158, 117, 0.18);
       border-radius: 16px;
       padding: 36px 40px;
     }
     .deep-dive-header {
-      display: flex; align-items: center; gap: 16px;
       margin-bottom: 24px;
     }
     .deep-dive-label {
       font-family: var(--f-mono); font-size: 10px;
-      color: #1D9E75; letter-spacing: 2px; text-transform: uppercase;
-      background: #fff; border: 1px solid #b8e8d4;
-      padding: 4px 12px; border-radius: 100px; white-space: nowrap;
+      color: #5DCAA5; letter-spacing: 2px; text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 0;
     }
-    .deep-dive-sub { font-size: 12px; color: #888; font-style: italic; margin: 0; }
-    .deep-dive-body { font-size: 16px; line-height: 1.85; color: var(--fg-1); font-weight: 350; }
+    .deep-dive-body { font-size: 16px; line-height: 1.9; color: var(--fg-1); font-weight: 350; }
     .deep-dive-body p { margin-bottom: 20px; }
     .deep-dive-body p:last-child { margin-bottom: 0; }
 
@@ -222,8 +220,7 @@
     const deepDiveBlock = post.deepDive
       ? `<div class="deep-dive-section">
            <div class="deep-dive-header">
-             <span class="deep-dive-label">DEEP DIVE</span>
-             <p class="deep-dive-sub">AI-generated analysis and context</p>
+             <span class="deep-dive-label">THE SIGNAL</span>
            </div>
            <div class="deep-dive-body">${post.deepDive.split(/\n\n+/).map(p => `<p>${escapeHtml(p)}</p>`).join('')}</div>
          </div>`
