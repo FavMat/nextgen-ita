@@ -157,6 +157,63 @@
     @media (max-width: 560px) {
       .skills-grid { grid-template-columns: 1fr; }
     }
+
+    /* Access gate modal */
+    #accessModal {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.72);
+      display: none; align-items: center; justify-content: center;
+      padding: 24px;
+      backdrop-filter: blur(4px);
+    }
+    .access-card {
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 400px; width: 100%;
+      text-align: center;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+    }
+    .access-card .ac-lock { font-size: 36px; margin-bottom: 20px; display: block; }
+    .access-card h3 {
+      font-family: var(--f-display); font-size: 24px;
+      color: var(--fg); margin-bottom: 10px;
+    }
+    .access-card p { font-size: 14px; color: var(--fg-2); line-height: 1.6; margin-bottom: 28px; }
+    #accessCode {
+      width: 100%; box-sizing: border-box;
+      padding: 14px 18px;
+      font-family: var(--f-mono); font-size: 22px;
+      letter-spacing: 8px; text-align: center;
+      background: var(--bg-0, #0a0a0a); color: var(--fg);
+      border: 1px solid var(--line);
+      border-radius: 10px; outline: none;
+      transition: border-color .2s;
+      margin-bottom: 12px;
+    }
+    #accessCode:focus { border-color: var(--green); }
+    #unlockBtn {
+      width: 100%; padding: 14px;
+      background: var(--green); color: #fff;
+      border: none; border-radius: 10px;
+      font-family: var(--f-sans); font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: opacity .2s;
+    }
+    #unlockBtn:hover { opacity: 0.85; }
+    #accessError { margin-top: 12px; font-size: 13px; color: #e05252; display: none; }
+    #accessClose {
+      margin-top: 16px; display: block;
+      font-size: 12px; color: var(--fg-3);
+      cursor: pointer; background: none; border: none;
+      font-family: var(--f-sans); text-decoration: underline;
+    }
+    @keyframes ac-shake {
+      0%,100% { transform: translateX(0); }
+      20%,60% { transform: translateX(-6px); }
+      40%,80% { transform: translateX(6px); }
+    }
+    .ac-shake { animation: ac-shake .35s ease; }
   </style>
 </head>
 <body>
@@ -479,16 +536,29 @@ const PERSONAS = {
   }
 };
 
+const FREE_PERSONAS = ['founder'];
+let pendingPersonaKey = null;
+const isUnlocked = () => sessionStorage.getItem('toolbox_unlocked') === 'true';
+
 function renderTabs() {
   const tabsEl = document.getElementById('personaTabs');
-  tabsEl.innerHTML = Object.keys(PERSONAS).map((key, i) =>
-    `<button class="persona-tab${i===0?' active':''}" data-key="${key}">
+  const unlocked = isUnlocked();
+  tabsEl.innerHTML = Object.keys(PERSONAS).map((key, i) => {
+    const locked = !FREE_PERSONAS.includes(key) && !unlocked;
+    return `<button class="persona-tab${i===0?' active':''}" data-key="${key}" data-locked="${locked}">
        <span class="ic">${PERSONAS[key].icon}</span>
        <span>${PERSONAS[key].label}</span>
-     </button>`
-  ).join('');
+       ${locked ? '<span style="font-size:10px;opacity:0.45;letter-spacing:1px;font-family:var(--f-mono)">🔒</span>' : ''}
+     </button>`;
+  }).join('');
   tabsEl.querySelectorAll('.persona-tab').forEach(btn => {
     btn.addEventListener('click', () => {
+      if (btn.dataset.locked === 'true') {
+        pendingPersonaKey = btn.dataset.key;
+        document.getElementById('accessModal').style.display = 'flex';
+        setTimeout(() => document.getElementById('accessCode').focus(), 50);
+        return;
+      }
       tabsEl.querySelectorAll('.persona-tab').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderPersona(btn.dataset.key);
@@ -524,6 +594,50 @@ function renderPersona(key) {
 
 renderTabs();
 renderPersona('founder');
+</script>
+
+<div id="accessModal">
+  <div class="access-card">
+    <span class="ac-lock">🔒</span>
+    <h3>Members only</h3>
+    <p>Enter your access code to unlock all 6 professional personas.</p>
+    <input id="accessCode" type="text" maxlength="20" placeholder="· · · ·" autocomplete="off" />
+    <button id="unlockBtn">Unlock access</button>
+    <p id="accessError">Wrong code. Try again.</p>
+    <button id="accessClose">Cancel</button>
+  </div>
+</div>
+
+<script>
+document.getElementById('unlockBtn').addEventListener('click', tryUnlock);
+document.getElementById('accessCode').addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+document.getElementById('accessClose').addEventListener('click', () => {
+  document.getElementById('accessModal').style.display = 'none';
+  document.getElementById('accessCode').value = '';
+  document.getElementById('accessError').style.display = 'none';
+});
+
+function tryUnlock() {
+  const code = document.getElementById('accessCode').value.trim();
+  if (code === '0564') {
+    sessionStorage.setItem('toolbox_unlocked', 'true');
+    document.getElementById('accessModal').style.display = 'none';
+    document.getElementById('accessCode').value = '';
+    document.getElementById('accessError').style.display = 'none';
+    renderTabs();
+    const tabsEl = document.getElementById('personaTabs');
+    tabsEl.querySelectorAll('.persona-tab').forEach(b => b.classList.remove('active'));
+    const target = tabsEl.querySelector(`[data-key="${pendingPersonaKey}"]`);
+    if (target) target.classList.add('active');
+    renderPersona(pendingPersonaKey);
+  } else {
+    const card = document.querySelector('.access-card');
+    document.getElementById('accessError').style.display = 'block';
+    card.classList.remove('ac-shake');
+    void card.offsetWidth;
+    card.classList.add('ac-shake');
+  }
+}
 </script>
 
 <script src="assets/i18n.js?v=2"></script>
