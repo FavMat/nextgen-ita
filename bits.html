@@ -186,17 +186,16 @@
 
     /* ── Key Reports ── */
     .reports-btn {
-      position: fixed; top: 76px; right: 20px; z-index: 200;
       display: flex; align-items: center; gap: 7px;
       padding: 8px 16px 8px 12px;
-      background: var(--bg-1); border: 1px solid var(--green-20);
+      background: transparent; border: 1px solid var(--green-20);
       border-radius: 100px; cursor: pointer;
       font-family: var(--f-mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
       color: var(--green); text-decoration: none;
-      transition: background .2s, border-color .2s, box-shadow .2s;
-      box-shadow: 0 4px 20px rgba(0,0,0,.35);
+      transition: background .2s, border-color .2s;
+      white-space: nowrap;
     }
-    .reports-btn:hover { background: var(--bg-2); border-color: var(--green); box-shadow: 0 6px 28px rgba(0,0,0,.45); }
+    .reports-btn:hover { background: var(--bg-2); border-color: var(--green); }
     .reports-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
     .resources-section { margin-bottom: 60px; }
     .resources-header { margin-bottom: 32px; }
@@ -331,6 +330,10 @@
         <button class="fbtn" data-filter="Innovation">Innovation</button>
       </div>
       <span class="count-live"><strong id="bit-count">—</strong> BITS · LIVE</span>
+      <a href="#resources" class="reports-btn" id="reports-btn" onclick="(function(){var s=document.getElementById('resources');var open=s.style.display==='none';s.style.display=open?'block':'none';if(open)s.scrollIntoView({behavior:'smooth',block:'start'});})();return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        KEY REPORTS
+      </a>
     </div>
 
     <div id="featured-slot"></div>
@@ -447,11 +450,6 @@
     <span><a href="privacy.html" style="color:inherit;text-decoration:none;opacity:.6">Privacy &amp; Cookie Policy</a> · Built in Italy, for the world</span>
   </div>
 </footer>
-
-<a href="#resources" class="reports-btn" id="reports-btn" onclick="(function(){var s=document.getElementById('resources');var open=s.style.display==='none';s.style.display=open?'block':'none';if(open)s.scrollIntoView({behavior:'smooth',block:'start'});})();return false;">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-  KEY REPORTS
-</a>
 
 <script src="posts-data.js?v=20260504a"></script>
 <script src="assets/i18n.js?v=2"></script>
