@@ -71,6 +71,7 @@ const TRANSLATIONS = {
     errPdb: 'PDB "{id}" non trovato su RCSB',
     errLoadSmall: 'Errore nel caricamento',
     errLoadProtein: 'Errore caricamento proteina',
+    errDefault: 'Errore imprevisto. Riprova.',
     // Description
     descLoading: 'Caricamento descrizione ufficiale...',
     descNoData: 'Nessuna descrizione disponibile.',
@@ -141,6 +142,7 @@ const TRANSLATIONS = {
     errPdb: 'PDB "{id}" not found on RCSB',
     errLoadSmall: 'Loading error',
     errLoadProtein: 'Protein loading error',
+    errDefault: 'Unexpected error. Try again.',
     descLoading: 'Loading official description...',
     descNoData: 'No description available.',
     descWait: 'Fetching information...',
@@ -201,6 +203,7 @@ const TRANSLATIONS = {
     errProps: 'Propriétés non récupérables', errNoSdf: 'Structure SDF introuvable',
     errPdb: 'PDB "{id}" introuvable sur RCSB',
     errLoadSmall: 'Erreur de chargement', errLoadProtein: 'Erreur chargement protéine',
+    errDefault: 'Erreur inattendue. Réessayez.',
     descLoading: 'Chargement de la description officielle...',
     descNoData: 'Aucune description disponible.',
     catNeuro: 'Neurotransmetteurs', catDrugs: 'Médicaments & Stimulants', catHormones: 'Hormones',
@@ -255,6 +258,7 @@ const TRANSLATIONS = {
     errProps: 'Eigenschaften nicht abrufbar', errNoSdf: 'SDF-Struktur nicht gefunden',
     errPdb: 'PDB "{id}" auf RCSB nicht gefunden',
     errLoadSmall: 'Ladefehler', errLoadProtein: 'Fehler beim Laden des Proteins',
+    errDefault: 'Unerwarteter Fehler. Bitte erneut versuchen.',
     descLoading: 'Offizielle Beschreibung wird geladen...',
     descNoData: 'Keine Beschreibung verfügbar.',
     catNeuro: 'Neurotransmitter', catDrugs: 'Medikamente & Stimulanzien', catHormones: 'Hormone',
@@ -309,6 +313,7 @@ const TRANSLATIONS = {
     errProps: 'No se pudieron obtener propiedades', errNoSdf: 'Estructura SDF no encontrada',
     errPdb: 'PDB "{id}" no encontrado en RCSB',
     errLoadSmall: 'Error de carga', errLoadProtein: 'Error cargando proteína',
+    errDefault: 'Error inesperado. Inténtalo de nuevo.',
     descLoading: 'Cargando descripción oficial...',
     descNoData: 'No hay descripción disponible.',
     catNeuro: 'Neurotransmisores', catDrugs: 'Fármacos y Estimulantes', catHormones: 'Hormonas',
@@ -339,6 +344,24 @@ function t(key, vars={}) {
   let str = T[key] || TRANSLATIONS.en[key] || key;
   Object.entries(vars).forEach(([k,v]) => { str = str.replaceAll(`{${k}}`, v); });
   return str;
+}
+
+function escapeHTML(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  }[ch]));
+}
+
+function renderTextWithLineBreaks(el, value) {
+  const parts = String(value ?? '').split(/<br\s*\/?>/i);
+  parts.forEach((part, idx) => {
+    if (idx) el.appendChild(document.createElement('br'));
+    el.appendChild(document.createTextNode(part));
+  });
 }
 
 /* ══════════════════════════════════════════════════
@@ -484,6 +507,7 @@ let rawData      = null;      // SDF or PDB text for download
 let vizStyle     = 'stick';
 let vizColor     = 'element';
 let spinning     = false;
+let activeLoadId = 0;
 
 /* ══════════════════════════════════════════════════
    DOM REFS
@@ -537,6 +561,7 @@ let mouseTrail = [];
   const cx = cv.getContext('2d');
   let W, H, pts;
   const ATTRACT = 190;  // mouse attraction radius
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   
   const resize = () => { W = cv.width = innerWidth; H = cv.height = innerHeight; };
   const mk = () => ({
@@ -654,7 +679,7 @@ let mouseTrail = [];
         }
       }
     }
-    requestAnimationFrame(draw);
+    if (!reduceMotion) requestAnimationFrame(draw);
   };
   
   addEventListener('resize', resize);
@@ -738,7 +763,12 @@ function toast(msg, type='info', ms=4500) {
   const icons = { error:'mdi:alert-circle', success:'mdi:check-circle', info:'mdi:information' };
   const el = document.createElement('div');
   el.className = `toast ${type}`;
-  el.innerHTML = `<iconify-icon icon="${icons[type]}" class="toast-icon"></iconify-icon><span>${msg}</span>`;
+  const icon = document.createElement('iconify-icon');
+  icon.setAttribute('icon', icons[type] || icons.info);
+  icon.className = 'toast-icon';
+  const text = document.createElement('span');
+  renderTextWithLineBreaks(text, msg);
+  el.append(icon, text);
   toastWrap.appendChild(el);
   setTimeout(() => {
     el.classList.add('fadeout');
@@ -767,6 +797,7 @@ function hideLoad() { loadOverlay.classList.remove('visible'); }
    SCREENS
 ══════════════════════════════════════════════════ */
 function goHome() {
+  activeLoadId++;
   welcome.classList.remove('hidden');
   viewerScreen.classList.remove('visible');
   viewerScreen.style.display = '';
@@ -777,6 +808,7 @@ function goHome() {
   spinning = false;
   if (viewer) { try { viewer.spin(false); } catch(e){} }
   btnSpin.classList.remove('active-btn');
+  btnSpin.setAttribute('aria-pressed', 'false');
   document.title = 'MoleculeViewer — 3D Molecular Visualization';
   window.scrollTo(0, 0);
 }
@@ -787,6 +819,12 @@ function openViewer() {
   viewerScreen.classList.add('visible');
   viewerScreen.style.display = 'flex';
   document.body.classList.add('viewer-open');
+  const toolbar = $('viewer-toolbar');
+  const toolbarToggle = $('btn-toolbar-toggle');
+  if (toolbar && matchMedia('(max-width: 600px)').matches) {
+    toolbar.classList.add('hidden');
+    toolbarToggle?.setAttribute('aria-expanded', 'false');
+  }
 }
 
 /* ══════════════════════════════════════════════════
@@ -967,11 +1005,15 @@ function refreshToolbar() {
   document.querySelectorAll('[data-style]').forEach(btn => {
     const isCartoon  = btn.dataset.style === 'cartoon';
     const isSmallMol = molType === 'small';
+    const isActive = btn.dataset.style === vizStyle;
     btn.classList.toggle('unavailable', isCartoon && isSmallMol);
-    btn.classList.toggle('active', btn.dataset.style === vizStyle);
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', String(isActive));
   });
   document.querySelectorAll('[data-color]').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.color === vizColor);
+    const isActive = btn.dataset.color === vizColor;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', String(isActive));
   });
 }
 
@@ -986,7 +1028,7 @@ function setupAtomHover() {
       const chain = atom.chain ? ` (${t('chain')} ${atom.chain})` : '';
       atomTip.innerHTML = `
         <span class="atom-dot" style="background:${cpk.color}"></span>
-        <strong>${el}</strong>&nbsp;${cpk.name}${resi}${chain}
+        <strong>${escapeHTML(el)}</strong>&nbsp;${escapeHTML(cpk.name)}${escapeHTML(resi)}${escapeHTML(chain)}
       `;
       const rect = viewWrap.getBoundingClientRect();
       const x = event.clientX - rect.left;
@@ -1021,21 +1063,22 @@ function renderSmallMolProps(props) {
     { k: t('propCharge'),   v: props.Charge != null ? `${props.Charge >= 0 ? '+' : ''}${props.Charge}` : '—' },
   ];
   propsList.innerHTML = rows.map(r => `
-    <div class="prop-row" ${r.tip ? `title="${r.tip}"` : ''}>
+    <div class="prop-row" ${r.tip ? `title="${escapeHTML(r.tip)}"` : ''}>
       <span class="prop-key">
-        ${r.k}
+        ${escapeHTML(r.k)}
         ${r.tip ? `<iconify-icon icon="mdi:help-circle-outline" class="prop-help"></iconify-icon>` : ''}
       </span>
-      <span class="prop-value ${r.cls||''}">
-        ${r.v}
-        ${r.badge ? `<span class="prop-badge ${r.badge.c}">${r.badge.l}</span>` : ''}
+      <span class="prop-value ${escapeHTML(r.cls||'')}">
+        ${escapeHTML(r.v)}
+        ${r.badge ? `<span class="prop-badge ${escapeHTML(r.badge.c)}">${escapeHTML(r.badge.l)}</span>` : ''}
       </span>
     </div>
   `).join('');
 }
 
 function renderProteinProps(meta, pdbId) {
-  if (!meta) { propsList.innerHTML = `<div class="prop-row"><span class="prop-key">${t('propPdbId')}</span><span class="prop-value">${pdbId.toUpperCase()}</span></div>`; return; }
+  const safePdbId = escapeHTML(pdbId.toUpperCase());
+  if (!meta) { propsList.innerHTML = `<div class="prop-row"><span class="prop-key">${escapeHTML(t('propPdbId'))}</span><span class="prop-value">${safePdbId}</span></div>`; return; }
   const method     = meta?.exptl?.[0]?.method || '—';
   const resolution = meta?.refine?.[0]?.ls_d_res_high;
   const mw         = meta?.rcsb_entry_info?.molecular_weight;
@@ -1044,18 +1087,18 @@ function renderProteinProps(meta, pdbId) {
   const organism   = meta?.rcsb_entity_source_organism?.[0]?.ncbi_scientific_name;
 
   const rows = [
-    { k: t('propPdbId'),    v: `<a href="https://www.rcsb.org/structure/${pdbId.toUpperCase()}" target="_blank" class="prop-link">${pdbId.toUpperCase()}</a>` },
+    { k: t('propPdbId'),    v: `<a href="https://www.rcsb.org/structure/${safePdbId}" target="_blank" rel="noopener" class="prop-link">${safePdbId}</a>`, html: true },
     { k: t('propMethod'),   v: method },
     ...(resolution ? [{ k: t('propResolution'), v: `${Number(resolution).toFixed(2)} Å`, tip: t('propResTip') }] : []),
     ...(mw         ? [{ k: t('propMw'),         v: `${Number(mw).toFixed(1)} kDa` }] : []),
     ...(chains     ? [{ k: t('propChains'),      v: chains }] : []),
     ...(atoms      ? [{ k: t('propAtoms'),       v: Number(atoms).toLocaleString() }] : []),
-    ...(organism   ? [{ k: t('propOrganism'),    v: `<em>${organism}</em>` }] : []),
+    ...(organism   ? [{ k: t('propOrganism'),    v: `<em>${escapeHTML(organism)}</em>`, html: true }] : []),
   ];
   propsList.innerHTML = rows.map(r => `
-    <div class="prop-row" ${r.tip ? `title="${r.tip}"` : ''}>
-      <span class="prop-key">${r.k}${r.tip ? `<iconify-icon icon="mdi:help-circle-outline" class="prop-help"></iconify-icon>` : ''}</span>
-      <span class="prop-value">${r.v}</span>
+    <div class="prop-row" ${r.tip ? `title="${escapeHTML(r.tip)}"` : ''}>
+      <span class="prop-key">${escapeHTML(r.k)}${r.tip ? `<iconify-icon icon="mdi:help-circle-outline" class="prop-help"></iconify-icon>` : ''}</span>
+      <span class="prop-value">${r.html ? r.v : escapeHTML(r.v)}</span>
     </div>
   `).join('');
 }
@@ -1106,14 +1149,16 @@ function buildLegend() {
 /* ══════════════════════════════════════════════════
    LOAD SMALL MOLECULE (PubChem)
 ══════════════════════════════════════════════════ */
-async function loadSmallMolecule(name) {
+async function loadSmallMolecule(name, loadId) {
   try {
     setStep(0, t('searchingOn', {name}));
     const cid = await getCid(name);
+    if (loadId !== activeLoadId) return;
     currentCid = cid;
 
     setStep(1, t('downloadingStructure'));
     const [sdf, props, description] = await Promise.all([getSdf(cid), getProperties(cid), fetchDescription(cid)]);
+    if (loadId !== activeLoadId) return;
     rawData = sdf;
 
     const display = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
@@ -1148,6 +1193,7 @@ async function loadSmallMolecule(name) {
 
     setStep(2, t('rendering3d'));
     await ready3d();
+    if (loadId !== activeLoadId) return;
     initViewer();
     viewer.addModel(sdf, 'sdf');
     applyVizStyle();
@@ -1167,6 +1213,7 @@ async function loadSmallMolecule(name) {
     }
 
   } catch(err) {
+    if (loadId !== activeLoadId) return;
     hideLoad();
     toast(err.message || t('errDefault'), 'error');
     goHome();
@@ -1176,13 +1223,14 @@ async function loadSmallMolecule(name) {
 /* ══════════════════════════════════════════════════
    LOAD PROTEIN (RCSB PDB)
 ══════════════════════════════════════════════════ */
-async function loadProtein(pdbId, displayName) {
+async function loadProtein(pdbId, displayName, loadId) {
   try {
     setStep(0, t('searchingProtein', {name: displayName || pdbId}));
     currentPdbId = pdbId;
     molType      = 'protein';
 
     const [pdb, meta] = await Promise.all([getPdb(pdbId), getRcsbMeta(pdbId)]);
+    if (loadId !== activeLoadId) return;
     rawData = pdb;
 
     const title = meta?.struct?.title || displayName || pdbId.toUpperCase();
@@ -1220,6 +1268,7 @@ async function loadProtein(pdbId, displayName) {
 
     setStep(2, t('renderingProtein'));
     await ready3d();
+    if (loadId !== activeLoadId) return;
     initViewer();
     viewer.addModel(pdb, 'pdb');
     applyVizStyle();
@@ -1235,6 +1284,7 @@ async function loadProtein(pdbId, displayName) {
     renderDescription(protDesc || t('descNoData'));
 
   } catch(err) {
+    if (loadId !== activeLoadId) return;
     hideLoad();
     toast(err.message || t('errDefault'), 'error');
     goHome();
@@ -1245,18 +1295,19 @@ async function loadProtein(pdbId, displayName) {
    DISPATCHER
 ══════════════════════════════════════════════════ */
 async function loadMolecule(name, pdbId=null) {
+  const loadId = ++activeLoadId;
   openViewer();
   dispName.textContent = name.charAt(0).toUpperCase() + name.slice(1);
   iupacEl.textContent  = '';
   propsList.innerHTML  = '';
 
   if (pdbId) {
-    await loadProtein(pdbId, name);
+    await loadProtein(pdbId, name, loadId);
   } else {
     if (/^[1-9][A-Za-z0-9]{3}$/.test(name.trim())) {
-      await loadProtein(name.trim().toUpperCase(), name.trim().toUpperCase());
+      await loadProtein(name.trim().toUpperCase(), name.trim().toUpperCase(), loadId);
     } else {
-      await loadSmallMolecule(name);
+      await loadSmallMolecule(name, loadId);
     }
   }
 }
@@ -1351,6 +1402,10 @@ function doSearch() {
 searchBtn.addEventListener('click', doSearch);
 searchInput.addEventListener('keydown', e => {
   if (e.key === 'Enter') doSearch();
+  if (e.key === 'ArrowDown' && autoList.classList.contains('visible')) {
+    e.preventDefault();
+    autoList.querySelector('.autocomplete-item')?.focus();
+  }
   if (e.key === 'Escape') {
     searchInput.blur();
     closeAuto();
@@ -1383,10 +1438,10 @@ searchInput.addEventListener('input', () => {
   if (!matches.length) { closeAuto(); return; }
   autoList.innerHTML = matches.map(m => `
     <div class="autocomplete-item" role="option" tabindex="0"
-      data-name="${m.pubchemName||m.name}" ${m.pdb ? `data-pdb="${m.pdb}"` : ''}>
-      <span>${m.emoji}</span>
-      <span class="mol-name">${m.pubchemName||m.name}</span>
-      <span class="mol-cat">${m.category}</span>
+      data-name="${escapeHTML(m.pubchemName||m.name)}" ${m.pdb ? `data-pdb="${escapeHTML(m.pdb)}"` : ''}>
+      <span>${escapeHTML(m.emoji)}</span>
+      <span class="mol-name">${escapeHTML(m.pubchemName||m.name)}</span>
+      <span class="mol-cat">${escapeHTML(m.category)}</span>
     </div>
   `).join('');
   autoList.classList.add('visible');
@@ -1397,6 +1452,28 @@ autoList.addEventListener('click', e => {
   searchInput.value = item.dataset.name;
   closeAuto();
   loadMolecule(item.dataset.name, item.dataset.pdb || null);
+});
+autoList.addEventListener('keydown', e => {
+  const item = e.target.closest('.autocomplete-item');
+  if (!item) return;
+
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    searchInput.value = item.dataset.name;
+    closeAuto();
+    loadMolecule(item.dataset.name, item.dataset.pdb || null);
+    return;
+  }
+
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    const items = [...autoList.querySelectorAll('.autocomplete-item')];
+    const current = items.indexOf(item);
+    const next = e.key === 'ArrowDown'
+      ? Math.min(current + 1, items.length - 1)
+      : Math.max(current - 1, 0);
+    items[next]?.focus();
+  }
 });
 document.addEventListener('click', e => { if (!e.target.closest('.search-wrapper')) closeAuto(); });
 function closeAuto() { autoList.classList.remove('visible'); }
@@ -1431,6 +1508,7 @@ btnReset.addEventListener('click', () => {
 btnSpin.addEventListener('click', () => {
   spinning = !spinning;
   btnSpin.classList.toggle('active-btn', spinning);
+  btnSpin.setAttribute('aria-pressed', String(spinning));
   if (viewer) viewer.spin(spinning ? 'y' : false);
 });
 
@@ -1454,7 +1532,7 @@ btnDownload.addEventListener('click', () => {
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
   a.href = url; a.download = `${dispName.textContent||'molecule'}.${ext}`; a.click();
-  URL.revokeObjectURL(url);
+  setTimeout(() => URL.revokeObjectURL(url), 0);
   toast(t('toastDownloaded', {ext: ext.toUpperCase()}), 'success');
 });
 
@@ -1586,8 +1664,12 @@ applyI18nToDOM();
 // Load from URL hash
 const hash = window.location.hash.slice(1);
 if (hash) {
-  const decoded = decodeURIComponent(hash);
-  loadMolecule(decoded, /^[1-9][A-Za-z0-9]{3}$/.test(decoded) ? decoded.toUpperCase() : null);
+  try {
+    const decoded = decodeURIComponent(hash);
+    loadMolecule(decoded, /^[1-9][A-Za-z0-9]{3}$/.test(decoded) ? decoded.toUpperCase() : null);
+  } catch {
+    toast(t('errDefault'), 'error');
+  }
 }
 
 console.log('%c⚗️ MoleculeViewer v3', 'color:#00d4ff;font-size:18px;font-weight:bold');
@@ -1600,8 +1682,10 @@ const btnToolbarToggle = $('btn-toolbar-toggle');
 const viewerToolbar = $('viewer-toolbar');
 
 if (btnToolbarToggle && viewerToolbar) {
+  btnToolbarToggle.setAttribute('aria-expanded', String(!viewerToolbar.classList.contains('hidden')));
   btnToolbarToggle.addEventListener('click', () => {
-    viewerToolbar.classList.toggle('hidden');
+    const hidden = viewerToolbar.classList.toggle('hidden');
+    btnToolbarToggle.setAttribute('aria-expanded', String(!hidden));
   });
 }
 
@@ -1614,7 +1698,10 @@ if (btnFullscreen) {
       else if (vc.msRequestFullscreen) vc.msRequestFullscreen(); // IE11
       
       // Auto-hide toolbar to see molecule clearly on fullscreen
-      if (viewerToolbar) viewerToolbar.classList.add('hidden');
+      if (viewerToolbar) {
+        viewerToolbar.classList.add('hidden');
+        btnToolbarToggle?.setAttribute('aria-expanded', 'false');
+      }
     } else {
       if (document.exitFullscreen) document.exitFullscreen();
       else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
