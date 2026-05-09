@@ -11,6 +11,42 @@
   <link rel="preconnect" href="https://pubchem.ncbi.nlm.nih.gov" />
   <link rel="preconnect" href="https://files.rcsb.org" />
   <link rel="stylesheet" href="style.css?v=2" />
+  <style>
+    #accessModal {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.82);
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+    .access-card {
+      background: #0d1520; border: 1px solid #1e3a5f;
+      border-radius: 18px; padding: 40px 36px; width: 340px; max-width: 92vw;
+      text-align: center; box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    }
+    .access-card .ac-lock { font-size: 36px; margin-bottom: 18px; display: block; }
+    .access-card h3 { font-family: 'Syne', sans-serif; font-size: 22px; color: #e8f4ff; margin-bottom: 8px; }
+    .access-card p { font-size: 14px; color: #7a9abf; line-height: 1.6; margin-bottom: 24px; }
+    #accessCode {
+      width: 100%; box-sizing: border-box; padding: 13px 16px;
+      background: #0a1219; border: 1px solid #1e3a5f; border-radius: 10px;
+      color: #e8f4ff; font-size: 20px; letter-spacing: 8px; text-align: center;
+      font-family: 'Syne', monospace; outline: none; margin-bottom: 12px;
+    }
+    #accessCode:focus { border-color: #3b9eff; }
+    #unlockBtn {
+      width: 100%; padding: 13px; background: #3b9eff; color: #fff;
+      border: none; border-radius: 10px; font-family: 'Syne', sans-serif;
+      font-size: 15px; font-weight: 700; cursor: pointer; transition: opacity .2s;
+    }
+    #unlockBtn:hover { opacity: 0.85; }
+    #accessError { margin-top: 10px; font-size: 13px; color: #e05252; display: none; }
+    @keyframes ac-shake {
+      0%,100% { transform: translateX(0); }
+      20%,60% { transform: translateX(-6px); }
+      40%,80% { transform: translateX(6px); }
+    }
+    .ac-shake { animation: ac-shake .35s ease; }
+  </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js" defer></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js" defer></script>
 </head>
@@ -276,5 +312,43 @@
 
 
   <script src="app.js" defer></script>
+
+  <div id="accessModal" style="display:none">
+    <div class="access-card">
+      <span class="ac-lock">🔒</span>
+      <h3>Members only</h3>
+      <p>Enter your access code to use MoleculeViewer.</p>
+      <input id="accessCode" type="password" maxlength="10" placeholder="· · · ·" autocomplete="off" />
+      <button id="unlockBtn">Unlock access</button>
+      <p id="accessError">Wrong code. Try again.</p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      if (sessionStorage.getItem('mv_unlocked') !== 'true') {
+        document.getElementById('accessModal').style.display = 'flex';
+        setTimeout(function() { document.getElementById('accessCode').focus(); }, 50);
+      }
+      function tryUnlock() {
+        var code = document.getElementById('accessCode').value.trim();
+        if (code === '0564') {
+          sessionStorage.setItem('mv_unlocked', 'true');
+          document.getElementById('accessModal').style.display = 'none';
+        } else {
+          var card = document.querySelector('.access-card');
+          document.getElementById('accessError').style.display = 'block';
+          card.classList.remove('ac-shake');
+          void card.offsetWidth;
+          card.classList.add('ac-shake');
+          document.getElementById('accessCode').value = '';
+        }
+      }
+      document.getElementById('unlockBtn').addEventListener('click', tryUnlock);
+      document.getElementById('accessCode').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') tryUnlock();
+      });
+    })();
+  </script>
 </body>
 </html>
