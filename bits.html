@@ -184,7 +184,46 @@
       border-bottom: 1px solid var(--line);
     }
 
-    /* ── Key Reports ── */
+    /* ── Key Reports Modal ── */
+    #reports-modal {
+      position: fixed; inset: 0; z-index: 1000;
+      align-items: flex-end; justify-content: center;
+    }
+    .rm-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+    }
+    .rm-drawer {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 900px;
+      background: var(--bg-1); border: 1px solid var(--line);
+      border-bottom: none; border-radius: 24px 24px 0 0;
+      padding: 40px 48px 48px;
+      transform: translateY(100%);
+      transition: transform .32s cubic-bezier(.22,1,.36,1);
+    }
+    #reports-modal.rm-open .rm-drawer { transform: translateY(0); }
+    .rm-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 32px;
+    }
+    .rm-label {
+      font-family: var(--f-mono); font-size: 11px;
+      color: var(--green); letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .rm-sub { font-size: 14px; color: var(--fg-2); }
+    .rm-close {
+      background: none; border: 1px solid var(--line); border-radius: 50%;
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--fg-2); flex-shrink: 0;
+      transition: border-color .2s, color .2s;
+    }
+    .rm-close:hover { border-color: var(--fg-3); color: var(--fg); }
+    .rm-close svg { width: 16px; height: 16px; }
+    @media (max-width: 720px) { .rm-drawer { padding: 28px 20px 40px; } }
+
+    /* ── Key Reports Button ── */
     .reports-btn {
       display: flex; align-items: center; gap: 8px;
       padding: 10px 20px 10px 14px;
@@ -339,52 +378,6 @@
     <div id="featured-slot"></div>
     <div class="bits-grid" id="bits-grid"></div>
 
-    <div class="resources-section" id="resources" style="display:none">
-      <div class="resources-header">
-        <div class="resources-label">KEY REPORTS</div>
-        <p class="resources-sub">Primary source documents cited in AI Bits. Free to download.</p>
-      </div>
-      <div class="resources-grid">
-        <a href="resources/who-ai-eu-health-readiness-2026.pdf" target="_blank" rel="noopener" class="resource-card">
-          <div class="resource-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          </div>
-          <div class="resource-body">
-            <div class="resource-tag">WHO · Apr 2026</div>
-            <div class="resource-title">AI Readiness in EU Health Systems</div>
-            <div class="resource-desc">State of readiness across all 27 EU Member States. Covers infrastructure gaps, regulatory alignment, and workforce preparedness. The data behind AI Bit #10.</div>
-            <div class="resource-topics">
-              <span class="resource-topic">Health AI</span>
-              <span class="resource-topic">EU Policy</span>
-              <span class="resource-topic">WHO Data</span>
-            </div>
-          </div>
-          <div class="resource-dl">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            PDF
-          </div>
-        </a>
-        <a href="https://aiindex.stanford.edu/wp-content/uploads/2026/04/HAI_AI-Index-Report-2026.pdf" target="_blank" rel="noopener" class="resource-card">
-          <div class="resource-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          </div>
-          <div class="resource-body">
-            <div class="resource-tag">Stanford HAI · Apr 2026</div>
-            <div class="resource-title">AI Index Report 2026</div>
-            <div class="resource-desc">The definitive annual benchmark on AI progress, adoption, and policy. Tracks models, compute, investment, regulation, and public perception across 30+ countries. Behind AI Bit #02.</div>
-            <div class="resource-topics">
-              <span class="resource-topic">Benchmarks</span>
-              <span class="resource-topic">AI Adoption</span>
-              <span class="resource-topic">Global Policy</span>
-            </div>
-          </div>
-          <div class="resource-dl">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            PDF
-          </div>
-        </a>
-      </div>
-    </div>
 
     <div class="subscribe reveal">
       <div>
@@ -544,6 +537,77 @@
   }));
 
   render();
+})();
+</script>
+
+<!-- KEY REPORTS MODAL -->
+<div id="reports-modal" style="display:none">
+  <div class="rm-backdrop" id="rm-backdrop"></div>
+  <div class="rm-drawer">
+    <div class="rm-header">
+      <div>
+        <div class="rm-label">KEY REPORTS</div>
+        <p class="rm-sub">Primary source documents cited in AI Bits. Free to download.</p>
+      </div>
+      <button class="rm-close" id="rm-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="resources-grid">
+      <a href="resources/who-ai-eu-health-readiness-2026.pdf" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="resource-body">
+          <div class="resource-tag">WHO · Apr 2026</div>
+          <div class="resource-title">AI Readiness in EU Health Systems</div>
+          <div class="resource-desc">State of readiness across all 27 EU Member States. Covers infrastructure gaps, regulatory alignment, and workforce preparedness. The data behind AI Bit #10.</div>
+          <div class="resource-topics">
+            <span class="resource-topic">Health AI</span>
+            <span class="resource-topic">EU Policy</span>
+            <span class="resource-topic">WHO Data</span>
+          </div>
+        </div>
+        <div class="resource-dl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          PDF
+        </div>
+      </a>
+      <a href="https://aiindex.stanford.edu/wp-content/uploads/2026/04/HAI_AI-Index-Report-2026.pdf" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="resource-body">
+          <div class="resource-tag">Stanford HAI · Apr 2026</div>
+          <div class="resource-title">AI Index Report 2026</div>
+          <div class="resource-desc">The definitive annual benchmark on AI progress, adoption, and policy. Tracks models, compute, investment, regulation, and public perception across 30+ countries. Behind AI Bit #02.</div>
+          <div class="resource-topics">
+            <span class="resource-topic">Benchmarks</span>
+            <span class="resource-topic">AI Adoption</span>
+            <span class="resource-topic">Global Policy</span>
+          </div>
+        </div>
+        <div class="resource-dl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          PDF
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var modal = document.getElementById('reports-modal');
+  var btn = document.getElementById('reports-btn');
+  var close = document.getElementById('rm-close');
+  var backdrop = document.getElementById('rm-backdrop');
+  function open(){ modal.style.display='flex'; setTimeout(function(){ modal.classList.add('rm-open'); },10); }
+  function closeModal(){ modal.classList.remove('rm-open'); setTimeout(function(){ modal.style.display='none'; },320); }
+  btn.addEventListener('click', function(e){ e.preventDefault(); open(); });
+  close.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
 })();
 </script>
 </body>
