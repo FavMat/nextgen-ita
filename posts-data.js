@@ -4,6 +4,37 @@
 
 window.NEXTGEN_POSTS = [
   {
+    id: "10",
+    published: true,
+    date: "May 2026",
+    tag: "AI",
+    title: "Europe Has an AI Strategy. The Budget Is Another Story.",
+    excerpt: "WHO released its first AI readiness report for the EU. 85% of Member States have a national AI strategy. Only 63% of those who said health AI was a priority actually funded it. Around a third in total.",
+    file: "",
+    readTime: "2 min",
+    author: "Matteo Favilli",
+    image: "",
+    linkedin: "https://www.linkedin.com/posts/matteo-favilli_eu-ai-health-readiness-who-ugcPost-7457556893180395520-2FYX",
+    text: `WHO just released its first AI readiness report for the EU. 85% of Member States have a national AI strategy. Only 63% of those who identified health AI priorities allocated funding. Around a third in total.
+
+The World Health Organization just gave us the first real picture of where the European Union stands on AI in health. "Artificial Intelligence is Reshaping Health Systems: State of Readiness Across the European Union", released April 2026, covering all 27 EU Member States.
+
+The number that stuck with me: 59% of countries identified priority areas for AI in health. Of those, only 63% actually put money behind it. Which means roughly one in three countries wrote down what they want to do, and stopped there. This is not a technology problem. It is a governance problem. And it is not unique to health.
+
+Every organization working on AI, public or private, runs into the same wall. A strategy document that took six months to write. A steering committee. A slide deck with a roadmap. And then, when it comes to the actual budget cycle, AI sits somewhere between "innovation reserve" and "we'll revisit in Q3." The tools exist. The use cases are validated. The money just doesn't move.
+
+The report has other numbers that tell the same story. Only 15% of EU countries offer AI training to both current and future healthcare professionals. Yet 74% are already deploying AI-assisted diagnostics in clinical settings. The technology is running. The people using it were never formally trained on it. There is a word for building before the foundations are ready. In construction it tends to end badly.
+
+The EU AI Act is already here (rules always first in the European Union). The budgets, less so. Europe has a long tradition of regulating what others are busy building. Honestly, we'll see in 12 months.`,
+    deepDive: `The WHO report is significant because it is the first systematic attempt to measure not what EU governments say about AI in health, but what they actually commit to. The gap between strategy and funding is a familiar dynamic in public sector technology initiatives, but the scale here is notable. When 59% of countries identify health AI as a priority and only 63% of those allocate dedicated funding, roughly two in three countries that declared AI a health priority have no budget attached to that declaration. Strategy without allocation is aspiration, not policy.
+
+The training gap points to a structural problem that funding alone does not fix. 74% of EU countries are already deploying AI-assisted diagnostics in clinical settings, while only 15% offer formal AI training to healthcare professionals. This means the majority of clinical AI deployment in Europe is happening with people who were never formally trained on the tools they are using. The risk is not that the technology fails. It is that its outputs are misinterpreted, its limitations are not understood, and its errors go undetected by the people who are supposed to catch them.
+
+The EU AI Act classifies many health AI applications as high-risk, imposing conformity assessments, transparency requirements, and human oversight obligations. These requirements are sensible in principle. The practical constraint is that hospitals, health systems, and health IT vendors subject to them are simultaneously navigating governance obligations and deploying technology in environments where the workforce has had minimal formal AI training. Compliance capacity and deployment capacity are not the same thing, and the report suggests Europe is building the second without adequately developing the first.
+
+The 12-month window is the right timeframe to watch. The AI Act's main obligations for high-risk systems began applying in 2025. The next round of national AI budgets will show whether the strategy documents are being backed or quietly deferred. The report provides a clear baseline. Whether anything changes from here is a political question as much as a technical one.`
+  },
+  {
     id: "09",
     published: true,
     date: "May 2026",

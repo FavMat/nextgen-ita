@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -209,6 +209,49 @@
       text-decoration: none;
     }
 
+    /* ── Events section ── */
+    .events-divider {
+      padding: 80px 48px 48px;
+      border-top: 1px solid var(--line);
+      max-width: 1280px; margin: 0 auto;
+    }
+    .events-divider .eyebrow { margin-bottom: 20px; }
+    .events-divider h2 {
+      font-family: var(--f-display); font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: -.03em; line-height: 1.05; margin-bottom: 16px;
+    }
+    .events-divider .lead { font-size: 18px; color: var(--fg-1); margin-bottom: 40px; }
+    .sg-banner {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 24px; background: var(--bg-1);
+      border: 1px solid var(--line); border-radius: 14px;
+      margin-bottom: 48px;
+      font-family: var(--f-mono); font-size: 11px;
+      color: var(--fg-2); letter-spacing: 1.5px;
+    }
+    .sg-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+    .events-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 28px;
+    }
+    .event-card {
+      display: flex; flex-direction: column;
+      border: 1px solid var(--line); border-radius: 20px;
+      overflow: hidden; background: var(--bg-1);
+      transition: all .35s var(--ease);
+    }
+    .event-card:hover { transform: translateY(-4px); border-color: var(--line-2); box-shadow: 0 24px 60px rgba(0,0,0,.4); }
+    .event-flyer { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+    .event-card-foot {
+      padding: 18px 20px; border-top: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .event-meta { font-family: var(--f-mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--fg-2); }
+    .event-badge {
+      font-family: var(--f-mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 100px;
+      background: rgba(255,255,255,.04); color: var(--fg-3); border: 1px solid var(--line-2);
+    }
+
     @media (max-width: 900px) {
       .page-content { padding: 48px 20px 20px; }
       .vprop { grid-template-columns: 1fr; }
@@ -219,6 +262,7 @@
       .nfe { margin: 0 -20px 48px; padding: 40px 20px; }
       .nfe h2 { font-size: 28px; }
       .nfe-grid { grid-template-columns: 1fr; gap: 32px; }
+      .events-divider { padding: 48px 20px; }
     }
   </style>
 </head>
@@ -235,12 +279,11 @@
   </a>
   <ul class="ng-links">
     <li><a href="index.html">Home</a></li>
-    <li><a href="podcast.html">Podcast</a></li>
     <li><a href="toolbox.html">Toolbox</a></li>
-    <li><a href="coaching.html" class="active">Coaching</a></li>
-    <li><a href="events.html">Events</a></li>
-    <li><a href="bits.html">AI Bits</a></li>
     <li><a href="apps.html">Cool Apps</a></li>
+    <li><a href="bits.html">AI Bits</a></li>
+    <li><a href="podcast.html">Podcast</a></li>
+    <li><a href="coaching.html" class="active">Coaching &amp; Events</a></li>
     <li><a href="team.html">Team</a></li>
   </ul>
   <a href="#apply" class="ng-cta">Apply now</a>
@@ -320,7 +363,7 @@
         </div>
 
         <a href="mailto:mttfvll@gmail.com?subject=NextGen%20Ita%20Coaching%20Application&body=Hi%20Matteo%2C%0A%0A1.%20What%20I'm%20building%3A%0A%0A2.%20The%20real%20blocker%3A%0A%0A3.%20Why%20now%3A%0A%0A%20Grazie%2C" class="apply-btn" data-magnet>
-          <span>mttfvll@gmail.com</span>
+          <span>Send your application →</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
             <line x1="7" y1="17" x2="17" y2="7"/>
             <polyline points="7 7 17 7 17 17"/>
@@ -360,6 +403,27 @@
 
   </div>
 
+  <div id="events">
+    <div class="events-divider">
+      <div class="eyebrow reveal">→ Events</div>
+      <h2 class="reveal d1">Where ideas<br>meet <em>people.</em></h2>
+      <p class="lead reveal d2">Real events, real rooms. In partnership with Startup Grind.</p>
+      <div class="sg-banner reveal d3">
+        <div class="sg-dot"></div>
+        IN PARTNERSHIP WITH STARTUP GRIND PISA LUCCA
+      </div>
+      <div class="events-grid reveal d4">
+        <div class="event-card">
+          <img src="luminous-horizons-2.png" alt="Luminous Horizons 2nd Edition" class="event-flyer" />
+          <div class="event-card-foot">
+            <div class="event-meta">Mar 2025 · Pisa</div>
+            <span class="event-badge">Past</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <footer class="ng-footer">
@@ -373,8 +437,7 @@
       <div class="flinks">
         <a href="podcast.html">Podcast</a>
         <a href="toolbox.html">Toolbox</a>
-        <a href="coaching.html">Coaching</a>
-        <a href="events.html">Events</a>
+        <a href="coaching.html">Coaching &amp; Events</a>
         <a href="bits.html">AI Bits</a>
         <a href="apps.html">Cool Apps</a>
         <a href="team.html">Team</a>
@@ -384,7 +447,7 @@
       <h4>Connect</h4>
       <div class="flinks">
         <a href="mailto:mttfvll@gmail.com">Email</a>
-        <a href="https://linkedin.com/in/matteofaralli" target="_blank">LinkedIn</a>
+        <a href="https://linkedin.com/in/matteo-favilli" target="_blank">LinkedIn</a>
         <a href="https://open.spotify.com/show/6yWSAUi97PEEQXSAzNTI9z" target="_blank">Spotify</a>
       </div>
     </div>
