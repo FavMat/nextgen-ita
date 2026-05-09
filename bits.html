@@ -336,7 +336,7 @@
     <div id="featured-slot"></div>
     <div class="bits-grid" id="bits-grid"></div>
 
-    <div class="resources-section reveal" id="resources">
+    <div class="resources-section" id="resources" style="display:none">
       <div class="resources-header">
         <div class="resources-label">KEY REPORTS</div>
         <p class="resources-sub">Primary source documents cited in AI Bits. Free to download.</p>
@@ -448,7 +448,7 @@
   </div>
 </footer>
 
-<a href="#resources" class="reports-btn" id="reports-btn" onclick="document.getElementById('resources').scrollIntoView({behavior:'smooth'});return false;">
+<a href="#resources" class="reports-btn" id="reports-btn" onclick="(function(){var s=document.getElementById('resources');var open=s.style.display==='none';s.style.display=open?'block':'none';if(open)s.scrollIntoView({behavior:'smooth',block:'start'});})();return false;">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
   KEY REPORTS
 </a>
