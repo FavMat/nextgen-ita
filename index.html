@@ -527,15 +527,15 @@
         </div>
 
         <div class="hero-side">
-          <a href="podcast.html" class="hero-pill reveal d3">
-            <div class="num">6</div>
+          <a href="toolbox.html" class="hero-pill reveal d3">
+            <div class="num">84</div>
             <div>
-              <div class="lab">Podcast</div>
-              <div class="val">episodes on Spotify</div>
+              <div class="lab">Toolbox</div>
+              <div class="val">AI prompts across all personas</div>
             </div>
           </a>
           <a href="bits.html" class="hero-pill reveal d4">
-            <div class="num">10</div>
+            <div class="num" id="hero-bits-count">—</div>
             <div>
               <div class="lab">AI Bits</div>
               <div class="val">live articles, backed by research</div>
@@ -786,6 +786,15 @@
   </div>
 </footer>
 
+<script src="posts-data.js?v=20260504a"></script>
+<script>
+(function(){
+  var el = document.getElementById('hero-bits-count');
+  if(el && window.NEXTGEN_POSTS) {
+    el.textContent = window.NEXTGEN_POSTS.filter(function(p){ return p.published; }).length;
+  }
+})();
+</script>
 <script src="assets/i18n.js?v=2"></script>
 <script src="assets/ng.js"></script>
 </body>
