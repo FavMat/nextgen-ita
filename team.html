@@ -158,6 +158,22 @@
   </style>
 </head>
 <body>
+<script>
+(function(){
+  if(sessionStorage.getItem('ng_auth')==='1')return;
+  var o=document.createElement('div');
+  o.id='ng-gate';
+  o.style.cssText='position:fixed;inset:0;z-index:99999;background:#fff;display:flex;align-items:center;justify-content:center;font-family:Geist,sans-serif;';
+  o.innerHTML='<div style="text-align:center;"><div style="font-size:11px;font-weight:600;letter-spacing:.15em;color:#aaa;margin-bottom:32px;">NEXTGEN ITA</div><input id="ng-pw" type="password" placeholder="Password" autofocus style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 20px;font-size:15px;width:220px;outline:none;text-align:center;font-family:inherit;" /><div id="ng-err" style="color:#e55;font-size:13px;margin-top:12px;height:16px;"></div></div>';
+  document.body.prepend(o);
+  setTimeout(function(){document.getElementById('ng-pw').focus();},50);
+  document.getElementById('ng-pw').addEventListener('keydown',function(e){
+    if(e.key!=='Enter')return;
+    if(this.value==='0564'){sessionStorage.setItem('ng_auth','1');o.remove();}
+    else{document.getElementById('ng-err').textContent='Wrong password';this.value='';}
+  });
+})();
+</script>
 <div class="bg-grid"></div>
 <canvas class="bg-canvas"></canvas>
 <div class="grain"></div>
