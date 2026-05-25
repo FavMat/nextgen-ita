@@ -88,7 +88,14 @@
       "Bash(GIT_TERMINAL_PROMPT=0 git -C \"C:/Users/donat/OneDrive/Desktop/Claude Dev/NextGenIta\" push origin main)",
       "Bash(echo \"EXIT:$?\")",
       "Bash(git rm *)",
-      "Bash(git reset *)"
+      "Bash(git reset *)",
+      "Bash(cp \"/c/Users/donat/.gemini/antigravity/scratch/molecule-viewer/index.html\" \"/c/Users/donat/OneDrive/Desktop/Claude Dev/NextGenIta/molecule-viewer/index.html\")",
+      "Bash(cp \"/c/Users/donat/.gemini/antigravity/scratch/molecule-viewer/style.css\" \"/c/Users/donat/OneDrive/Desktop/Claude Dev/NextGenIta/molecule-viewer/style.css\")",
+      "Bash(cp \"/c/Users/donat/.gemini/antigravity/scratch/molecule-viewer/app.js\" \"/c/Users/donat/OneDrive/Desktop/Claude Dev/NextGenIta/molecule-viewer/app.js\")",
+      "Bash(powershell -Command ' *)",
+      "Bash(Get-Date -Format 'yyyyMMdd_HHmm')",
+      "Bash(powershell Compress-Archive -Path \"NextGenIta\" -DestinationPath \"NextGenIta_backup_$\\(Get-Date -Format 'yyyyMMdd_HHmm'\\).zip\" -Force)",
+      "PowerShell($ts = Get-Date -Format 'yyyyMMdd_HHmm'; $dest = \"G:\\\\Il mio Drive\\\\NextGenIta_backup_$ts\"; Copy-Item -Path \"C:\\\\Users\\\\donat\\\\OneDrive\\\\Desktop\\\\Claude Dev\\\\NextGenIta\" -Destination $dest -Recurse -Force; Write-Output \"Backup creato in: $dest\"; \\(Get-ChildItem $dest -Recurse | Measure-Object -Property Length -Sum\\).Sum / 1MB)"
     ]
   }
 }
