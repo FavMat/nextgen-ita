@@ -320,4 +320,18 @@
     setInterval(tickClock, 1000);
   }
 
+  /* ═══════ Logo AI reveal animation ═══════ */
+  const logos = document.querySelectorAll('.ng-logo:has(.ng-logo-text)');
+  if (logos.length) {
+    function pulseAI() {
+      logos.forEach(l => l.classList.add('show-ai'));
+      setTimeout(() => logos.forEach(l => l.classList.remove('show-ai')), 1400);
+    }
+    // first pulse after 3s, then every 7s
+    setTimeout(() => {
+      pulseAI();
+      setInterval(pulseAI, 7000);
+    }, 3000);
+  }
+
 })();

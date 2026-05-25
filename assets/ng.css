@@ -139,6 +139,34 @@ img, svg { display: block; max-width: 100%; }
 @keyframes shimmer { 0%,100%{transform:translateX(-100%)} 50%{transform:translateX(100%)} }
 .ng-logo em { font-style: italic; color: var(--green); }
 
+/* CiaoMirta logo — AI letter reveal animation */
+.ng-logo-text {
+  display: inline-flex;
+  align-items: baseline;
+}
+.ng-logo-text em {
+  display: inline-flex;
+  align-items: baseline;
+}
+.ng-logo-text .lt {
+  display: inline-block;
+  transition: opacity .55s cubic-bezier(.4,0,.2,1),
+              color .55s cubic-bezier(.4,0,.2,1),
+              transform .55s cubic-bezier(.4,0,.2,1),
+              text-shadow .55s ease;
+}
+.ng-logo.show-ai .ng-logo-text .lt:not(.ai-a):not(.ai-i) {
+  opacity: .12;
+  transform: scale(.94);
+}
+.ng-logo.show-ai .ng-logo-text .lt.ai-a,
+.ng-logo.show-ai .ng-logo-text .lt.ai-i {
+  color: var(--green);
+  font-weight: 700;
+  transform: scale(1.18);
+  text-shadow: 0 0 18px rgba(45, 212, 160, .55);
+}
+
 .ng-links {
   display: flex; align-items: center; gap: 2px;
   list-style: none;
