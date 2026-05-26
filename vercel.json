@@ -1,31 +1,22 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": false,
+  "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
     {
       "source": "/podcast.html",
-      "destination": "https://nextgenitaly.it/",
+      "destination": "/nextgen-ita",
       "permanent": true
     },
     {
       "source": "/coaching.html",
-      "destination": "https://nextgenitaly.it/",
+      "destination": "/nextgen-ita",
       "permanent": true
     },
     {
       "source": "/events.html",
-      "destination": "https://nextgenitaly.it/",
+      "destination": "/nextgen-ita",
       "permanent": true
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/nextgen-ita.html",
-      "has": [
-        { "type": "host", "value": "(?:www\\.)?nextgenitaly\\.it" }
-      ]
     }
   ]
 }
