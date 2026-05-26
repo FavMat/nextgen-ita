@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CiaoMirta · Italy's AI Resource Hub for Builders</title>
-  <meta name="description" content="Tools, research, coaching and events for Italian founders and builders who use AI as real leverage. Everything free." />
+  <meta name="description" content="The resource side of the Italian builder community: AI Toolbox, key reports, working apps, sharp reads. For podcast, events and coaching see NextGen Ita. All free." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -73,10 +73,26 @@
     h1.mega .line { display: block; overflow: hidden; }
     h1.mega em {
       font-style: italic;
-      color: var(--green);
+      background: linear-gradient(110deg,
+        var(--green) 0%,
+        var(--green) 30%,
+        var(--amber) 50%,
+        var(--green) 70%,
+        var(--green) 100%);
+      background-size: 220% 100%;
+      background-position: 100% 50%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
       position: relative;
+      animation: heroShimmer 5.5s ease-in-out infinite;
     }
-    /* underline accent under the italic em */
+    @keyframes heroShimmer {
+      0%   { background-position: 130% 50%; }
+      100% { background-position: -30% 50%; }
+    }
+    /* bordeaux underline accent — reveals when line scrolls into view */
     h1.mega em::after {
       content: ''; position: absolute;
       left: 0; right: .1em;
@@ -599,17 +615,17 @@
       <div class="hero-grid">
         <div>
           <p class="hero-lead reveal d3">
-            CiaoMirta is the resource hub for Italian founders, innovators and builders working with AI.
-            Toolbox, AI Bits, key reports, apps, podcast, coaching and events.
-            <em>Not a buzzword. A resource.</em>
+            CiaoMirta is the resource side: AI Toolbox, key reports, working apps, sharp reads.
+            For the live side <em>(podcast, events, 1:1 coaching)</em> head to NextGen Ita.
+            <em>One project. Two doors.</em>
           </p>
           <div class="hero-ctas reveal d4">
-            <a href="nextgen-ita.html#coaching" class="btn-primary" data-magnet>
-              Join community
+            <a href="toolbox.html" class="btn-primary" data-magnet>
+              Open the Toolbox
               <span>→</span>
             </a>
-            <a href="nextgen-ita.html#podcast" class="btn-ghost" data-magnet>
-              Listen to podcast
+            <a href="nextgen-ita.html" class="btn-ghost" data-magnet>
+              Visit NextGen Ita
               <span>↗</span>
             </a>
           </div>
@@ -657,15 +673,15 @@
       <span class="marquee-item">Key reports</span>
       <span class="marquee-item">Italian builders</span>
       <span class="marquee-item">Zero filler</span>
-      <span class="marquee-item">Free coaching</span>
-      <span class="marquee-item">Live events</span>
+      <span class="marquee-item">NextGen Ita live</span>
+      <span class="marquee-item">Free for everyone</span>
       <span class="marquee-item">Real tools</span>
       <span class="marquee-item">AI as leverage</span>
       <span class="marquee-item">Key reports</span>
       <span class="marquee-item">Italian builders</span>
       <span class="marquee-item">Zero filler</span>
-      <span class="marquee-item">Free coaching</span>
-      <span class="marquee-item">Live events</span>
+      <span class="marquee-item">NextGen Ita live</span>
+      <span class="marquee-item">Free for everyone</span>
     </div>
   </div>
 
@@ -755,8 +771,8 @@
       </aside>
       <div>
         <p class="manifesto-body reveal d1">
-          The resources were scattered. <em>Now they are in one place.</em>
-          <span class="muted">Tools, research, coaching and real events, built for Italian founders who want to move fast and think clearly.</span>
+          The resources were scattered. <em>Now they are in two places.</em>
+          <span class="muted">CiaoMirta keeps the asynchronous side: tools to use, reports to read, apps that work. NextGen Ita keeps the live side: a podcast, real rooms in Tuscany and beyond, and free 1:1 coaching.</span>
           We don't talk about AI. We build with it, write about it and bring the people doing the same thing into the same room. <em>From Italy,</em> for anyone serious about what comes next.
         </p>
         <div class="manifesto-sig reveal d2">
@@ -770,12 +786,12 @@
   <!-- ══════════════ SIGNAL ══════════════ -->
   <div class="signal" data-screen-label="05 Signal">
     <div class="signal-cell reveal">
-      <div class="num"><em data-count="5">5</em></div>
-      <div class="label">Programs running</div>
+      <div class="num">2 <span class="small">↗ doors</span></div>
+      <div class="label">CiaoMirta + NextGen Ita</div>
     </div>
     <div class="signal-cell reveal d1">
       <div class="num"><em data-count="12">12</em></div>
-      <div class="label">Free AI tools</div>
+      <div class="label">AI tools in the Toolbox</div>
     </div>
     <div class="signal-cell reveal d2">
       <div class="num">IT <span class="small">↗ global</span></div>
@@ -817,10 +833,11 @@
     <div class="cta-box reveal">
       <div class="cta-inner">
         <div class="eyebrow" style="margin-bottom:24px;">§07 · Get started</div>
-        <h2>The resources<br>are here. <em>Use them.</em></h2>
-        <p>Toolbox, AI Bits, coaching, events, apps. All free, all live. Talk to us if you want to go further.</p>
+        <h2>Pick the door.<br><em>Both are open.</em></h2>
+        <p>CiaoMirta for the Toolbox, AI Bits, working apps. NextGen Ita for the podcast, real events and 1:1 coaching. Or just write us.</p>
         <div class="ctas">
-          <a href="nextgen-ita.html#coaching" class="btn-primary" data-magnet>Book free session <span>→</span></a>
+          <a href="nextgen-ita.html" class="btn-primary" data-magnet>Enter NextGen Ita <span>→</span></a>
+          <a href="toolbox.html" class="btn-ghost" data-magnet>Open the Toolbox</a>
           <a href="mailto:matteo@ciaomirta.it" class="btn-ghost" data-magnet>Send an email</a>
         </div>
       </div>
@@ -833,8 +850,8 @@
 <footer class="ng-footer">
   <div class="ng-footer-inner">
     <div>
-      <div class="ftag">Free for Italy.<br><em>AI as leverage.</em></div>
-      <p class="fsub">A community for founders, builders and researchers who want to move fast, think clearly, and ship what matters.</p>
+      <div class="ftag">Two doors.<br><em>One project.</em></div>
+      <p class="fsub">CiaoMirta is the resource side. <a href="nextgen-ita.html" style="color:var(--bordeaux-hi);text-decoration:underline;text-underline-offset:3px;">NextGen Ita</a> is the live side. For Italian founders, builders and researchers who want to move fast and think clearly.</p>
     </div>
     <div>
       <h4>Explore</h4>
