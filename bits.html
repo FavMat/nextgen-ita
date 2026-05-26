@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -329,23 +329,6 @@
   </style>
 </head>
 <body>
-<script>
-(function(){
-  if(sessionStorage.getItem('ng_auth')==='1')return;
-  var o=document.createElement('div');
-  o.id='ng-gate';
-  o.style.cssText='position:fixed;inset:0;z-index:99999;background:#fff;display:flex;align-items:center;justify-content:center;font-family:Geist,sans-serif;';
-  o.innerHTML='<div style="text-align:center;"><div style="font-size:11px;font-weight:600;letter-spacing:.15em;color:#aaa;margin-bottom:32px;">CIAO MIRTA</div><input id="ng-pw" type="password" placeholder="Password" autofocus style="border:1px solid #e0e0e0;border-radius:8px;padding:12px 20px;font-size:15px;width:220px;outline:none;text-align:center;font-family:inherit;" /><div id="ng-err" style="color:#e55;font-size:13px;margin-top:12px;height:16px;"></div></div>';
-  document.body.prepend(o);
-  setTimeout(function(){document.getElementById('ng-pw').focus();},50);
-  document.getElementById('ng-pw').addEventListener('keydown',function(e){
-    if(e.key!=='Enter')return;
-    if(this.value==='0564'){sessionStorage.setItem('ng_auth','1');o.remove();}
-    else{document.getElementById('ng-err').textContent='Wrong password';this.value='';}
-  });
-})();
-</script>
-
 <div class="bg-grid"></div>
 <canvas class="bg-canvas"></canvas>
 <div class="grain"></div>
@@ -360,10 +343,10 @@
     <li><a href="toolbox.html">Toolbox</a></li>
     <li><a href="apps.html">Cool Apps</a></li>
     <li><a href="bits.html" class="active">AI Bits</a></li>
-    <li><a href="podcast.html">NextGen Ita</a></li>
+    <li><a href="https://nextgenitaly.it/">NextGen Ita</a></li>
     <li><a href="team.html">Team</a></li>
   </ul>
-  <a href="coaching.html" class="ng-cta">Join community</a>
+  <a href="https://nextgenitaly.it/" class="ng-cta">Join community</a>
 </nav>
 
 <main>
@@ -413,7 +396,7 @@
           <div><strong>Follow on <em>LinkedIn</em></strong></div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
         </a>
-        <a href="mailto:matteo@ciaomirta.it?subject=AI%20Bit%20Pitch">
+        <a href="mailto:matteo@ciaomirta.it">
           <div><strong>Pitch <em>your bit</em></strong></div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
         </a>
@@ -433,9 +416,9 @@
     <div>
       <h4>Explore</h4>
       <div class="flinks">
-        <a href="podcast.html">Podcast</a>
+        <a href="https://nextgenitaly.it/">Podcast</a>
         <a href="toolbox.html">Toolbox</a>
-        <a href="coaching.html">Coaching &amp; Events</a>
+        <a href="https://nextgenitaly.it/">Coaching &amp; Events</a>
         <a href="bits.html">AI Bits</a>
         <a href="apps.html">Cool Apps</a>
         <a href="team.html">Team</a>
