@@ -5,18 +5,27 @@
   "redirects": [
     {
       "source": "/podcast.html",
-      "destination": "/nextgen-ita",
+      "destination": "https://nextgenitaly.it/",
       "permanent": true
     },
     {
       "source": "/coaching.html",
-      "destination": "/nextgen-ita",
+      "destination": "https://nextgenitaly.it/",
       "permanent": true
     },
     {
       "source": "/events.html",
-      "destination": "/nextgen-ita",
+      "destination": "https://nextgenitaly.it/",
       "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/nextgen-ita.html",
+      "has": [
+        { "type": "host", "value": "(?:www\\.)?nextgenitaly\\.it" }
+      ]
     }
   ]
 }
