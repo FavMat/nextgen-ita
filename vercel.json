@@ -8,27 +8,17 @@
     { "source": "/events.html",   "destination": "https://nextgenitaly.it/", "permanent": true },
     { "source": "/podcast",       "destination": "https://nextgenitaly.it/", "permanent": true },
     { "source": "/coaching",      "destination": "https://nextgenitaly.it/", "permanent": true },
-    { "source": "/events",        "destination": "https://nextgenitaly.it/", "permanent": true }
-  ],
-  "rewrites": [
+    { "source": "/events",        "destination": "https://nextgenitaly.it/", "permanent": true },
     {
       "source": "/",
-      "destination": "/nextgen-ita.html",
+      "destination": "/nextgen-ita",
+      "permanent": false,
       "has": [{ "type": "host", "value": "nextgenitaly.it" }]
     },
     {
       "source": "/",
-      "destination": "/nextgen-ita.html",
-      "has": [{ "type": "host", "value": "www.nextgenitaly.it" }]
-    },
-    {
-      "source": "/nextgen-ita",
-      "destination": "/nextgen-ita.html",
-      "has": [{ "type": "host", "value": "nextgenitaly.it" }]
-    },
-    {
-      "source": "/nextgen-ita",
-      "destination": "/nextgen-ita.html",
+      "destination": "/nextgen-ita",
+      "permanent": false,
       "has": [{ "type": "host", "value": "www.nextgenitaly.it" }]
     }
   ]
