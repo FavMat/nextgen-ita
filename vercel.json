@@ -3,29 +3,33 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    {
-      "source": "/podcast.html",
-      "destination": "https://nextgenitaly.it/",
-      "permanent": true
-    },
-    {
-      "source": "/coaching.html",
-      "destination": "https://nextgenitaly.it/",
-      "permanent": true
-    },
-    {
-      "source": "/events.html",
-      "destination": "https://nextgenitaly.it/",
-      "permanent": true
-    }
+    { "source": "/podcast.html",  "destination": "https://nextgenitaly.it/", "permanent": true },
+    { "source": "/coaching.html", "destination": "https://nextgenitaly.it/", "permanent": true },
+    { "source": "/events.html",   "destination": "https://nextgenitaly.it/", "permanent": true },
+    { "source": "/podcast",       "destination": "https://nextgenitaly.it/", "permanent": true },
+    { "source": "/coaching",      "destination": "https://nextgenitaly.it/", "permanent": true },
+    { "source": "/events",        "destination": "https://nextgenitaly.it/", "permanent": true }
   ],
   "rewrites": [
     {
       "source": "/",
       "destination": "/nextgen-ita.html",
-      "has": [
-        { "type": "host", "value": "(?:www\\.)?nextgenitaly\\.it" }
-      ]
+      "has": [{ "type": "host", "value": "nextgenitaly.it" }]
+    },
+    {
+      "source": "/",
+      "destination": "/nextgen-ita.html",
+      "has": [{ "type": "host", "value": "www.nextgenitaly.it" }]
+    },
+    {
+      "source": "/nextgen-ita",
+      "destination": "/nextgen-ita.html",
+      "has": [{ "type": "host", "value": "nextgenitaly.it" }]
+    },
+    {
+      "source": "/nextgen-ita",
+      "destination": "/nextgen-ita.html",
+      "has": [{ "type": "host", "value": "www.nextgenitaly.it" }]
     }
   ]
 }
