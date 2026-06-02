@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /admin/
+Disallow: /bit-template.html
+Disallow: /women-health/app.html
+Disallow: /women-health/app
+
+Sitemap: https://ciaomirta.it/sitemap.xml

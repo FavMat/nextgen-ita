@@ -134,7 +134,7 @@
 
   <div class="page-content">
 
-    <p class="policy-meta">Aggiornata il 20 aprile 2026 · Versione 1.0</p>
+    <p class="policy-meta">Aggiornata il 2 giugno 2026 · Versione 1.1</p>
 
     <!-- 1. Titolare -->
     <div class="policy-block reveal">
@@ -153,15 +153,41 @@
     <div class="policy-block reveal">
       <h2>2. Dati raccolti e finalità</h2>
       <p>
-        Questo sito <strong>non raccoglie dati personali in modo diretto</strong>. Non sono presenti form di registrazione, account utente, sistemi di commento o analytics di profilazione.
+        Il sito principale <strong>ciaomirta.it</strong> non utilizza analytics di profilazione e non richiede registrazione per la consultazione. Tuttavia, attraverso alcune funzionalità e applicazioni collegate, possono essere raccolti i seguenti dati personali:
       </p>
+
+      <h3 style="font-family:var(--f-display);font-size:18px;color:var(--fg);margin-top:20px;margin-bottom:10px">2.1 Modulo Coaching (mailto)</h3>
       <p>
-        L'unica interazione diretta con dati personali avviene tramite la pagina Coaching: il modulo di contatto apre il client email del visitatore (tramite protocollo <code>mailto:</code>). I dati inseriti vengono gestiti esclusivamente dal client email dell'utente e non vengono salvati su alcun server del sito.
+        Il modulo della pagina Coaching apre il client email del visitatore (protocollo <code>mailto:</code>). I dati inseriti (nome, azienda, descrizione del progetto) vengono trasmessi via email del visitatore al titolare. Finalità: rispondere alla richiesta di coaching. Base giuridica: esecuzione di misure precontrattuali su richiesta dell'interessato (art. 6, par. 1, lett. b GDPR).
       </p>
+
+      <h3 style="font-family:var(--f-display);font-size:18px;color:var(--fg);margin-top:20px;margin-bottom:10px">2.2 Gen AI Use Cases (Cool App)</h3>
+      <p>
+        L'applicazione <a href="https://gen-ai-use-cases.vercel.app" target="_blank" rel="noopener">gen-ai-use-cases.vercel.app</a>, raggiungibile dalla pagina Cool Apps, mette a disposizione un modulo di contatto e una chat AI. Vengono raccolti i seguenti dati:
+      </p>
+      <ul>
+        <li><strong>Form lead</strong>: nome, cognome, email, azienda, interesse. Finalità: ricontatto commerciale/consulenziale. Base giuridica: consenso dell'interessato (art. 6, par. 1, lett. a GDPR). Conservazione: fino a richiesta di cancellazione.</li>
+        <li><strong>Chat AI</strong>: i messaggi inviati vengono trasmessi a Groq Inc. (USA) per generare la risposta tramite modello LLM <em>llama-3.3-70b-versatile</em>. Non vengono salvati log persistenti dei messaggi sui nostri server. Base giuridica: legittimo interesse nell'erogazione del servizio (art. 6, par. 1, lett. f GDPR).</li>
+      </ul>
+
+      <h3 style="font-family:var(--f-display);font-size:18px;color:var(--fg);margin-top:20px;margin-bottom:10px">2.3 Women Health Platform (anteprima)</h3>
+      <p>
+        L'area <code>/women-health/</code> è un'anteprima in fase di sviluppo. Al lancio ufficiale rinvierà a una piattaforma esterna conforme con propria informativa privacy. L'attuale demo non deve essere utilizzata per inserire dati sanitari reali.
+      </p>
+
+      <h3 style="font-family:var(--f-display);font-size:18px;color:var(--fg);margin-top:20px;margin-bottom:10px">2.4 Altre Cool Apps</h3>
+      <p>
+        Le altre applicazioni elencate nella pagina Cool Apps (SubTrack, Zen Focus Space, Solar 5195, MoleculeViewer, CGT Radar, Italian NHS Monitor) sono strumenti di analisi/visualizzazione che non richiedono registrazione e non raccolgono dati personali identificativi. Le app effettuano chiamate verso API pubbliche di terze parti (NASA, ClinicalTrials.gov, PubChem, dati ministeriali italiani) per recuperare dati di pubblico dominio.
+      </p>
+
+      <h3 style="font-family:var(--f-display);font-size:18px;color:var(--fg);margin-top:20px;margin-bottom:10px">2.5 Terze parti tecniche</h3>
       <p>Servizi di terze parti integrati nel sito possono raccogliere dati tecnici (vedi sezione Cookie):</p>
       <ul>
         <li><strong>Google Fonts</strong> — carica font tipografici da server Google, trasmettendo l'indirizzo IP del visitatore</li>
         <li><strong>Spotify embed</strong> — presente nella pagina Podcast, può impostare cookie di terze parti</li>
+        <li><strong>Vercel</strong> — hosting del sito e delle applicazioni; log tecnici di accesso (IP, user-agent, timestamp) per finalità di sicurezza e diagnostica</li>
+        <li><strong>Supabase</strong> — database utilizzato dall'app Gen AI Use Cases per persistere i lead raccolti</li>
+        <li><strong>Groq Inc.</strong> — provider del modello LLM utilizzato dalla chat AI di Gen AI Use Cases</li>
       </ul>
     </div>
 
@@ -232,7 +258,7 @@
     <div class="policy-block reveal">
       <h2>5. Trasferimento dati extra-UE</h2>
       <p>
-        I servizi Google Fonts e Spotify sono gestiti da soggetti con sede negli Stati Uniti. Il trasferimento dei dati avviene nel rispetto delle garanzie previste dal GDPR (Data Privacy Framework EU-USA o clausole contrattuali standard).
+        I seguenti servizi sono gestiti da soggetti con sede negli Stati Uniti: Google Fonts, Spotify, Vercel, Supabase, Groq Inc. Il trasferimento dei dati avviene nel rispetto delle garanzie previste dal GDPR (Data Privacy Framework EU-USA, clausole contrattuali standard o, dove applicabile, decisioni di adeguatezza).
       </p>
     </div>
 
