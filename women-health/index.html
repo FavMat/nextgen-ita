@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Women Health Platform · Coming Soon</title>
   <meta name="description" content="A holistic health platform for women. Coming soon." />
+  <meta name="robots" content="noindex,nofollow" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -44,67 +45,31 @@
     .lead {
       font-size: 17px; line-height: 1.65;
       color: rgba(61,74,61,.75);
-      margin-bottom: 48px;
+      margin-bottom: 36px;
       max-width: 480px; margin-left: auto; margin-right: auto;
     }
-
-    .gate {
-      margin-top: 16px;
-      padding: 28px 24px;
-      background: var(--white);
-      border: 1px solid rgba(61,74,61,.12);
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(61,74,61,.06);
-    }
-    .gate-label {
-      font-size: 11px; letter-spacing: 1.5px;
+    .notify-label {
+      font-size: 12px; letter-spacing: 1.5px;
       text-transform: uppercase; color: rgba(61,74,61,.5);
-      margin-bottom: 14px; font-weight: 500;
+      margin-bottom: 16px; font-weight: 500;
     }
-    .gate-row { display: flex; gap: 10px; justify-content: center; }
-    .gate input {
-      flex: 1; max-width: 220px;
-      padding: 14px 18px;
-      border: 1.5px solid rgba(61,74,61,.18);
-      border-radius: 12px;
-      font-family: 'Inter', sans-serif;
-      font-size: 16px; letter-spacing: 2px;
-      text-align: center;
-      background: var(--bg); color: var(--ol);
-      transition: all .2s;
-      -moz-appearance: textfield;
-    }
-    .gate input::-webkit-outer-spin-button,
-    .gate input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-    .gate input:focus {
-      outline: none; border-color: var(--ru);
-      background: var(--white);
-      box-shadow: 0 0 0 4px rgba(200,121,65,.1);
-    }
-    .gate input.err {
-      border-color: #c53030;
-      box-shadow: 0 0 0 4px rgba(197,48,48,.08);
-    }
-    .gate button {
-      padding: 14px 24px;
+    .cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px;
       background: var(--ol); color: var(--cr);
-      border: none; border-radius: 12px;
+      border: none; border-radius: 100px;
       font-family: 'Inter', sans-serif;
       font-size: 14px; font-weight: 500;
-      cursor: pointer;
+      cursor: pointer; text-decoration: none;
       transition: all .25s;
     }
-    .gate button:hover {
+    .cta:hover {
       background: var(--ru);
       transform: translateY(-1px);
       box-shadow: 0 6px 18px rgba(200,121,65,.25);
     }
-    .err-msg {
-      margin-top: 14px; font-size: 13px;
-      color: #c53030; min-height: 18px;
-    }
-
     .back {
+      display: inline-block;
       margin-top: 40px;
       font-size: 13px; color: rgba(61,74,61,.55);
       text-decoration: none;
@@ -112,7 +77,6 @@
       padding-bottom: 2px;
     }
     .back:hover { color: var(--ru); border-color: var(--ru); }
-
     .dots {
       display: flex; gap: 6px; justify-content: center; margin-bottom: 32px;
     }
@@ -135,51 +99,13 @@
     <div class="badge">Coming Soon</div>
     <h1>Women Health<br><em>Platform</em></h1>
     <p class="lead">
-      A holistic ecosystem for women's health. Built with clinicians, researchers, and the community.
-      Launching soon.
+      A holistic ecosystem for women's health. Built with clinicians, researchers, and the community. Launching soon.
     </p>
 
-    <div class="gate">
-      <div class="gate-label">Have an access code?</div>
-      <form class="gate-row" id="gateForm" onsubmit="return checkCode(event)">
-        <input
-          type="password"
-          id="code"
-          inputmode="numeric"
-          autocomplete="off"
-          maxlength="6"
-          placeholder="••••••"
-          aria-label="Access code"
-        />
-        <button type="submit">Enter</button>
-      </form>
-      <div class="err-msg" id="errMsg"></div>
-    </div>
+    <div class="notify-label">Want to be notified at launch?</div>
+    <a href="mailto:matteo@ciaomirta.it?subject=Women%20Health%20Platform%20%E2%80%94%20Notify%20me&body=Hi%20Matteo%2C%0A%0AI%27d%20like%20to%20be%20notified%20when%20the%20Women%20Health%20Platform%20launches.%0A%0AName%3A%20%0ARole%2FOrganization%3A%20%0A" class="cta">Notify me by email →</a>
 
     <a href="/apps.html" class="back">← Back to Cool Apps</a>
   </div>
-
-  <script>
-    function checkCode(e) {
-      e.preventDefault();
-      var input = document.getElementById('code');
-      var err = document.getElementById('errMsg');
-      var val = (input.value || '').trim();
-      if (val === '051897') {
-        sessionStorage.setItem('wh_unlocked', '1');
-        window.location.href = 'app.html';
-      } else {
-        input.classList.add('err');
-        err.textContent = 'Invalid code.';
-        input.focus();
-        input.select();
-        setTimeout(function () {
-          input.classList.remove('err');
-          err.textContent = '';
-        }, 2200);
-      }
-      return false;
-    }
-  </script>
 </body>
 </html>

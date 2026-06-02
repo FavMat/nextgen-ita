@@ -31,6 +31,10 @@
       letter-spacing: 1.5px; text-transform: uppercase;
       padding: 5px 14px; border-radius: 100px;
     }
+    .cat-badge.ai-driven {
+      background: rgba(168,85,247,.10); color: #b87aff;
+      border: 1px solid rgba(168,85,247,.25);
+    }
     .cat-badge.generalist {
       background: var(--green-08); color: var(--green);
       border: 1px solid var(--green-20);
@@ -76,6 +80,10 @@
       font-family: var(--f-display); font-size: 22px; font-style: italic;
       margin-bottom: 20px;
     }
+    .app-icon.ai-driven {
+      background: rgba(168,85,247,.10); color: #b87aff;
+      border: 1px solid rgba(168,85,247,.25);
+    }
     .app-icon.generalist {
       background: var(--green-08); color: var(--green);
       border: 1px solid var(--green-20);
@@ -103,6 +111,7 @@
       font-family: var(--f-mono); font-size: 10px;
       letter-spacing: 1.5px; text-transform: uppercase;
     }
+    .app-tag.ai-driven { color: #b87aff; }
     .app-tag.generalist { color: var(--green); }
     .app-tag.life-science { color: var(--amber); }
 
@@ -119,6 +128,9 @@
       border-bottom: 1px solid var(--line);
       position: relative; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
+    }
+    .app-preview.ai-driven {
+      background: radial-gradient(ellipse 80% 80% at 50% 110%, rgba(168,85,247,.18), transparent 70%);
     }
     .app-preview.generalist {
       background: radial-gradient(ellipse 80% 80% at 50% 110%, rgba(45,212,160,.18), transparent 70%);
@@ -313,6 +325,64 @@
 
   <div class="page-content">
 
+    <!-- AI-DRIVEN -->
+    <div class="cat-section reveal">
+      <div class="cat-header">
+        <span class="cat-label">Category</span>
+        <span class="cat-badge ai-driven">AI-driven</span>
+        <span class="cat-count" id="ai-count"></span>
+      </div>
+      <div class="apps-grid" id="ai-grid">
+
+        <!-- Agentry -->
+        <a href="mailto:matteo@ciaomirta.it?subject=Agentry%20%E2%80%94%20Notify%20me%20at%20launch" class="app-card" data-cat="ai-driven">
+          <div class="app-preview ai-driven">
+            <div class="prev-genai">
+              <div class="prev-node hot">◆</div>
+              <div class="prev-node">◇</div>
+              <div class="prev-node hot">◆</div>
+              <div class="prev-node">◇</div>
+              <div class="prev-node hot">◆</div>
+              <div class="prev-node">◇</div>
+            </div>
+          </div>
+          <div class="app-card-top">
+            <div class="app-icon ai-driven">◆</div>
+            <div class="app-name">Agentry</div>
+            <p class="app-desc">Coordinate teams of AI agents to run real workflows. Orchestrate research, content, and ops with one interface. <em style="color:#b87aff">Login required.</em></p>
+          </div>
+          <div class="app-card-foot">
+            <span class="app-tag ai-driven">AI-driven · Coming soon</span>
+            <span class="app-link">Notify me →</span>
+          </div>
+        </a>
+
+        <!-- Gen AI Use Cases -->
+        <a href="https://gen-ai-use-cases.vercel.app" target="_blank" class="app-card" data-cat="ai-driven">
+          <div class="app-preview ai-driven">
+            <div class="prev-genai">
+              <div class="prev-node">✦</div>
+              <div class="prev-node hot">✦</div>
+              <div class="prev-node">✦</div>
+              <div class="prev-node hot">✦</div>
+              <div class="prev-node">✦</div>
+              <div class="prev-node hot">✦</div>
+            </div>
+          </div>
+          <div class="app-card-top">
+            <div class="app-icon ai-driven">✦</div>
+            <div class="app-name">Gen AI Use Cases</div>
+            <p class="app-desc">Browse a curated catalog of real generative AI use cases across industries. Chat with an AI copilot to find the right pattern for your team.</p>
+          </div>
+          <div class="app-card-foot">
+            <span class="app-tag ai-driven">AI-driven</span>
+            <span class="app-link">Open app →</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
     <!-- GENERALIST -->
     <div class="cat-section reveal">
       <div class="cat-header">
@@ -335,29 +405,6 @@
             <div class="app-icon generalist">🪐</div>
             <div class="app-name">Solar 5195</div>
             <p class="app-desc">3D real-time simulation of Earth, the Solar System and live satellites. Keplerian orbits, NASA-grade math, and TLE data for ISS, Starlink and GPS.</p>
-          </div>
-          <div class="app-card-foot">
-            <span class="app-tag generalist">Generalist</span>
-            <span class="app-link">Open app →</span>
-          </div>
-        </a>
-
-        <!-- Gen AI Use Cases -->
-        <a href="https://gen-ai-use-cases.vercel.app" target="_blank" class="app-card" data-cat="generalist">
-          <div class="app-preview generalist">
-            <div class="prev-genai">
-              <div class="prev-node">✦</div>
-              <div class="prev-node hot">✦</div>
-              <div class="prev-node">✦</div>
-              <div class="prev-node hot">✦</div>
-              <div class="prev-node">✦</div>
-              <div class="prev-node hot">✦</div>
-            </div>
-          </div>
-          <div class="app-card-top">
-            <div class="app-icon generalist">✦</div>
-            <div class="app-name">Gen AI Use Cases</div>
-            <p class="app-desc">Browse a curated catalog of real generative AI use cases across industries. Chat with an AI copilot to find the right pattern for your team.</p>
           </div>
           <div class="app-card-foot">
             <span class="app-tag generalist">Generalist</span>
@@ -559,6 +606,8 @@
 <script>
 (function () {
   const appWord = (window.NG_T && window.NG_T('apps')) || 'apps';
+  document.getElementById('ai-count').textContent =
+    document.querySelectorAll('[data-cat="ai-driven"]').length + ' ' + appWord;
   document.getElementById('gen-count').textContent =
     document.querySelectorAll('[data-cat="generalist"]').length + ' ' + appWord;
   document.getElementById('ls-count').textContent =
