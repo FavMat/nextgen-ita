@@ -6,6 +6,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", "-p", "3333", "."],
       "port": 3333
+    },
+    {
+      "name": "zen-focus-preview",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-p", "4444", "C:/Users/donat/.gemini/antigravity/scratch/zen-focus-space/dist"],
+      "port": 4444
     }
   ]
 }

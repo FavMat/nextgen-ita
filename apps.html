@@ -236,6 +236,31 @@
       100% { transform: scale(1.1); opacity: 0; }
     }
 
+    /* Zen Focus preview — pulsing ring timer */
+    .prev-zen {
+      position: relative; width: 100px; height: 100px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .prev-zen-ring {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(45,212,160,.25);
+    }
+    .prev-zen-arc {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      border-top-color: var(--green);
+      border-right-color: var(--green);
+      animation: spin 4s linear infinite;
+      box-shadow: 0 0 14px rgba(45,212,160,.4);
+    }
+    .prev-zen-time {
+      font-family: var(--f-mono); font-size: 16px;
+      color: var(--green); letter-spacing: 1px;
+      font-weight: 500;
+    }
+
     /* Coming soon badge on card */
     .app-card.soon { position: relative; }
     .app-card.soon .soon-tag {
@@ -333,6 +358,26 @@
             <div class="app-icon generalist">✦</div>
             <div class="app-name">Gen AI Use Cases</div>
             <p class="app-desc">Browse a curated catalog of real generative AI use cases across industries. Chat with an AI copilot to find the right pattern for your team.</p>
+          </div>
+          <div class="app-card-foot">
+            <span class="app-tag generalist">Generalist</span>
+            <span class="app-link">Open app →</span>
+          </div>
+        </a>
+
+        <!-- Zen Focus Space -->
+        <a href="https://zen-focus-space.vercel.app" target="_blank" class="app-card" data-cat="generalist">
+          <div class="app-preview generalist">
+            <div class="prev-zen">
+              <div class="prev-zen-ring"></div>
+              <div class="prev-zen-arc"></div>
+              <div class="prev-zen-time">25:00</div>
+            </div>
+          </div>
+          <div class="app-card-top">
+            <div class="app-icon generalist">⏱</div>
+            <div class="app-name">Zen Focus Space</div>
+            <p class="app-desc">A minimal Pomodoro timer for deep work. 25 minutes of focus, 5 of rest. Picture-in-Picture mode keeps the timer floating above anything you do.</p>
           </div>
           <div class="app-card-foot">
             <span class="app-tag generalist">Generalist</span>
