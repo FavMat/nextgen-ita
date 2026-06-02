@@ -8,8 +8,7 @@ export default function middleware(request) {
   const expectedPass = process.env.ADMIN_PASSWORD;
 
   if (!expectedPass) {
-    const keys = Object.keys(process.env || {}).filter(k => !k.startsWith('VERCEL') && !k.startsWith('AWS')).join(',');
-    return new Response('DEBUG env keys visible: ' + keys, { status: 500 });
+    return new Response('Server misconfiguration: ADMIN_PASSWORD not set', { status: 500 });
   }
 
   if (auth) {
