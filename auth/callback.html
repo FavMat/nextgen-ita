@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signing you in… · Ciao Mirta</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/ng.css" />
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 24px;
+      padding: 24px;
+    }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 2px solid var(--line-2);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .msg {
+      font-family: var(--f-display);
+      font-size: 22px;
+      color: var(--fg);
+      text-align: center;
+    }
+    .sub {
+      font-size: 13px;
+      color: var(--fg-2);
+      text-align: center;
+      max-width: 420px;
+      line-height: 1.5;
+    }
+    .err-card {
+      max-width: 460px;
+      background: rgba(220,60,60,.08);
+      border: 1px solid rgba(220,60,60,.25);
+      color: #ff9090;
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+      display: none;
+    }
+    .err-card.show { display: block; }
+    .err-card a { color: var(--green); text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<canvas class="bg-canvas"></canvas>
+<div class="grain"></div>
+
+<div class="spinner" id="spinner"></div>
+<div class="msg" id="msg">Signing you in…</div>
+<div class="sub" id="sub">One moment, we're getting your session ready.</div>
+<div class="err-card" id="err"></div>
+
+<script src="../assets/ng.js"></script>
+<script src="../assets/auth.js"></script>
+<script>
+(function () {
+  const params = new URLSearchParams(location.search);
+  const hashParams = new URLSearchParams(location.hash.startsWith('#') ? location.hash.slice(1) : '');
+  const returnTo = params.get('return_to') || '/account.html';
+
+  function fail(message, hint) {
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('msg').textContent = 'Something went wrong.';
+    document.getElementById('sub').textContent = '';
+    const err = document.getElementById('err');
+    err.innerHTML = (message || 'Auth callback failed.') + (hint ? '<br><br>' + hint : '');
+    err.classList.add('show');
+  }
+
+  async function ready() {
+    if (window.ciaomirtaAuth) return window.ciaomirtaAuth;
+    return new Promise(r => window.addEventListener('ciaomirta:auth-ready', () => r(window.ciaomirtaAuth), { once: true }));
+  }
+
+  ready().then(async auth => {
+    // OAuth/Magic link errors come back as query/hash params
+    const err = params.get('error') || hashParams.get('error');
+    if (err) {
+      const desc = params.get('error_description') || hashParams.get('error_description') || err;
+      return fail(decodeURIComponent(desc), '<a href="/login.html">Back to sign in →</a>');
+    }
+
+    // The Supabase client (detectSessionInUrl=true) auto-handles ?code=... PKCE flow.
+    // Wait briefly for the session to materialize.
+    let attempts = 0;
+    const poll = setInterval(async () => {
+      attempts++;
+      const session = await auth.getSession();
+      if (session) {
+        clearInterval(poll);
+        const profile = await auth.getProfile();
+        // Touch last_login (best effort)
+        try { await auth.supabase.rpc('touch_last_login', { uid: session.user.id }); } catch (e) {}
+        if (!profile || !profile.onboarded) {
+          location.href = '/onboarding.html' + (returnTo ? '?return_to=' + encodeURIComponent(returnTo) : '');
+        } else {
+          location.href = returnTo;
+        }
+      } else if (attempts > 25) {
+        clearInterval(poll);
+        fail('Sign-in did not complete in time.', '<a href="/login.html">Try again →</a>');
+      }
+    }, 200);
+  }).catch(e => fail(e.message));
+})();
+</script>
+</body>
+</html>

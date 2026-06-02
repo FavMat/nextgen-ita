@@ -4,3 +4,19 @@ resources/stanford-ai-index-2026.pdf
 space.html
 
 .vercel
+
+# Local env
+.env
+.env.local
+.vercel
+
+# Secrets hardening (do NOT remove)
+.env*
+!.env.example
+*.pem
+*.key
+secrets/
+*_secret.json
+*_credentials.json
+service-account*.json
+node_modules/

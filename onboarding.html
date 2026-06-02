@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome · Ciao Mirta</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/ng.css" />
+  <style>
+    body { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .ob {
+      width: 100%; max-width: 480px;
+      background: var(--bg-1); border: 1px solid var(--line);
+      border-radius: 24px; padding: 40px 36px 32px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.3);
+      position: relative; z-index: 10;
+    }
+    .ob-eyebrow {
+      font-family: var(--f-mono); font-size: 10px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--fg-3); margin-bottom: 8px;
+    }
+    h1 {
+      font-family: var(--f-display); font-size: 30px;
+      letter-spacing: -.02em; color: var(--fg); margin-bottom: 8px;
+    }
+    h1 em { color: var(--green); font-style: italic; }
+    .ob-sub {
+      font-size: 13px; color: var(--fg-2);
+      margin-bottom: 28px; line-height: 1.5;
+    }
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block; font-size: 12px;
+      color: var(--fg-2); margin-bottom: 6px;
+      font-family: var(--f-mono); letter-spacing: 1px; text-transform: uppercase;
+    }
+    .field input, .field select {
+      width: 100%; box-sizing: border-box;
+      padding: 12px 14px;
+      background: var(--bg-2); color: var(--fg);
+      border: 1px solid var(--line-2); border-radius: 10px;
+      font-family: var(--f-sans); font-size: 14px;
+    }
+    .field input:focus, .field select:focus {
+      outline: none; border-color: var(--green);
+      box-shadow: 0 0 0 3px var(--green-10);
+    }
+    .row { display: flex; gap: 10px; }
+    .row > .field { flex: 1; }
+    .consent {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 14px; margin-top: 8px;
+      background: var(--bg-2); border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .consent input { margin-top: 2px; }
+    .consent label {
+      font-size: 12px; color: var(--fg-1); line-height: 1.55;
+      cursor: pointer; flex: 1;
+    }
+    .consent a { color: var(--green); text-decoration: underline; }
+    .submit {
+      width: 100%; margin-top: 22px; padding: 13px;
+      background: var(--green); color: #fff;
+      border: none; border-radius: 12px;
+      font-family: var(--f-sans); font-size: 14px; font-weight: 500;
+      cursor: pointer; transition: all .15s;
+    }
+    .submit:hover { background: var(--green-hi); }
+    .submit:disabled { opacity: .6; cursor: not-allowed; }
+    .err {
+      margin-top: 14px; padding: 10px 14px;
+      background: rgba(220,60,60,.08); color: #ff8080;
+      border: 1px solid rgba(220,60,60,.25);
+      border-radius: 10px; font-size: 13px;
+      display: none;
+    }
+    .err.show { display: block; }
+  </style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<canvas class="bg-canvas"></canvas>
+<div class="grain"></div>
+
+<div class="ob">
+  <div class="ob-eyebrow">→ One quick step</div>
+  <h1>Welcome to<br>Ciao<em>Mirta</em></h1>
+  <p class="ob-sub">Tell us who you are so we can tailor the experience. You can change all this later in your account.</p>
+
+  <form id="ob-form">
+    <div class="row">
+      <div class="field">
+        <label for="first_name">First name</label>
+        <input id="first_name" required autocomplete="given-name" />
+      </div>
+      <div class="field">
+        <label for="last_name">Last name</label>
+        <input id="last_name" required autocomplete="family-name" />
+      </div>
+    </div>
+    <div class="field">
+      <label for="role">What best describes you?</label>
+      <select id="role" required>
+        <option value="">Choose one…</option>
+        <option value="founder">Founder / Entrepreneur</option>
+        <option value="researcher">Researcher / Academic</option>
+        <option value="healthcare_pro">Healthcare professional</option>
+        <option value="investor">Investor</option>
+        <option value="student">Student</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="lang">Language</label>
+      <select id="lang" required>
+        <option value="en">English</option>
+        <option value="it">Italiano</option>
+      </select>
+    </div>
+
+    <div class="consent">
+      <input type="checkbox" id="c_priv" required />
+      <label for="c_priv">I have read and accept the <a href="/privacy.html" target="_blank">Privacy Policy</a>. (Required)</label>
+    </div>
+    <div class="consent">
+      <input type="checkbox" id="c_mkt" />
+      <label for="c_mkt">Send me occasional updates about new tools and content. (Optional, you can unsubscribe anytime)</label>
+    </div>
+
+    <button class="submit" type="submit" id="submit-btn">Get started →</button>
+    <div class="err" id="err"></div>
+  </form>
+</div>
+
+<script src="assets/ng.js"></script>
+<script src="assets/auth.js"></script>
+<script>
+(function () {
+  const params = new URLSearchParams(location.search);
+  const returnTo = params.get('return_to') || '/account.html';
+  const err = document.getElementById('err');
+  function fail(m) { err.textContent = m; err.classList.add('show'); }
+
+  async function ready() {
+    if (window.ciaomirtaAuth) return window.ciaomirtaAuth;
+    return new Promise(r => window.addEventListener('ciaomirta:auth-ready', () => r(window.ciaomirtaAuth), { once: true }));
+  }
+
+  ready().then(async auth => {
+    const session = await auth.getSession();
+    if (!session) { location.href = '/login.html'; return; }
+
+    // Pre-fill from existing profile if present (Google OAuth seeds it)
+    const profile = await auth.getProfile();
+    if (profile) {
+      if (profile.first_name) document.getElementById('first_name').value = profile.first_name;
+      if (profile.last_name)  document.getElementById('last_name').value = profile.last_name;
+      if (profile.role && profile.role !== 'other') document.getElementById('role').value = profile.role;
+      if (profile.lang) document.getElementById('lang').value = profile.lang;
+      if (profile.onboarded) { location.href = returnTo; return; }
+    }
+    // Default lang from browser
+    if (!document.getElementById('lang').value) {
+      document.getElementById('lang').value = navigator.language.startsWith('it') ? 'it' : 'en';
+    }
+
+    document.getElementById('ob-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.classList.remove('show');
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true; btn.textContent = 'Saving…';
+
+      const fields = {
+        first_name: document.getElementById('first_name').value.trim(),
+        last_name:  document.getElementById('last_name').value.trim(),
+        role:       document.getElementById('role').value,
+        lang:       document.getElementById('lang').value,
+        onboarded:  true
+      };
+      const mkt = document.getElementById('c_mkt').checked;
+
+      try {
+        await auth.updateProfile(fields);
+        await auth.logConsent('privacy_policy', true, '1.1');
+        if (mkt) await auth.logConsent('marketing', true, '1.1');
+        location.href = returnTo;
+      } catch (e) {
+        fail(e.message || 'Could not save your profile.');
+        btn.disabled = false; btn.textContent = 'Get started →';
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

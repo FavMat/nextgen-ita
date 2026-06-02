@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account · Ciao Mirta</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/ng.css" />
+  <style>
+    .page-content { padding: 64px 48px 100px; max-width: 760px; margin: 0 auto; }
+    .acc-head { margin-bottom: 36px; }
+    .acc-eyebrow {
+      font-family: var(--f-mono); font-size: 10px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--fg-3); margin-bottom: 8px;
+    }
+    h1 {
+      font-family: var(--f-display); font-size: 42px;
+      letter-spacing: -.02em; color: var(--fg);
+    }
+    h1 em { color: var(--green); font-style: italic; }
+    .acc-card {
+      background: var(--bg-1); border: 1px solid var(--line);
+      border-radius: 20px; padding: 32px;
+      margin-bottom: 24px;
+    }
+    .acc-card h2 {
+      font-family: var(--f-display); font-size: 20px;
+      color: var(--fg); margin-bottom: 4px;
+    }
+    .acc-card p.sub {
+      font-size: 13px; color: var(--fg-2); margin-bottom: 22px;
+    }
+    .field { margin-bottom: 14px; }
+    .field label {
+      display: block; font-size: 11px;
+      color: var(--fg-2); margin-bottom: 5px;
+      font-family: var(--f-mono); letter-spacing: 1px; text-transform: uppercase;
+    }
+    .field input, .field select {
+      width: 100%; box-sizing: border-box;
+      padding: 11px 14px;
+      background: var(--bg-2); color: var(--fg);
+      border: 1px solid var(--line-2); border-radius: 10px;
+      font-family: var(--f-sans); font-size: 14px;
+    }
+    .field input[readonly] { opacity: .6; }
+    .field input:focus, .field select:focus {
+      outline: none; border-color: var(--green);
+      box-shadow: 0 0 0 3px var(--green-10);
+    }
+    .row { display: flex; gap: 10px; }
+    .row > .field { flex: 1; }
+    .btn-save {
+      padding: 11px 20px; background: var(--green); color: #fff;
+      border: none; border-radius: 10px;
+      font-family: var(--f-sans); font-size: 13px; font-weight: 500;
+      cursor: pointer; margin-top: 6px;
+    }
+    .btn-save:hover { background: var(--green-hi); }
+    .acc-foot { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 30px; }
+    .btn-out {
+      padding: 11px 20px; background: transparent;
+      color: var(--fg-1); border: 1px solid var(--line-2);
+      border-radius: 10px; cursor: pointer;
+      font-family: var(--f-sans); font-size: 13px; font-weight: 500;
+    }
+    .btn-out:hover { color: var(--fg); border-color: var(--line-3); }
+    .btn-export {
+      padding: 11px 20px; background: transparent;
+      color: var(--fg-1); border: 1px solid var(--line-2);
+      border-radius: 10px; cursor: pointer;
+      font-family: var(--f-sans); font-size: 13px;
+    }
+    .btn-danger {
+      padding: 11px 20px; background: transparent;
+      color: #ff8080; border: 1px solid rgba(220,60,60,.3);
+      border-radius: 10px; cursor: pointer;
+      font-family: var(--f-sans); font-size: 13px;
+    }
+    .btn-danger:hover { background: rgba(220,60,60,.08); }
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      padding: 12px 20px;
+      background: var(--bg-1); border: 1px solid var(--line-2);
+      border-radius: 10px;
+      font-size: 13px; color: var(--fg);
+      box-shadow: 0 12px 30px rgba(0,0,0,.4);
+      opacity: 0; transform: translateY(8px);
+      transition: all .2s;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.ok { border-left: 3px solid var(--green); }
+    .toast.err { border-left: 3px solid #ff6060; }
+  </style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<canvas class="bg-canvas"></canvas>
+<div class="grain"></div>
+
+<nav class="ng-nav">
+  <a href="index.html" class="ng-logo">
+    <span class="mark">M</span>
+    <span class="ng-logo-text"><span class="lt">C</span><span class="lt">i</span><span class="lt ai-a">a</span><span class="lt">o</span><em><span class="lt">M</span><span class="lt ai-i">i</span><span class="lt">r</span><span class="lt">t</span><span class="lt">a</span></em></span>
+  </a>
+  <ul class="ng-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="toolbox.html">Toolbox</a></li>
+    <li><a href="apps.html">Cool Apps</a></li>
+    <li><a href="bits.html">AI Bits</a></li>
+    <li><a href="https://nextgenitaly.it/">NextGen Ita</a></li>
+    <li><a href="team.html">Team</a></li>
+  </ul>
+  <a href="account.html" class="ng-cta">Account</a>
+</nav>
+
+<main>
+  <div class="page-content">
+    <div class="acc-head">
+      <div class="acc-eyebrow">→ Your account</div>
+      <h1>Your <em>profile</em></h1>
+    </div>
+
+    <div class="acc-card">
+      <h2>Identity</h2>
+      <p class="sub">How we know you across the ecosystem.</p>
+      <div class="field">
+        <label>Email</label>
+        <input id="email" readonly />
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>First name</label>
+          <input id="first_name" />
+        </div>
+        <div class="field">
+          <label>Last name</label>
+          <input id="last_name" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Role</label>
+          <select id="role">
+            <option value="founder">Founder / Entrepreneur</option>
+            <option value="researcher">Researcher / Academic</option>
+            <option value="healthcare_pro">Healthcare professional</option>
+            <option value="investor">Investor</option>
+            <option value="student">Student</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Language</label>
+          <select id="lang">
+            <option value="en">English</option>
+            <option value="it">Italiano</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-save" id="save-identity">Save identity</button>
+    </div>
+
+    <div class="acc-card">
+      <h2>Professional</h2>
+      <p class="sub">Helps tailor analytics, content and tool recommendations. All optional.</p>
+      <div class="field">
+        <label>Company / Institution</label>
+        <input id="company" />
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Industry</label>
+          <input id="industry" />
+        </div>
+        <div class="field">
+          <label>LinkedIn URL</label>
+          <input id="linkedin_url" placeholder="https://linkedin.com/in/..." />
+        </div>
+      </div>
+      <div class="field">
+        <label>CGT focus (if applicable)</label>
+        <input id="cgt_focus" placeholder="e.g. CAR-T solid tumors, gene editing, AAV manufacturing…" />
+      </div>
+      <button class="btn-save" id="save-pro">Save professional info</button>
+    </div>
+
+    <div class="acc-foot">
+      <button class="btn-out" id="btn-logout">Sign out</button>
+      <button class="btn-export" id="btn-export">Export my data (JSON)</button>
+      <button class="btn-danger" id="btn-delete">Delete my account</button>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/ng.js"></script>
+<script src="assets/auth.js"></script>
+<script>
+(function () {
+  const toastEl = document.getElementById('toast');
+  function toast(kind, msg) {
+    toastEl.className = 'toast ' + kind + ' show';
+    toastEl.textContent = msg;
+    setTimeout(() => toastEl.classList.remove('show'), 2400);
+  }
+  async function ready() {
+    if (window.ciaomirtaAuth) return window.ciaomirtaAuth;
+    return new Promise(r => window.addEventListener('ciaomirta:auth-ready', () => r(window.ciaomirtaAuth), { once: true }));
+  }
+
+  ready().then(async auth => {
+    const session = await auth.getSession();
+    if (!session) { location.href = '/login.html?return_to=' + encodeURIComponent('/account.html'); return; }
+
+    const profile = await auth.getProfile();
+    if (!profile) { location.href = '/onboarding.html'; return; }
+
+    // Fill fields
+    document.getElementById('email').value = session.user.email || '';
+    ['first_name', 'last_name', 'role', 'lang', 'company', 'industry', 'linkedin_url', 'cgt_focus']
+      .forEach(k => { const el = document.getElementById(k); if (el && profile[k] != null) el.value = profile[k]; });
+
+    document.getElementById('save-identity').addEventListener('click', async () => {
+      try {
+        await auth.updateProfile({
+          first_name: document.getElementById('first_name').value.trim(),
+          last_name:  document.getElementById('last_name').value.trim(),
+          role:       document.getElementById('role').value,
+          lang:       document.getElementById('lang').value
+        });
+        toast('ok', 'Saved.');
+      } catch (e) { toast('err', e.message || 'Save failed.'); }
+    });
+
+    document.getElementById('save-pro').addEventListener('click', async () => {
+      try {
+        await auth.updateProfile({
+          company:      document.getElementById('company').value.trim() || null,
+          industry:     document.getElementById('industry').value.trim() || null,
+          linkedin_url: document.getElementById('linkedin_url').value.trim() || null,
+          cgt_focus:    document.getElementById('cgt_focus').value.trim() || null
+        });
+        toast('ok', 'Saved.');
+      } catch (e) { toast('err', e.message || 'Save failed.'); }
+    });
+
+    document.getElementById('btn-logout').addEventListener('click', async () => {
+      try {
+        await auth.signOut();
+        location.href = '/';
+      } catch (e) { toast('err', e.message); }
+    });
+
+    document.getElementById('btn-export').addEventListener('click', async () => {
+      const p = await auth.getProfile();
+      const blob = new Blob([JSON.stringify({ session: { email: session.user.email, id: session.user.id }, profile: p }, null, 2)],
+                            { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'ciaomirta-profile.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('btn-delete').addEventListener('click', async () => {
+      if (!confirm('Are you sure you want to delete your account?\n\nThis is permanent and cannot be undone. All your profile data will be erased.')) return;
+      if (!confirm('Last chance — really delete?')) return;
+      try {
+        const res = await fetch('/api/account-delete', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + session.access_token }
+        });
+        if (!res.ok) {
+          const txt = await res.text();
+          throw new Error(txt || 'Deletion failed');
+        }
+        await auth.signOut();
+        alert('Your account has been deleted. Goodbye.');
+        location.href = '/';
+      } catch (e) {
+        toast('err', e.message || 'Could not delete account.');
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
