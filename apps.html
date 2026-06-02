@@ -170,6 +170,83 @@
     }
     .prev-dot.active { background: var(--amber); box-shadow: 0 0 6px var(--amber); opacity: .8; }
 
+    /* Solar preview — planet with orbit */
+    .prev-solar { position: relative; width: 110px; height: 110px; }
+    .prev-orbit {
+      position: absolute; inset: 0;
+      border: 1px dashed rgba(45,212,160,.35);
+      border-radius: 50%;
+      animation: spin 16s linear infinite;
+    }
+    .prev-orbit.o2 {
+      inset: 18px;
+      border-color: rgba(45,212,160,.2);
+      animation-duration: 22s; animation-direction: reverse;
+    }
+    .prev-sun {
+      position: absolute; inset: 42px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #2dd4a0 0%, rgba(45,212,160,.6) 50%, transparent 80%);
+      box-shadow: 0 0 24px rgba(45,212,160,.6);
+    }
+    .prev-planet {
+      position: absolute; width: 8px; height: 8px;
+      border-radius: 50%; background: var(--green);
+      top: -4px; left: calc(50% - 4px);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    /* GenAI preview — sparkle nodes */
+    .prev-genai {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; width: 180px;
+    }
+    .prev-node {
+      display: flex; align-items: center; justify-content: center;
+      height: 36px; border-radius: 8px;
+      background: rgba(45,212,160,.07);
+      border: 1px solid rgba(45,212,160,.18);
+      font-family: var(--f-mono); font-size: 14px;
+      color: var(--green);
+    }
+    .prev-node.hot {
+      background: rgba(45,212,160,.18);
+      border-color: var(--green);
+      box-shadow: 0 0 12px rgba(45,212,160,.3);
+    }
+
+    /* Women Health preview — soft pulse */
+    .prev-wh {
+      position: relative; width: 100px; height: 100px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .prev-wh-ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 1px solid rgba(245,184,74,.35);
+      animation: whPulse 2.4s ease-in-out infinite;
+    }
+    .prev-wh-ring.r2 { animation-delay: .8s; }
+    .prev-wh-ring.r3 { animation-delay: 1.6s; }
+    .prev-wh-core {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 18px rgba(245,184,74,.7);
+    }
+    @keyframes whPulse {
+      0% { transform: scale(.55); opacity: .9; }
+      100% { transform: scale(1.1); opacity: 0; }
+    }
+
+    /* Coming soon badge on card */
+    .app-card.soon { position: relative; }
+    .app-card.soon .soon-tag {
+      position: absolute; top: 14px; right: 14px; z-index: 2;
+      font-family: var(--f-mono); font-size: 9px;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 5px 10px; border-radius: 100px;
+      background: rgba(245,184,74,.15); color: var(--amber);
+      border: 1px solid rgba(245,184,74,.3);
+    }
+
     @media (max-width: 900px) {
       .page-content { padding: 40px 20px 80px; }
       .apps-grid { grid-template-columns: 1fr; }
@@ -220,6 +297,49 @@
       </div>
       <div class="apps-grid" id="gen-grid">
 
+        <!-- Solar 5195 -->
+        <a href="space.html" target="_blank" class="app-card" data-cat="generalist">
+          <div class="app-preview generalist">
+            <div class="prev-solar">
+              <div class="prev-orbit"><div class="prev-planet"></div></div>
+              <div class="prev-orbit o2"><div class="prev-planet"></div></div>
+              <div class="prev-sun"></div>
+            </div>
+          </div>
+          <div class="app-card-top">
+            <div class="app-icon generalist">🪐</div>
+            <div class="app-name">Solar 5195</div>
+            <p class="app-desc">3D real-time simulation of Earth, the Solar System and live satellites. Keplerian orbits, NASA-grade math, and TLE data for ISS, Starlink and GPS.</p>
+          </div>
+          <div class="app-card-foot">
+            <span class="app-tag generalist">Generalist</span>
+            <span class="app-link">Open app →</span>
+          </div>
+        </a>
+
+        <!-- Gen AI Use Cases -->
+        <a href="https://gen-ai-use-cases.vercel.app" target="_blank" class="app-card" data-cat="generalist">
+          <div class="app-preview generalist">
+            <div class="prev-genai">
+              <div class="prev-node">✦</div>
+              <div class="prev-node hot">✦</div>
+              <div class="prev-node">✦</div>
+              <div class="prev-node hot">✦</div>
+              <div class="prev-node">✦</div>
+              <div class="prev-node hot">✦</div>
+            </div>
+          </div>
+          <div class="app-card-top">
+            <div class="app-icon generalist">✦</div>
+            <div class="app-name">Gen AI Use Cases</div>
+            <p class="app-desc">Browse a curated catalog of real generative AI use cases across industries. Chat with an AI copilot to find the right pattern for your team.</p>
+          </div>
+          <div class="app-card-foot">
+            <span class="app-tag generalist">Generalist</span>
+            <span class="app-link">Open app →</span>
+          </div>
+        </a>
+
         <!-- SubTrack -->
         <a href="https://subtrack-v2.vercel.app" target="_blank" class="app-card" data-cat="generalist">
           <div class="app-preview generalist">
@@ -251,6 +371,28 @@
         <span class="cat-count" id="ls-count"></span>
       </div>
       <div class="apps-grid" id="ls-grid">
+
+        <!-- Women Health Platform (coming soon, gated) -->
+        <a href="women-health/" target="_blank" class="app-card soon" data-cat="life-science">
+          <span class="soon-tag">Coming Soon</span>
+          <div class="app-preview life-science">
+            <div class="prev-wh">
+              <div class="prev-wh-ring"></div>
+              <div class="prev-wh-ring r2"></div>
+              <div class="prev-wh-ring r3"></div>
+              <div class="prev-wh-core"></div>
+            </div>
+          </div>
+          <div class="app-card-top">
+            <div class="app-icon life-science">♀</div>
+            <div class="app-name">Women Health Platform</div>
+            <p class="app-desc">A holistic ecosystem for women's health. Built with clinicians, researchers and the community. Launching soon.</p>
+          </div>
+          <div class="app-card-foot">
+            <span class="app-tag life-science">Life Science</span>
+            <span class="app-link">Preview →</span>
+          </div>
+        </a>
 
         <!-- MoleculeViewer -->
         <a href="/molecule-viewer/" target="_blank" class="app-card" data-cat="life-science">

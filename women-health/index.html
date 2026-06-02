@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Women Health Platform · Coming Soon</title>
+  <meta name="description" content="A holistic health platform for women. Coming soon." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cr: #E8E2D5; --ol: #3D4A3D; --ru: #C87941;
+      --bg: #f8f5f0; --white: #fff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      background: var(--bg); color: var(--ol);
+      font-family: 'Inter', sans-serif;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 24px; min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,121,65,.08), transparent 60%),
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(61,74,61,.08), transparent 60%);
+    }
+    .wrap { max-width: 560px; width: 100%; text-align: center; }
+    .badge {
+      display: inline-block; font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--ru); font-weight: 600;
+      margin-bottom: 24px;
+      padding: 6px 14px; border: 1px solid rgba(200,121,65,.3);
+      border-radius: 100px; background: rgba(200,121,65,.06);
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 400; line-height: 1.05;
+      letter-spacing: -.02em; margin-bottom: 24px;
+      color: var(--ol);
+    }
+    h1 em { color: var(--ru); font-style: italic; }
+    .lead {
+      font-size: 17px; line-height: 1.65;
+      color: rgba(61,74,61,.75);
+      margin-bottom: 48px;
+      max-width: 480px; margin-left: auto; margin-right: auto;
+    }
+
+    .gate {
+      margin-top: 16px;
+      padding: 28px 24px;
+      background: var(--white);
+      border: 1px solid rgba(61,74,61,.12);
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(61,74,61,.06);
+    }
+    .gate-label {
+      font-size: 11px; letter-spacing: 1.5px;
+      text-transform: uppercase; color: rgba(61,74,61,.5);
+      margin-bottom: 14px; font-weight: 500;
+    }
+    .gate-row { display: flex; gap: 10px; justify-content: center; }
+    .gate input {
+      flex: 1; max-width: 220px;
+      padding: 14px 18px;
+      border: 1.5px solid rgba(61,74,61,.18);
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px; letter-spacing: 2px;
+      text-align: center;
+      background: var(--bg); color: var(--ol);
+      transition: all .2s;
+      -moz-appearance: textfield;
+    }
+    .gate input::-webkit-outer-spin-button,
+    .gate input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .gate input:focus {
+      outline: none; border-color: var(--ru);
+      background: var(--white);
+      box-shadow: 0 0 0 4px rgba(200,121,65,.1);
+    }
+    .gate input.err {
+      border-color: #c53030;
+      box-shadow: 0 0 0 4px rgba(197,48,48,.08);
+    }
+    .gate button {
+      padding: 14px 24px;
+      background: var(--ol); color: var(--cr);
+      border: none; border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px; font-weight: 500;
+      cursor: pointer;
+      transition: all .25s;
+    }
+    .gate button:hover {
+      background: var(--ru);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(200,121,65,.25);
+    }
+    .err-msg {
+      margin-top: 14px; font-size: 13px;
+      color: #c53030; min-height: 18px;
+    }
+
+    .back {
+      margin-top: 40px;
+      font-size: 13px; color: rgba(61,74,61,.55);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(61,74,61,.2);
+      padding-bottom: 2px;
+    }
+    .back:hover { color: var(--ru); border-color: var(--ru); }
+
+    .dots {
+      display: flex; gap: 6px; justify-content: center; margin-bottom: 32px;
+    }
+    .dots span {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--ru); opacity: .4;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    .dots span:nth-child(2) { animation-delay: .2s; }
+    .dots span:nth-child(3) { animation-delay: .4s; }
+    @keyframes pulse {
+      0%, 100% { opacity: .25; transform: scale(.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <div class="badge">Coming Soon</div>
+    <h1>Women Health<br><em>Platform</em></h1>
+    <p class="lead">
+      A holistic ecosystem for women's health. Built with clinicians, researchers, and the community.
+      Launching soon.
+    </p>
+
+    <div class="gate">
+      <div class="gate-label">Have an access code?</div>
+      <form class="gate-row" id="gateForm" onsubmit="return checkCode(event)">
+        <input
+          type="password"
+          id="code"
+          inputmode="numeric"
+          autocomplete="off"
+          maxlength="6"
+          placeholder="••••••"
+          aria-label="Access code"
+        />
+        <button type="submit">Enter</button>
+      </form>
+      <div class="err-msg" id="errMsg"></div>
+    </div>
+
+    <a href="/apps.html" class="back">← Back to Cool Apps</a>
+  </div>
+
+  <script>
+    function checkCode(e) {
+      e.preventDefault();
+      var input = document.getElementById('code');
+      var err = document.getElementById('errMsg');
+      var val = (input.value || '').trim();
+      if (val === '051897') {
+        sessionStorage.setItem('wh_unlocked', '1');
+        window.location.href = 'app.html';
+      } else {
+        input.classList.add('err');
+        err.textContent = 'Invalid code.';
+        input.focus();
+        input.select();
+        setTimeout(function () {
+          input.classList.remove('err');
+          err.textContent = '';
+        }, 2200);
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>
