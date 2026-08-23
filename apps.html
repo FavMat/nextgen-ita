@@ -274,7 +274,13 @@
     }
 
     /* Coming soon badge on card */
-    .app-card.soon { position: relative; }
+    .app-card.soon { position: relative; cursor: default; }
+    .app-card.soon:hover {
+      transform: none;
+      border-color: var(--line);
+      box-shadow: none;
+    }
+    .app-card.soon:hover .app-link { color: var(--fg-2); gap: 6px; }
     .app-card.soon .soon-tag {
       position: absolute; top: 14px; right: 14px; z-index: 2;
       font-family: var(--f-mono); font-size: 9px;
@@ -464,8 +470,8 @@
       </div>
       <div class="apps-grid" id="ls-grid">
 
-        <!-- Women Health Platform (coming soon, gated) -->
-        <a href="women-health/" target="_blank" class="app-card soon" data-cat="life-science">
+        <!-- Women Health Platform (coming soon, non-clickable) -->
+        <div class="app-card soon" data-cat="life-science" aria-disabled="true">
           <span class="soon-tag">Coming Soon</span>
           <div class="app-preview life-science">
             <div class="prev-wh">
@@ -482,9 +488,9 @@
           </div>
           <div class="app-card-foot">
             <span class="app-tag life-science">Life Science</span>
-            <span class="app-link">Preview →</span>
+            <span class="app-link">Coming soon</span>
           </div>
-        </a>
+        </div>
 
         <!-- MoleculeViewer -->
         <a href="/molecule-viewer/" target="_blank" class="app-card" data-cat="life-science">
@@ -534,8 +540,9 @@
           </div>
         </a>
 
-        <!-- Italian NHS Monitor -->
-        <a href="/salute/" target="_blank" class="app-card" data-cat="life-science">
+        <!-- Italian NHS Monitor (coming soon, non-clickable) -->
+        <div class="app-card soon" data-cat="life-science" aria-disabled="true">
+          <span class="soon-tag">Coming Soon</span>
           <div class="app-preview life-science">
             <div class="prev-map">
               <div class="prev-dot active"></div><div class="prev-dot"></div><div class="prev-dot active"></div><div class="prev-dot active"></div><div class="prev-dot"></div><div class="prev-dot active"></div>
@@ -547,13 +554,13 @@
           <div class="app-card-top">
             <div class="app-icon life-science">🏥</div>
             <div class="app-name">Italian NHS Monitor</div>
-            <p class="app-desc">Live 3D monitor of Italian public health data. Real locations, real numbers across all regions — built on open government datasets.</p>
+            <p class="app-desc">Live 3D monitor of Italian public health data. Real locations, real numbers across all regions, built on open government datasets.</p>
           </div>
           <div class="app-card-foot">
             <span class="app-tag life-science">Life Science</span>
-            <span class="app-link">Open app →</span>
+            <span class="app-link">Coming soon</span>
           </div>
-        </a>
+        </div>
 
       </div>
     </div>
