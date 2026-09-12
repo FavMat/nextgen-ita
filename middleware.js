@@ -12,11 +12,17 @@
 const PROJECT_REF = 'vpqnyogmsipugvdhgaxj';
 const COOKIE_NAME = `sb-${PROJECT_REF}-auth-token`;
 
-const PROTECTED = [
-  /^\/agentry(\/.*)?$/,
-  /^\/toolbox\/protected(\/.*)?$/,
-  /^\/cgt-radar\/deep(\/.*)?$/
-];
+// Deliberately empty: the gate is dormant, not deleted.
+//
+// The three paths that used to be here (/agentry, /toolbox/protected,
+// /cgt-radar/deep) never existed, so the only thing the gate achieved was
+// sending visitors to a signup form to reach a 404. /agentry was a fossil in
+// particular: Agentry moved to agents.ciaomirta.it, which is open and says so.
+//
+// Everything behind this still works, Supabase, the login and account pages,
+// consent logging, RLS. To gate real paid or member areas later, put their
+// patterns back in this array and the server side check resumes.
+const PROTECTED = [];
 
 const PUBLIC_AUTH_PATHS = ['/login.html', '/login', '/auth/callback.html', '/auth/callback'];
 
