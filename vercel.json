@@ -36,6 +36,9 @@
     }
   ],
   "redirects": [
+    { "source": "/agentry",       "destination": "https://agents.ciaomirta.it/", "permanent": false },
+    { "source": "/agentry/(.*)",  "destination": "https://agents.ciaomirta.it/", "permanent": false },
+    { "source": "/agents",        "destination": "https://agents.ciaomirta.it/", "permanent": false },
     { "source": "/podcast.html",  "destination": "https://nextgenitaly.it/", "permanent": true },
     { "source": "/coaching.html", "destination": "https://nextgenitaly.it/", "permanent": true },
     { "source": "/events.html",   "destination": "https://nextgenitaly.it/", "permanent": true },
