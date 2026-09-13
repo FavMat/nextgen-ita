@@ -3,6 +3,10 @@
 Shared context for any coding agent (Antigravity, Claude Code, Cursor).
 Keep this file true. If you find it wrong, fix it in the same change.
 
+Workspace wide working rules live one level up in `../AGENTS.md`. If your
+workspace root is this folder rather than its parent, open that file manually
+once: it carries the git handoff rules and the lessons already paid for.
+
 ## What this repo is
 
 One repo, two public sites, both static HTML on Vercel.
